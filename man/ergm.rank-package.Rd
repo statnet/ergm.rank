@@ -1,40 +1,34 @@
-\name{ergm.count-package}
-\alias{ergm.count-package}
+\name{ergm.rank-package}
+\alias{ergm.rank-package}
 \docType{package}
 \title{
-Fit, Simulate and Diagnose Exponential-Family Models for Networks with
-Count Edges 
+Fit, Simulate and Diagnose Exponential-Family Models for Rank-Order
+Relational Data 
 }
 \description{
-\code{\link[=ergm.count-package]{ergm.count}} is a set of extensions to
+\code{\link[=ergm.rank-package]{ergm.rank}} is a set of extensions to
 \R package \code{\link[=ergm-package]{ergm}} to fit and simulate from exponential-family random 
-graph models for networks whose edge weights are counts. For a list of
+graph models for networks whose edge weights are ranks. For a list of
 functions type \code{help(package='ergm')} and
-\code{help(package='ergm.count')}
+\code{help(package='ergm.rank')}
 
 Mainly, it implements Poisson, binomial, geometric, and discrete uniform
 dyadwise reference measures for valued ERGMs (\link[=ergm-references]{documented here}), and provides some
 count-specific change statistics (\link[=ergm-terms]{documented here}).
 
-For a complete list of the functions, use \code{library(help="ergm")} and \code{library(help="ergm.count")} 
+For a complete list of the functions, use \code{library(help="ergm")} and \code{library(help="ergm.rank")} 
 or read the rest of the manual. 
 
 When publishing results obtained using this package, please cite the
-original authors as described in \code{citation(package="ergm.count")}.
+original authors as described in \code{citation(package="ergm.rank")}.
 
 All programs derived from this package must cite it.
 
 }
 \details{
 This package contains functions specific to using \code{\link{ergm}} to
-model networks whose dyad values are counts. Examples include counts of
-conversations, messages, and other interactions.
-
-In particular, this package implements the Poisson, geometric, binomial,
-and discrete uniform reference measures (documented in \code{\link{ergm-references}}) for
-use by \code{\link{ergm}} and \code{\link{simulate.ergm}} to fit models
-from this family, as well as statistics specific to modeling counts,
-such as the \code{\link{CMP}} for the Conway-Maxwell-Poisson Distribution.
+model networks whose dyad values are ranks. Examples include
+preferences, valued ties reduced to ranks, etc..
 
 For detailed information on how to download and install the software,
 go to the Statnet project website:
@@ -45,7 +39,7 @@ A tutorial, support newsgroup, references and links to further resources are pro
 \seealso{\code{\link{ergm-terms}}, \code{\link{ergm-references}}}
 
 \author{
-Pavel N. Krivitsky \email{krivitsky@stat.psu.edu}
+Pavel N. Krivitsky \email{krivitsky@uow.edu.au}
 }
 \references{
 Handcock MS, Hunter DR, Butts CT, Goodreau SG, Krivitsky PN and Morris M

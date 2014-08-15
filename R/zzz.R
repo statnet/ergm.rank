@@ -1,5 +1,5 @@
 .onAttach <- function(lib, pkg){
-  sm <- statnetStartupMessage("ergm.count",c("statnet"),FALSE)
+  sm <- statnetStartupMessage("ergm.rank",c("statnet"),FALSE)
   if(!is.null(sm)) packageStartupMessage(sm)
 
   .RegisterMHPs()
@@ -8,22 +8,15 @@
 }
 
 .RegisterMHPs <- function(){
-  ergm.MHP.table("c", "Poisson", "",  0, "random", "Poisson")
-  ergm.MHP.table("c", "Poisson", "",  0, "0inflated", "ZIPoisson")
-  ergm.MHP.table("c", "Poisson", "observed",  0, "random", "PoissonNonObserved")
+  ergm.MHP.table("c", "DescRank", "",  0, "random", "DescRank")
+  ergm.MHP.table("c", "DescRank", "ranks",  0, "random", "DescRankEquivalent")
 
-  ergm.MHP.table("c", "Geometric", "",  0, "random", "Geometric")
-  ergm.MHP.table("c", "Geometric", "observed",  0, "random", "GeometricNonObserved")
-
-  ergm.MHP.table("c", "Binomial", "",  0, "random", "Binomial")
-  ergm.MHP.table("c", "Binomial", "observed",  0, "random", "BinomialNonObserved")
+  ergm.MHP.table("c", "StdNormal", "ranks",  0, "random", "StdNormalRank")
 }
 
 .RegisterConstraintImplications <- function(){
 }
 
 .RegisterInitMethods <- function(){
-  ergm.init.methods("Poisson", c("CD","zeros"))
-  ergm.init.methods("Binomial", c("CD","zeros"))
-  ergm.init.methods("Geometric", c("CD","zeros"))
+  ergm.init.methods("DescRank", c("CD","zeros"))
 }

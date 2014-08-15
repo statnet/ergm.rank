@@ -1,28 +1,33 @@
-library(ergm.count)
-load("testnet3d.RData")
+library(statnet.common)
+library(ergm)
 
-set.seed(0)
+## StdNormal-reference with rank constraint
+cat("Standard-normal-reference ERGM with rank constraint\n")
+load("testrank3d.RData")
 
-## Poisson-reference
-cat("======== Poisson-reference ERGM with mean 2\n")
-s <- simulate(testnet3d~sum, nsim=1000, reference=~Poisson, response="w", coef=log(2), statsonly=TRUE)
-test <- approx.hotelling.diff.test(s/6,mu0=2)
-if(test$p.value<0.001) {print(test); stop("Simulation test failed.")}
+s.full<-simulate(testrank3d~sum, nsim=1000, reference=~StdNormal, response="w", coef=0, statsonly=FALSE,
+                 constraints=~ranks, control=control.simulate(MCMC.burnin=10000))
+s.cells<-sapply(s.full, function(x) as.matrix(x,m="a",a="w"), simplify=FALSE)
+ref.sample<-pmax(rnorm(10000),rnorm(10000))
 
-cat("======== Poisson-reference ERGM with mean 2, zero-modified proposal\n")
-s <- simulate(testnet3d~sum, nsim=1000, reference=~Poisson, response="w", coef=log(2), statsonly=TRUE, control=control.simulate.formula(MCMC.prop.weights="0inflated", MCMC.prop.args=list(p0=0.8)))
-test <- approx.hotelling.diff.test(s/6,mu0=2)
-if(test$p.value<0.001) {print(test); stop("Simulation test failed.")}
+cat("Simulated means (target[1:2,]=+-",mean(ref.sample),";target[3,]=0):\n",sep="")
+print(matrix(c(NA,
+  mean(sapply(s.cells,"[",1,2)),
+  mean(sapply(s.cells,"[",1,3)),
+  mean(sapply(s.cells,"[",2,1)),
+  NA,
+  mean(sapply(s.cells,"[",2,3)),
+  mean(sapply(s.cells,"[",3,1)),
+  mean(sapply(s.cells,"[",3,2)),
+  NA),3,3,byrow=TRUE))
 
-## Geometric-reference
-cat("======== Geometric-reference ERGM with mean 2\n")
-s <- simulate(testnet3d~sum, nsim=1000, reference=~Geometric, response="w", coef=log(2/3), statsonly=TRUE)
-test <- approx.hotelling.diff.test(s/6,mu0=2)
-if(test$p.value<0.001) {print(test); stop("Simulation test failed.")}
-
-## Binomial-reference
-cat("======== Binomial-reference ERGM with mean 5 trials and probability of success 0.4 for a mean 2\n")
-s <- simulate(testnet3d~sum, nsim=1000, reference=~Binomial(5), response="w", coef=log(.4/.6), statsonly=TRUE)
-test <- approx.hotelling.diff.test(s/6,mu0=2)
-if(test$p.value<0.001) {print(test); stop("Simulation test failed.")}
-
+cat("Simulated vars (target[1:2,]=+-",var(ref.sample),";target[3,]=0):\n",sep="")
+print(matrix(c(NA,
+  var(sapply(s.cells,"[",1,2)),
+  var(sapply(s.cells,"[",1,3)),
+  var(sapply(s.cells,"[",2,1)),
+  NA,
+  var(sapply(s.cells,"[",2,3)),
+  var(sapply(s.cells,"[",3,1)),
+  var(sapply(s.cells,"[",3,2)),
+  NA),3,3,byrow=TRUE))

@@ -1,5 +1,5 @@
 
-useDynLib(ergm.count)
+useDynLib(ergm.rank)
 
 import(statnet.common,network,ergm)
 
