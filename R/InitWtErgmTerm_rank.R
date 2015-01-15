@@ -90,7 +90,7 @@ InitWtErgmTerm.nonconformity<-function(nw, arglist, response, ...) {
                       defaultvalues = list("all",NULL),
                       required = c(FALSE,FALSE))
 
-  form<-match.arg(a$form,c("all","thresholds","geometric","local1","local2"))
+  form<-match.arg(a$form,c("all","thresholds","geometric","local1","local2","localAND"))
 
   if(form=="all"){
     inputs <- NULL
@@ -112,6 +112,10 @@ InitWtErgmTerm.nonconformity<-function(nw, arglist, response, ...) {
     inputs <- NULL
     coef.names <- "nonconformity.local2"
     name <- "local2_nonconformity"
+  }else if(form=="localAND"){
+    inputs <- NULL
+    coef.names <- "nonconformity.localAND"
+    name <- "localAND_nonconformity"
   }
   
   list(name=name,
