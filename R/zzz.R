@@ -1,7 +1,9 @@
 .onAttach <- function(lib, pkg){
   sm <- statnetStartupMessage("ergm.rank",c("statnet"),FALSE)
   if(!is.null(sm)) packageStartupMessage(sm)
+}
 
+.onLoad <- function(lib, pkg){
   .RegisterMHPs()
   .RegisterConstraintImplications()
   .RegisterInitMethods()
