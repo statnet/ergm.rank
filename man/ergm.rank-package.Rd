@@ -12,9 +12,8 @@ graph models for networks whose edge weights are ranks. For a list of
 functions type \code{help(package='ergm')} and
 \code{help(package='ergm.rank')}
 
-Mainly, it implements Poisson, binomial, geometric, and discrete uniform
-dyadwise reference measures for valued ERGMs (\link[=ergm-references]{documented here}), and provides some
-count-specific change statistics (\link[=ergm-terms]{documented here}).
+Mainly, it implements the \code{CompleteOrder} reference measure for valued ERGMs (\link[=ergm-references]{documented here}), and provides some
+rank-order change statistics (\link[=ergm-terms]{documented here}).
 
 For a complete list of the functions, use \code{library(help="ergm")} and \code{library(help="ergm.rank")} 
 or read the rest of the manual. 
@@ -39,7 +38,7 @@ A tutorial, support newsgroup, references and links to further resources are pro
 \seealso{\code{\link{ergm-terms}}, \code{\link{ergm-references}}}
 
 \author{
-Pavel N. Krivitsky \email{krivitsky@uow.edu.au}
+Pavel N. Krivitsky \email{pavel@uow.edu.au}
 }
 \references{
 Handcock MS, Hunter DR, Butts CT, Goodreau SG, Krivitsky PN and Morris M

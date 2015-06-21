@@ -3,7 +3,7 @@
 \alias{references-ergm}
 \alias{ergm.references}
 \alias{references.ergm}
-
+\alias{CompleterOrder}
 \docType{methods}
 
 \title{Reference Measures for Exponential-Family Random Graph Models for
@@ -22,23 +22,6 @@
 
 \section{Known issues}{
   
-  \subsection{Parameter space constraints}{
-    
-    Poisson- and geometric-reference ERGMs have an unbouded sample
-    space. This means that the parameter space may be constrained in
-    complex ways that depend on the terms used in the model. At this
-    time \code{\link{ergm}} has no way to detect when a parameter
-    configuration had strayed outside of the parameter space, but it may
-    be noticeable on a runtime trace plot (activated via
-    \code{MCMC.runtime.traceplot} control parameter), when the simulated
-    values keep climbing upwards. (See Krivitsky (2012) for a further
-    discussion.)
-
-    A possible remedy if this appears to occur is to try lowering the
-    control parameter \code{MCMLE.steplength}.
-
-  }
-
   \subsection{\code{\link[ergm:control.ergm]{MCMLE.trustregion}}}{
 
     Because Monte Carlo MLE's approximation to the likelihood becomes less
@@ -66,15 +49,29 @@
   Reference measures currently available are:
   \describe{
     
-    \item{}{\emph{-reference ERGM:}
+    \item{\code{CompleteOrder}}{A uniform distribution over the possible
+      complete orderings of the alters by each ego.
+    }
+
+    \item{\code{DiscUnif(a,b)}}{
+      A discrete uniform distribution used as a baseline distribution
+      for ranks. See \link[ergm:ergm-references]{documentation for \code{DiscUnif}
+      in the \code{ergm} package} for arguments. Using
+      \code{reference=~DiscUnif(1,n-1)} (for network size \code{n}) can
+      be used to model weak orderings, though this approach is currently
+      untested. Note that it entails a specific assumption about actors'
+      propensity to rank.
     }
 
   }
 }
 
 \references{
-Krivitsky PN (2012). Exponential-Family Random Graph Models for Valued Networks. \emph{Electronic Journal of Statistics}, 2012, 6, 1100-1128. \href{http://dx.doi.org/10.1214/12-EJS696}{\code{doi:10.1214/12-EJS696}}
+Krivitsky PN (2012). Exponential-Family Random Graph Models for Valued
+Networks. \emph{Electronic Journal of Statistics}, 2012, 6,
+1100-1128. \href{http://dx.doi.org/10.1214/12-EJS696}{\code{doi:10.1214/12-EJS696}}
 
+Krivitsky, PN and Butts, CT (2012). Exponential-Family Random Graph Models for Rank-Order Relational Data. Under review. \url{http://arxiv.org/abs/1210.0493}
 }
 
 \seealso{ergm, network, \%v\%, \%n\%, sna,
