@@ -26,13 +26,13 @@ S <- 20
 
 nw0 <- network.initialize(n,dir=TRUE)
 
-nws <- simulate(nw0~nonconformity("all")+nonconformity("local1")+nonconformity("local2")+nonconformity("localAND")+deference, coef=rep(0,5),response="r", reference=~DiscUnif(1, n-1), nsim=S, statsonly=FALSE)
+nws <- simulate(nw0~rank.nonconformity("all")+rank.nonconformity("local1")+rank.nonconformity("local2")+rank.nonconformity("localAND")+rank.deference, coef=rep(0,5),response="r", reference=~DiscUnif(1, n-1), nsim=S, statsonly=FALSE)
 
 d.stats <- attr(nws,"stats")
 
 c.stats <- t(sapply(lapply(nws,as.matrix,attrname="r"),function(m) c(global.nonconformity(m), local1.nonconformity(m), local2.nonconformity(m), localAND.nonconformity(m), deference(m))))
 
-s.stats <- summary(nws~nonconformity("all")+nonconformity("local1")+nonconformity("local2")+nonconformity("localAND")+deference, response="r")
+s.stats <- summary(nws~rank.nonconformity("all")+rank.nonconformity("local1")+rank.nonconformity("local2")+rank.nonconformity("localAND")+rank.deference, response="r")
 
 stopifnot(all.equal(d.stats,c.stats,check.attributes=FALSE),
           all.equal(d.stats,s.stats,check.attributes=FALSE),
@@ -40,13 +40,13 @@ stopifnot(all.equal(d.stats,c.stats,check.attributes=FALSE),
 
 nw1 <- nws[[length(nws)]]
 
-nws <- simulate(nw1~nonconformity("all")+nonconformity("local1")+nonconformity("local2")+nonconformity("localAND")+deference, coef=rep(0,5),response="r", reference=~DescRank, nsim=S, statsonly=FALSE)
+nws <- simulate(nw1~rank.nonconformity("all")+rank.nonconformity("local1")+rank.nonconformity("local2")+rank.nonconformity("localAND")+rank.deference, coef=rep(0,5),response="r", reference=~CompleteOrder, nsim=S, statsonly=FALSE)
 
 d.stats <- attr(nws,"stats")
 
 c.stats <- t(sapply(lapply(nws,as.matrix,attrname="r"),function(m) c(global.nonconformity(m), local1.nonconformity(m), local2.nonconformity(m), localAND.nonconformity(m), deference(m))))
 
-s.stats <- summary(nws~nonconformity("all")+nonconformity("local1")+nonconformity("local2")+nonconformity("localAND")+deference, response="r")
+s.stats <- summary(nws~rank.nonconformity("all")+rank.nonconformity("local1")+rank.nonconformity("local2")+rank.nonconformity("localAND")+rank.deference, response="r")
 
 stopifnot(all.equal(d.stats,c.stats,check.attributes=FALSE),
           all.equal(d.stats,s.stats,check.attributes=FALSE),
