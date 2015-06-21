@@ -1,3 +1,3 @@
-InitReference.DescRank <- function(lhs.nw, ...){
-  list(name="DescRank")  
+InitReference.CompleteOrder <- function(lhs.nw, ...){
+  list(name="CompleteOrder")  
 }

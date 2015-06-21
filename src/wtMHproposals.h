@@ -3,7 +3,7 @@
 
 #include "wtMHproposal.h"
 
-void MH_CompleteOrdering(WtMHproposal *MHp, WtNetwork *nwp);
+void MH_AlterSwap(WtMHproposal *MHp, WtNetwork *nwp);
 
 #endif 
 

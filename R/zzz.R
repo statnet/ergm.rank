@@ -10,8 +10,8 @@
 }
 
 .RegisterMHPs <- function(){
-  ergm.MHP.table("c", "DescRank", "",  0, "random", "DescRank")
-  ergm.MHP.table("c", "DescRank", "ranks",  0, "random", "DescRankEquivalent")
+  ergm.MHP.table("c", "CompleteOrder", "",  0, "random", "AlterSwap")
+  ergm.MHP.table("c", "CompleteOrder", "ranks",  0, "random", "DescRankEquivalent")
 
   ergm.MHP.table("c", "StdNormal", "ranks",  0, "random", "StdNormalRank")
 }
@@ -20,5 +20,5 @@
 }
 
 .RegisterInitMethods <- function(){
-  ergm.init.methods("DescRank", c("CD","zeros"))
+  ergm.init.methods("CompleteOrder", c("CD","zeros"))
 }

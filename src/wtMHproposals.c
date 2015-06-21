@@ -6,14 +6,14 @@
 #define Mweight (MHp->toggleweight)
 
 /*********************
- void MH_CompleteOrdering
+ void MH_AlterSwap
 
  Default MH algorithm for ERGM over complete orderings
 *********************/
-void MH_CompleteOrdering(WtMHproposal *MHp, WtNetwork *nwp)  {  
+void MH_AlterSwap(WtMHproposal *MHp, WtNetwork *nwp)  {  
   Vertex tail, head1, head2;
   
-  if(MHp->ntoggles == 0) { // Initialize CompleteOrdering 
+  if(MHp->ntoggles == 0) { // Initialize AlterSwap 
     MHp->ntoggles=2;
     return;
   }

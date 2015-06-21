@@ -1,6 +1,4 @@
-##### edgecov for ranks is implemented in InitWtErgmTerm.R #####
-
-InitWtErgmTerm.deference<-function(nw, arglist, response, ...) {
+InitWtErgmTerm.rank.deference<-function(nw, arglist, response, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
                       varnames = NULL,
                       vartypes = NULL,
@@ -13,11 +11,41 @@ InitWtErgmTerm.deference<-function(nw, arglist, response, ...) {
        dependence=TRUE)
 }
 
-InitWtErgmTerm.inconsistency<-function (nw, arglist, response, ...) {
+InitWtErgmTerm.rank.edgecov <- function(nw, arglist, response, ...) {
+  ### Check the network and arguments to make sure they are appropriate.
+  a <- check.ErgmTerm(nw, arglist, 
+                      varnames = c("x", "attrname"),
+                      vartypes = c("matrix,network,character", "character"),
+                      defaultvalues = list(NULL, NULL),
+                      required = c(TRUE, FALSE))
+  ### Process the arguments
+  if(is.network(a$x))
+    xm<-as.matrix.network(a$x,matrix.type="adjacency",a$attrname)
+  else if(is.character(a$x))
+    xm<-get.network.attribute(nw,a$x)
+  else
+    xm<-as.matrix(a$x)
+  ### Construct the list to return
+  if(!is.null(a$attrname)) {
+    # Note: the sys.call business grabs the name of the x object from the 
+    # user's call.  Not elegant, but it works as long as the user doesn't
+    # pass anything complicated.
+    cn<-paste("edgecov", as.character(sys.call(0)[[3]][2]), 
+              as.character(a$attrname), sep = ".")
+  } else {
+    cn<-paste("edgecov", as.character(sys.call(0)[[3]][2]), sep = ".")
+  }
+
+  inputs <- c(as.double(xm))
+  list(name="edgecov_rank", coef.names = paste(cn,"rank",sep="."), inputs = inputs, dependence=form=="rank", soname="ergm.rank")
+}
+
+
+InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, response, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
                      varnames = c("x","attrname","weights","wtname","wtcenter"),
                      vartypes = c("matrix,network","character","array,function","character","logical"),
-                     defaultvalues = list(nw,NULL,NULL,NULL,FALSE),
+                     defaultvalues = list(nw,response,NULL,NULL,FALSE),
                      required = c(FALSE,FALSE,FALSE,FALSE,FALSE))
 
   name<-"inconsistency_rank"
@@ -81,38 +109,54 @@ InitWtErgmTerm.inconsistency<-function (nw, arglist, response, ...) {
        inputs = inputs, dependence = FALSE)
 }
 
-##### nodeicov for ranks is implemented in InitWtErgmTerm.R #####
 
-InitWtErgmTerm.nonconformity<-function(nw, arglist, response, ...) {
+InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, response, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
-                      varnames = c("form","par"),
+                     varnames = c("attrname","transform","transformname"),
+                     vartypes = c("character","function","character"),
+                     defaultvalues = list(NULL,identity,""),
+                     required = c(TRUE,FALSE,FALSE))
+  attrname<-a$attrname
+  f<-a$transform
+  f.name<-a$transformname
+  coef.names <- paste("nodeicov.rank",f.name,attrname,sep=".")
+  nodecov <- f(get.node.attr(nw, attrname, "nodeicov", numeric=TRUE))
+  list(name="nodeicov_rank", soname="ergm.rank",
+       coef.names=coef.names,
+       inputs=c(nodecov),
+       dependence=TRUE)
+}
+
+InitWtErgmTerm.rank.nonconformity<-function(nw, arglist, response, ...) {
+  a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                      varnames = c("to","par"),
                       vartypes = c("character","numeric"),
                       defaultvalues = list("all",NULL),
                       required = c(FALSE,FALSE))
 
-  form<-match.arg(a$form,c("all","thresholds","geometric","local1","local2","localAND"))
+  to<-match.arg(a$to,c("all","thresholds","geometric","local1","local2","localAND"))
 
-  if(form=="all"){
+  if(to=="all"){
     inputs <- NULL
     coef.names <- "nonconformity"
     name <- "nonconformity"
-  }else if(form=="thresholds"){
+  }else if(to=="thresholds"){
     inputs <- sort(as.numeric(a$par),decreasing=TRUE)
     coef.names <- paste("nonconformity.over",inputs,sep=".")
     name <- "nonconformity_thresholds"
-  }else if(form=="geometric"){
+  }else if(to=="geometric"){
     inputs <- c(a$par,max(nw %e% response))
     coef.names <- paste("nonconformity.gw.",a$par,sep=".")
     name <- "nonconformity_decay"
-  }else if(form=="local1"){
+  }else if(to=="local1"){
     inputs <- NULL
     coef.names <- "nonconformity.local1"
     name <- "local1_nonconformity"
-  }else if(form=="local2"){
+  }else if(to=="local2"){
     inputs <- NULL
     coef.names <- "nonconformity.local2"
     name <- "local2_nonconformity"
-  }else if(form=="localAND"){
+  }else if(to=="localAND"){
     inputs <- NULL
     coef.names <- "nonconformity.localAND"
     name <- "localAND_nonconformity"
@@ -124,7 +168,7 @@ InitWtErgmTerm.nonconformity<-function(nw, arglist, response, ...) {
        dependence=TRUE)
 }
 
-InitWtErgmTerm.tiedranks<-function(nw, arglist, response, ...) {
+InitWtErgmTerm.rank.tiedranks<-function(nw, arglist, response, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
                       varnames = NULL,
                       vartypes = NULL,
@@ -138,7 +182,7 @@ InitWtErgmTerm.tiedranks<-function(nw, arglist, response, ...) {
        dependence=TRUE)
 }
 
-InitWtErgmTerm.rank.classes<-function(nw, arglist, response, ...) {
+InitWtErgmTerm.rank.n.classes<-function(nw, arglist, response, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
                       varnames = NULL,
                       vartypes = NULL,
