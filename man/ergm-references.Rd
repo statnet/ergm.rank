@@ -4,6 +4,8 @@
 \alias{ergm.references}
 \alias{references.ergm}
 \alias{CompleterOrder}
+\alias{InitReference.CompleteOrder}
+\alias{InitWtMHP.AlterSwap}
 \docType{methods}
 
 \title{Reference Measures for Exponential-Family Random Graph Models for
@@ -55,8 +57,8 @@
 
     \item{\code{DiscUnif(a,b)}}{
       A discrete uniform distribution used as a baseline distribution
-      for ranks. See \link[ergm:ergm-references]{documentation for \code{DiscUnif}
-      in the \code{ergm} package} for arguments. Using
+      for ranks. See \code{\link[ergm:ergm-references]{DiscUnif}}
+      documentation in the \code{\link[ergm:ergm-package]{ergm}} for arguments. Using
       \code{reference=~DiscUnif(1,n-1)} (for network size \code{n}) can
       be used to model weak orderings, though this approach is currently
       untested. Note that it entails a specific assumption about actors'

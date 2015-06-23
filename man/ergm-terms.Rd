@@ -3,11 +3,16 @@
 \alias{ergm.terms}
 \alias{terms-ergm}
 \alias{terms.ergm}
-\alias{rank.deferene}
+\alias{rank.deference}
 \alias{rank.edgecov}
 \alias{rank.inconsistency}
 \alias{rank.nodeicov}
 \alias{rank.nonconformity}
+\alias{InitWtErgmTerm.rank.deference}
+\alias{InitWtErgmTerm.rank.edgecov}
+\alias{InitWtErgmTerm.rank.inconsistency}
+\alias{InitWtErgmTerm.rank.nodeicov}
+\alias{InitWtErgmTerm.rank.nonconformity}
 \docType{methods}
 \title{Terms used in Exponential Family Random Graph Models for Ranks}
 \description{

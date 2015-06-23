@@ -37,7 +37,7 @@ InitWtErgmTerm.rank.edgecov <- function(nw, arglist, response, ...) {
   }
 
   inputs <- c(as.double(xm))
-  list(name="edgecov_rank", coef.names = paste(cn,"rank",sep="."), inputs = inputs, dependence=form=="rank", soname="ergm.rank")
+  list(name="edgecov_rank", coef.names = paste(cn,"rank",sep="."), inputs = inputs, dependence=TRUE, soname="ergm.rank")
 }
 
 
@@ -165,33 +165,5 @@ InitWtErgmTerm.rank.nonconformity<-function(nw, arglist, response, ...) {
   list(name=name,
        coef.names=coef.names,
        inputs=inputs,
-       dependence=TRUE)
-}
-
-InitWtErgmTerm.rank.tiedranks<-function(nw, arglist, response, ...) {
-  a <- check.ErgmTerm(nw, arglist, directed=TRUE,
-                      varnames = NULL,
-                      vartypes = NULL,
-                      defaultvalues = NULL,
-                      required = NULL)
-
- 
-  list(name="tiedranks",
-       coef.names="tiedranks",
-       inputs=NULL,
-       dependence=TRUE)
-}
-
-InitWtErgmTerm.rank.n.classes<-function(nw, arglist, response, ...) {
-  a <- check.ErgmTerm(nw, arglist, directed=TRUE,
-                      varnames = NULL,
-                      vartypes = NULL,
-                      defaultvalues = NULL,
-                      required = NULL)
-
- 
-  list(name="rank_classes",
-       coef.names="rank_classes",
-       inputs=NULL,
        dependence=TRUE)
 }
