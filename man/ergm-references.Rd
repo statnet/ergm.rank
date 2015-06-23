@@ -4,6 +4,8 @@
 \alias{ergm.references}
 \alias{references.ergm}
 \alias{CompleterOrder}
+\alias{InitReference.CompleteOrder}
+\alias{InitWtMHP.AlterSwap}
 \docType{methods}
 
 \title{Reference Measures for Exponential-Family Random Graph Models for
