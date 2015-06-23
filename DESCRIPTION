@@ -1,6 +1,6 @@
 Package: ergm.rank
-Version: 3.2-13897.1-2015.06.21-13.20.44
-Date: 2015-06-21
+Version: 3.2-13939-13940-2015.06.23-23.42.01
+Date: 2015-06-23
 Title:  Fit, Simulate and Diagnose Exponential-Family Models for Rank-Order Relational Data
 Authors@R: c(
            person("Pavel N.", "Krivitsky", role=c("aut","cre"), email="pavel@uow.edu.au"),
