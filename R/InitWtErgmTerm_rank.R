@@ -37,7 +37,7 @@ InitWtErgmTerm.rank.edgecov <- function(nw, arglist, response, ...) {
   }
 
   inputs <- c(as.double(xm))
-  list(name="edgecov_rank", coef.names = paste(cn,"rank",sep="."), inputs = inputs, dependence=form=="rank", soname="ergm.rank")
+  list(name="edgecov_rank", coef.names = paste(cn,"rank",sep="."), inputs = inputs, dependence=TRUE, soname="ergm.rank")
 }
 
 
