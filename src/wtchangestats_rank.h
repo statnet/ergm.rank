@@ -17,12 +17,6 @@ WtD_CHANGESTAT_FN(d_nonconformity); WtS_CHANGESTAT_FN(s_nonconformity);
 
 WtD_CHANGESTAT_FN(d_local_nonconformity); WtS_CHANGESTAT_FN(s_local_nonconformity);
 
-WtD_CHANGESTAT_FN(d_nonconformity_decay); WtS_CHANGESTAT_FN(s_nonconformity_thresholds);
 
-WtD_CHANGESTAT_FN(d_nonconformity_thresholds); WtS_CHANGESTAT_FN(s_nonconformity_thresholds);
-
-WtD_CHANGESTAT_FN(d_tiedranks); WtS_CHANGESTAT_FN(s_tiedranks);
-
-WtD_CHANGESTAT_FN(d_rank_classes); WtS_CHANGESTAT_FN(s_rank_classes);
 
 #endif
