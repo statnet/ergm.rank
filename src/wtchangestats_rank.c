@@ -260,7 +260,47 @@ WtS_CHANGESTAT_FN(s_deference){
   }
 }
 
-WtD_FROM_S_FN(d_nodeicov_rank)
+WtD_CHANGESTAT_FN(d_nodeicov_rank){
+  OPTIMAL_RANK_D({
+      Vertex v1=TAIL;
+      for (Vertex v2=1; v2 <= N_NODES; v2++){
+	if(v2==v1) continue;
+	double v12_old=GETOLDWT2(v1,v2);
+	double v12_new=GETNEWWT2OLD(v1,v2,v12_old);
+	for (Vertex v3=1; v3 <= N_NODES; v3++){
+	  if(v3==v2 || v3==v1 || 
+	     (HEAD1!=v2 && HEAD1!=v3 && HEAD2!=v2 && HEAD2!=v3)) continue;
+	  double v23_covdiff=INPUT_PARAM[v2-1] - INPUT_PARAM[v3-1];
+	  if(v23_covdiff==0) continue;  // If covariate value is 0, don't bother looking up the ranking of v3 by v1.
+	  double v13_old=GETOLDWT2(v1,v3);
+	  double v13_new=GETNEWWT2OLD(v1,v3,v13_old);
+	  if(v12_old>v13_old)
+	    CHANGE_STAT[0] -= v23_covdiff;
+	  if(v12_new>v13_new)
+	    CHANGE_STAT[0] += v23_covdiff;
+	}
+      }
+    },{
+      Vertex v1=TAIL;
+      Vertex v2=HEAD;
+      double v12_old = OLDWT;
+      double v12_new = NEWWT;
+      for (Vertex v3=1; v3 <= N_NODES; v3++){
+	if(v3==v2 || v3==v1) continue;
+	double v23_covdiff=INPUT_PARAM[v2-1] - INPUT_PARAM[v3-1];
+	if(v23_covdiff==0) continue; // If covariate value is 0, don't bother looking up the ranking of v3 by v1.
+	double v13_old=GETWT(v1,v3);
+	if(v12_old>v13_old)
+	  CHANGE_STAT[0] -= v23_covdiff;
+	if(v12_old<v13_old)
+	  CHANGE_STAT[0] += v23_covdiff;
+	if(v12_new>v13_old)
+	  CHANGE_STAT[0] += v23_covdiff;
+	if(v12_new<v13_old)
+	  CHANGE_STAT[0] -= v23_covdiff;
+      }
+    });
+} 
 
 WtS_CHANGESTAT_FN(s_nodeicov_rank){ 
   CHANGE_STAT[0]=0;
