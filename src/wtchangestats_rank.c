@@ -32,8 +32,12 @@ WtD_CHANGESTAT_FN(d_edgecov_rank){
 	double v13_old=GETWT(v1,v3);
 	if(v12_old>v13_old)
 	  CHANGE_STAT[0] -= v123_covdiff;
+	if(v12_old<v13_old)
+	  CHANGE_STAT[0] += v123_covdiff;
 	if(v12_new>v13_old)
 	  CHANGE_STAT[0] += v123_covdiff;
+	if(v12_new<v13_old)
+	  CHANGE_STAT[0] -= v123_covdiff;
       }
     });
 } 

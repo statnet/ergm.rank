@@ -36,7 +36,7 @@ InitWtErgmTerm.rank.edgecov <- function(nw, arglist, response, ...) {
     cn<-paste("edgecov", as.character(sys.call(0)[[3]][2]), sep = ".")
   }
 
-  inputs <- c(as.double(xm))
+  inputs <- c(as.double(t(xm))) # Need to transpose to produce row-major arrangement.
   list(name="edgecov_rank", coef.names = paste(cn,"rank",sep="."), inputs = inputs, dependence=TRUE, soname="ergm.rank")
 }
 
