@@ -89,12 +89,22 @@
 	  value of this statistic and/or a negative coefficient implies a
 	  degree
 	  of consensus in the network.}
-	\item{\code{"localAND"}}{\emph{Local nonconformity}
+	\item{\code{"localAND"}}{
 	  Nonconformity of \eqn{i} to ego \eqn{l} regarding the relative ranking
 	  of \eqn{j} and \eqn{k} is only counted if \eqn{i} ranks \eqn{l}
 	  over both \eqn{j} and \eqn{k}. A lower-than-chance
 	  value of this statistic and/or a negative coefficient implies a
-	  form of hierarchical transitivity in the network.}
+	  form of hierarchical transitivity in the network. This is the
+	  recommended form of local nonconformity (over \code{"local1"}
+	  and \code{"local2"}).}
+	\item{\code{"local1"}}{
+	  Nonconformity of \eqn{i} to ego \eqn{l} regarding the relative ranking
+	  of \eqn{j} and \eqn{k} is only counted if \eqn{i} ranks \eqn{l}
+	  over \eqn{j}.}
+	\item{\code{"local2"}}{
+	  Nonconformity of \eqn{i} to ego \eqn{l} regarding the relative ranking
+	  of \eqn{j} and \eqn{k} is only counted if \eqn{i} ranks \eqn{l}
+	  over \eqn{k}.}
       }
     }  
   }
