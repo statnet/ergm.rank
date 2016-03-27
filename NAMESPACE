@@ -2,6 +2,7 @@
 useDynLib(ergm.rank)
 
 import(statnet.common,network,ergm)
+importFrom(stats, na.omit)
 
 # Export all names that do not begin with a dot.
 exportPattern("^[^\\.]")

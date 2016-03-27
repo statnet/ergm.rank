@@ -41,13 +41,10 @@ A tutorial, support newsgroup, references and links to further resources are pro
 Pavel N. Krivitsky \email{pavel@uow.edu.au}
 }
 \references{
-Handcock MS, Hunter DR, Butts CT, Goodreau SG, Krivitsky PN and Morris M
-(2012). _Fit, Simulate and Diagnose Exponential-Family Models for
-Networks_. Version 3.1.  Project home
-page at <URL: http://www.statnet.org>, <URL:
-CRAN.R-project.org/package=ergm>.
+Krivitsky PN (2012). Exponential-Family Random Graph Models for Valued Networks. \emph{Electronic Journal of Statistics}, 2012, 6, 1100-1128. \doi{doi:10.1214/12-EJS696}
 
-Krivitsky PN (2012). Exponential-Family Random Graph Models for Valued Networks. \emph{Electronic Journal of Statistics}, 2012, 6, 1100-1128. \href{http://dx.doi.org/10.1214/12-EJS696}{\code{doi:10.1214/12-EJS696}}
+Krivitsky PN and Butts CT (2012). Exponential-Family Random Graph Models for Rank-Order Relational Data. \url{http://arxiv.org/abs/1210.0493}
+
 
 }
 \keyword{ package }

@@ -71,9 +71,9 @@
 \references{
 Krivitsky PN (2012). Exponential-Family Random Graph Models for Valued
 Networks. \emph{Electronic Journal of Statistics}, 2012, 6,
-1100-1128. \href{http://dx.doi.org/10.1214/12-EJS696}{\code{doi:10.1214/12-EJS696}}
+1100-1128. \doi{doi:10.1214/12-EJS696}
 
-Krivitsky, PN and Butts, CT (2012). Exponential-Family Random Graph Models for Rank-Order Relational Data. Under review. \url{http://arxiv.org/abs/1210.0493}
+Krivitsky, PN and Butts, CT (2012). Exponential-Family Random Graph Models for Rank-Order Relational Data. \url{http://arxiv.org/abs/1210.0493}
 }
 
 \seealso{ergm, network, \%v\%, \%n\%, sna,
