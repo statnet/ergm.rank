@@ -42,7 +42,7 @@ statnet.cite.pkg <- function(pkg=NULL){
 }
 # ---- END STATNET CITATION FUNCTIONS ----'
 library(statnet.common)
-statnet.cite.head("ergm.count")
+statnet.cite.head("ergm.rank")
 statnet.cite.pkg()
 statnet.cite.pkg("ergm")
-statnet.cite.foot("ergm.count")
+statnet.cite.foot("ergm.rank")
