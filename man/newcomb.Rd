@@ -10,7 +10,6 @@
 \name{newcomb}
 \title{Newcomb's Fraternity Networks}
 \alias{newcomb}
-\alias{newcomb.rank}
 \description{
 These 14 networks record weekly sociometric preference rankings
 from 17 men attending the University of Michigan in the fall
@@ -28,9 +27,8 @@ contains a network list \code{newcomb} with 14 networks. Each network is
 complete and contains two edge attributes:
 \describe{
   \item{\code{rank}}{the preference of the \eqn{i}th man for the \eqn{j}th
-man from \code{1} through \code{16}.  \code{1} indicates highest 
-preference.}
-  \item{\code{descrank}}{The same but \code{1} indicates
+man from \code{1} through \code{16}, with \code{1} being the highest preference.}
+  \item{\code{descrank}}{the same, but \code{1} indicates
     lowest preference.}
 }
 }
@@ -46,7 +44,6 @@ Michigan.
 
 White H., Boorman S. and Breiger R. (1977). Social structure from multiple networks, I. Blockmodels of roles and positions. American Journal of Sociology, 81, 730-780. 
 }
-\seealso{network, sna}
 \keyword{datasets}
 \section{Licenses and Citation}{
 If the source of the data set does not specified otherwise,
