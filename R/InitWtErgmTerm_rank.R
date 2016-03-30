@@ -176,31 +176,3 @@ InitWtErgmTerm.rank.nonconformity<-function(nw, arglist, response, ...) {
        inputs=inputs,
        dependence=TRUE)
 }
-
-InitWtErgmTerm.rank.tiedranks<-function(nw, arglist, response, ...) {
-  a <- check.ErgmTerm(nw, arglist, directed=TRUE,
-                      varnames = NULL,
-                      vartypes = NULL,
-                      defaultvalues = NULL,
-                      required = NULL)
-
- 
-  list(name="tiedranks",
-       coef.names="tiedranks",
-       inputs=NULL,
-       dependence=TRUE)
-}
-
-InitWtErgmTerm.rank.n.classes<-function(nw, arglist, response, ...) {
-  a <- check.ErgmTerm(nw, arglist, directed=TRUE,
-                      varnames = NULL,
-                      vartypes = NULL,
-                      defaultvalues = NULL,
-                      required = NULL)
-
- 
-  list(name="rank_classes",
-       coef.names="rank_classes",
-       inputs=NULL,
-       dependence=TRUE)
-}
