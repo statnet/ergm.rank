@@ -23,23 +23,19 @@ Project supervised by Theodore Newcomb from 1953 to 1956. All
 were incoming transfer students with no prior acquaintance of
 one another.
 
-The data set contains two longitudinal networks as \code{network.series}.
-
-\code{newcomb.rank} is a
-\code{network.series} object with 14 networks. Each network is complete and the
-edge value \code{rank} is the preference of the \eqn{i}th men for the \eqn{j}th
-man from \code{1} through \code{16}.  A \code{1} indicates first 
-preference, and no ties were allowed.
-
-\code{newcomb} is a \code{network.series} object that has binary
-edge values but is similar in structure to \code{newcomb.rank}
-and derived from it. Each network has a tie from the \eqn{i}th
-men to the \eqn{j}th man if \eqn{i} had a preference for
-\eqn{j} of 8 or less. Otherwise there is not tie from \eqn{i}
-to \eqn{j}.
+The data set, derived from one in the unreleased \code{netdata} package,
+contains a network list \code{newcomb} with 14 networks. Each network is
+complete and contains two edge attributes:
+\describe{
+  \item{\code{rank}}{the preference of the \eqn{i}th man for the \eqn{j}th
+man from \code{1} through \code{16}.  \code{1} indicates highest 
+preference.}
+  \item{\code{descrank}}{The same but \code{1} indicates
+    lowest preference.}
+}
 }
 \usage{data(newcomb)}
-\source{\url{http://vlado.fmf.uni-lj.si/pub/networks/pub/data/UciNet/UciData.htm#newfrat}}
+\source{\url{http://vlado.fmf.uni-lj.si/pub/networks/data/ucinet/ucidata.htm#newfrat}}
 \references{See the link above. 
 Newcomb T. (1961). The acquaintance process. New York: Holt, Reinhard
 and Winston.
@@ -58,7 +54,7 @@ this data set is protected by the Creative Commons License
 \url{http://creativecommons.org/licenses/by-nc-nd/2.5/}.
 
 When publishing results obtained using this data set the original authors
-should be cited.  In addition this package should be cited as:
+should be cited.  In addition this should be cited as:
 
 Mark S. Handcock, David Hunter, Carter T. Butts, Steven M. Goodreau,
 and Martina Morris. 2003 
@@ -70,4 +66,25 @@ and the source should be cited as:
 Vladimir Batagelj and Andrej Mrvar (2006): \emph{Pajek datasets}
 \cr
 \url{http://vlado.fmf.uni-lj.si/pub/networks/data/} 
+}
+
+\examples{
+\donttest{
+# Note: This takes a long time.
+data(newcomb)
+
+# Fit a model for the transition between initial (time 0) ranking and
+# ranking after one week (time 1). Note that MCMC interval has been
+# decreased to save time.
+newcomb.1.2.fit <- ergm(newcomb[[2]]~
+                        rank.inconsistency(newcomb[[1]],"descrank")+
+                        rank.deference+rank.nonconformity("all")+
+                        rank.nonconformity("localAND"),
+                        response="descrank", reference=~CompleteOrder,
+                        control=control.ergm(MCMLE.trustregion=10000,
+                                             MCMC.interval=10))
+# Check MCMC diagnostics (barely adequate).
+mcmc.diagnostics(newcomb.1.2.fit)
+summary(newcomb.1.2.fit)
+}
 }
