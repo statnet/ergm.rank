@@ -32,6 +32,7 @@
 	{case1sub};							\
       }									\
     }else{								\
+      ZERO_ALL_CHANGESTATS();						\
       EXEC_THROUGH_TOGGLES({defaultsub});				\
     }									\
   };									
