@@ -22,6 +22,47 @@
 #define GETNEWWT2(a,b) (SAMEDYAD(TAIL,HEAD1,a,b) ? NEWWT1 : (SAMEDYAD(TAIL,HEAD2,a,b) ? NEWWT2 : GETWT(a,b)))
 #define GETNEWWT2OLD(a,b,old) (SAMEDYAD(TAIL,HEAD1,a,b) ? NEWWT1 : (SAMEDYAD(TAIL,HEAD2,a,b) ? NEWWT2 : (old)))
 
+#define EXEC_THROUGH_FOUTDYADS(a,e,v,w,subroutine){		\
+  Vertex v = BIPARTITE?BIPARTITE:1;				\
+  for(Edge e=MIN_OUTEDGE(a);OUTVAL(e)!=0;e=NEXT_OUTEDGE(e)){	\
+    while(v < OUTVAL(e)){					\
+      if(v==a) continue;					\
+      double w=0;						\
+      {subroutine}						\
+      v++;							\
+    }// Now, v==OUTVAL(e), so					\
+    double w=OUTWT(e);						\
+    {subroutine}						\
+    v++;							\
+  } // Now, there are no more edges.				\
+  while(v<=N_NODES){						\
+    if(v==a) continue;						\
+    double w=0;							\
+    {subroutine}						\
+    v++;							\
+  }
+
+#define EXEC_THROUGH_FINDYADS(a,e,v,w,subroutine){		\
+  Vertex v = 1;							\
+  for(Edge e=MIN_INEDGE(a);INVAL(e)!=0;e=NEXT_INEDGE(e)){	\
+    while(v < INVAL(e)){					\
+      if(v==a) continue;					\
+      double w=0;						\
+      {subroutine}						\
+      v++;							\
+    }// Now, v==INVAL(e), so					\
+    double w=INWT(e);						\
+    {subroutine}						\
+    v++;							\
+  } // Now, there are no more edges.				\
+  while(v<=(BIPARTITE?BIPARTITE-1:N_NODES)){			\
+    if(v==a) continue;						\
+    double w=0;							\
+    {subroutine}						\
+    v++;							\
+  }
+
+
 #define OPTIMAL_RANK_D(case1sub,defaultsub){				\
     if(ntoggles==2 && tails[0]==tails[1]){				\
       Vertex TAIL=tails[0], HEAD1=heads[0], HEAD2=heads[1];		\
