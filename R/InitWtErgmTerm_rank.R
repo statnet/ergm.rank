@@ -17,7 +17,7 @@ InitWtErgmTerm.rank.deference<-function(nw, arglist, response, ...) {
   list(name="deference",
        coef.names="deference",
        inputs=NULL,
-       dependence=TRUE)
+       dependence=TRUE, auxiliaries=~.sociomatrix("numeric"))
 }
 
 InitWtErgmTerm.rank.edgecov <- function(nw, arglist, response, ...) {
@@ -46,7 +46,7 @@ InitWtErgmTerm.rank.edgecov <- function(nw, arglist, response, ...) {
   }
 
   inputs <- c(as.double(t(xm))) # Need to transpose to produce row-major arrangement.
-  list(name="edgecov_rank", coef.names = paste(cn,"rank",sep="."), inputs = inputs, dependence=TRUE, soname="ergm.rank")
+  list(name="edgecov_rank", coef.names = paste(cn,"rank",sep="."), inputs = inputs, dependence=TRUE, soname="ergm.rank", auxiliaries=~.sociomatrix("numeric"))
 }
 
 
@@ -115,7 +115,7 @@ InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, response, ...) {
   }
   
   list(name=name, coef.names=coef.names, #name and coef.names: required 
-       inputs = inputs, dependence = FALSE)
+       inputs = inputs, dependence = FALSE, auxiliaries=~.sociomatrix("numeric"))
 }
 
 
@@ -133,7 +133,7 @@ InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, response, ...) {
   list(name="nodeicov_rank", soname="ergm.rank",
        coef.names=coef.names,
        inputs=c(nodecov),
-       dependence=TRUE)
+       dependence=TRUE, auxiliaries=~.sociomatrix("numeric"))
 }
 
 InitWtErgmTerm.rank.nonconformity<-function(nw, arglist, response, ...) {
@@ -174,7 +174,7 @@ InitWtErgmTerm.rank.nonconformity<-function(nw, arglist, response, ...) {
   list(name=name,
        coef.names=coef.names,
        inputs=inputs,
-       dependence=TRUE)
+       dependence=TRUE, auxiliaries=~.sociomatrix("numeric"))
 }
 
 InitWtErgmTerm.rank.tiedranks<-function(nw, arglist, response, ...) {
@@ -188,7 +188,7 @@ InitWtErgmTerm.rank.tiedranks<-function(nw, arglist, response, ...) {
   list(name="tiedranks",
        coef.names="tiedranks",
        inputs=NULL,
-       dependence=TRUE)
+       dependence=TRUE, auxiliaries=~.sociomatrix("numeric"))
 }
 
 InitWtErgmTerm.rank.n.classes<-function(nw, arglist, response, ...) {
@@ -202,5 +202,5 @@ InitWtErgmTerm.rank.n.classes<-function(nw, arglist, response, ...) {
   list(name="rank_classes",
        coef.names="rank_classes",
        inputs=NULL,
-       dependence=TRUE)
+       dependence=TRUE, auxiliaries=~.sociomatrix("numeric"))
 }
