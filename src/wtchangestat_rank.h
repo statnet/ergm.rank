@@ -12,7 +12,7 @@
 
 #include "wtedgetree.h"
 #include "wtchangestat.h"
-
+#include "storage.h"
 
 // Case 1: One ego swaps the values of two alters.
 // Case 2: The alters are adjacent?
@@ -21,6 +21,8 @@
 #define GETOLDWT2(a,b) (SAMEDYAD(TAIL,HEAD1,a,b) ? OLDWT1 : (SAMEDYAD(TAIL,HEAD2,a,b) ? OLDWT2 : GETWT(a,b)))
 #define GETNEWWT2(a,b) (SAMEDYAD(TAIL,HEAD1,a,b) ? NEWWT1 : (SAMEDYAD(TAIL,HEAD2,a,b) ? NEWWT2 : GETWT(a,b)))
 #define GETNEWWT2OLD(a,b,old) (SAMEDYAD(TAIL,HEAD1,a,b) ? NEWWT1 : (SAMEDYAD(TAIL,HEAD2,a,b) ? NEWWT2 : (old)))
+
+#define GETNEWWTOLD_M(a,b,old) (SAMEDYAD(tail,head,a,b)?weight:old)
 
 #define EXEC_THROUGH_FOUTDYADS(a,e,v,w,subroutine){		\
   Vertex v = BIPARTITE?BIPARTITE:1;				\
