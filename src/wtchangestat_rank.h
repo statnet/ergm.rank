@@ -10,9 +10,9 @@
 #ifndef WTCHANGESTAT_RANK_H
 #define WTCHANGESTAT_RANK_H
 
-#include "wtedgetree.h"
-#include "wtchangestat.h"
-#include "storage.h"
+#include "ergm_wtedgetree.h"
+#include "ergm_wtchangestat.h"
+#include "ergm_storage.h"
 
 // Case 1: One ego swaps the values of two alters.
 // Case 2: The alters are adjacent?
@@ -32,11 +32,11 @@
       double w=0;						\
       {subroutine}						\
       v++;							\
-    }// Now, v==OUTVAL(e), so					\
+    }/* Now, v==OUTVAL(e), so */				\
     double w=OUTWT(e);						\
     {subroutine}						\
     v++;							\
-  } // Now, there are no more edges.				\
+  } /* Now, there are no more edges. */				\
   while(v<=N_NODES){						\
     if(v==a) continue;						\
     double w=0;							\
@@ -52,11 +52,11 @@
       double w=0;						\
       {subroutine}						\
       v++;							\
-    }// Now, v==INVAL(e), so					\
+    } /* Now, v==INVAL(e), so */				\
     double w=INWT(e);						\
     {subroutine}						\
     v++;							\
-  } // Now, there are no more edges.				\
+  } /* Now, there are no more edges. */				\
   while(v<=(BIPARTITE?BIPARTITE-1:N_NODES)){			\
     if(v==a) continue;						\
     double w=0;							\
