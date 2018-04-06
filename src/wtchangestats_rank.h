@@ -30,8 +30,4 @@ WtC_CHANGESTAT_FN(c_nonconformity_decay); WtS_CHANGESTAT_FN(s_nonconformity_thre
 
 WtC_CHANGESTAT_FN(c_nonconformity_thresholds); WtS_CHANGESTAT_FN(s_nonconformity_thresholds);
 
-WtC_CHANGESTAT_FN(c_tiedranks); WtS_CHANGESTAT_FN(s_tiedranks);
-
-WtC_CHANGESTAT_FN(c_rank_classes); WtS_CHANGESTAT_FN(s_rank_classes);
-
 #endif
