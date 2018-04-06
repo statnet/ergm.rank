@@ -1,4 +1,4 @@
-#  File R/InitReferences.R in package ergm.rank, part of the Statnet suite
+#  File R/InitErgmReferences.R in package ergm.rank, part of the Statnet suite
 #  of packages for network analysis, http://statnet.org .
 #
 #  This software is distributed under the GPL-3 license.  It is free,
@@ -7,6 +7,6 @@
 #
 #  Copyright 2008-2016 Statnet Commons
 #######################################################################
-InitReference.CompleteOrder <- function(lhs.nw, ...){
+InitErgmReference.CompleteOrder <- function(lhs.nw, ...){
   list(name="CompleteOrder")  
 }

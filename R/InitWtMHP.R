@@ -1,4 +1,4 @@
-#  File R/InitWtMHP.R in package ergm.rank, part of the Statnet suite
+#  File R/InitWtErgmProposal.R in package ergm.rank, part of the Statnet suite
 #  of packages for network analysis, http://statnet.org .
 #
 #  This software is distributed under the GPL-3 license.  It is free,
@@ -7,12 +7,12 @@
 #
 #  Copyright 2008-2016 Statnet Commons
 #######################################################################
-InitWtMHP.AlterSwap <- function(arguments, nw, response) {
+InitWtErgmProposal.AlterSwap <- function(arguments, nw, response) {
   MHproposal <- list(name = "AlterSwap", inputs=NULL)
   MHproposal
 }
 
-InitWtMHP.DescRankEquivalent <- function(arguments, nw, response) {
+InitWtErgmProposal.DescRankEquivalent <- function(arguments, nw, response) {
   MHproposal <- list(name = "CompleteOrderingEquivalent")
   
   # Construct the data structure for not-too-inefficient sampling
@@ -44,7 +44,7 @@ InitWtMHP.DescRankEquivalent <- function(arguments, nw, response) {
   MHproposal
 }
 
-InitWtMHP.StdNormalRank <- function(arguments, nw, response) {
+InitWtErgmProposal.StdNormalRank <- function(arguments, nw, response) {
   if(!is.directed(nw) && !is.bipartite(nw)) stop("StdNormRank: The Standard Normal proposal with rank-constraint only works with directed or bipartite networks.")
 
   if(is.bipartite(nw)){
