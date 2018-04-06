@@ -13,8 +13,8 @@
 \alias{ergm.references}
 \alias{references.ergm}
 \alias{CompleterOrder}
-\alias{InitReference.CompleteOrder}
-\alias{InitWtMHP.AlterSwap}
+\alias{InitErgmReference.CompleteOrder}
+\alias{InitWtErgmProposal.AlterSwap}
 \docType{methods}
 
 \title{Reference Measures for Exponential-Family Random Graph Models for
