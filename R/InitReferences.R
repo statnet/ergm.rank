@@ -8,5 +8,5 @@
 #  Copyright 2008-2016 Statnet Commons
 #######################################################################
 InitErgmReference.CompleteOrder <- function(lhs.nw, ...){
-  list(name="CompleteOrder")  
+  list(name="CompleteOrder", init_methods = c("CD","zeros"))
 }
