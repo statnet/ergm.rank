@@ -13,18 +13,9 @@
 }
 
 .onLoad <- function(lib, pkg){
-  .RegisterMHPs()
-  .RegisterConstraintImplications()
-  .RegisterInitMethods()
+  .RegisterProposals()
 }
 
-.RegisterMHPs <- function(){
-  ergm.MHP.table("c", "CompleteOrder", "",  0, "random", "AlterSwap")
-}
-
-.RegisterConstraintImplications <- function(){
-}
-
-.RegisterInitMethods <- function(){
-  ergm.init.methods("CompleteOrder", c("CD","zeros"))
+.RegisterProposals <- function(){
+  ergm_proposal_table("c", "CompleteOrder", "",  0, "random", "AlterSwap")
 }
