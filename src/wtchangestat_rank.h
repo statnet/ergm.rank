@@ -30,11 +30,11 @@
       double w=0;						\
       {subroutine}						\
       v++;							\
-    }// Now, v==OUTVAL(e), so					\
+    }/* Now, v==OUTVAL(e), so */				\
     double w=OUTWT(e);						\
     {subroutine}						\
     v++;							\
-  } // Now, there are no more edges.				\
+  } /* Now, there are no more edges. */				\
   while(v<=N_NODES){						\
     if(v==a) continue;						\
     double w=0;							\
@@ -50,11 +50,11 @@
       double w=0;						\
       {subroutine}						\
       v++;							\
-    }// Now, v==INVAL(e), so					\
+    }/* Now, v==INVAL(e), so */					\
     double w=INWT(e);						\
     {subroutine}						\
     v++;							\
-  } // Now, there are no more edges.				\
+  } /* Now, there are no more edges. */				\
   while(v<=(BIPARTITE?BIPARTITE-1:N_NODES)){			\
     if(v==a) continue;						\
     double w=0;							\
