@@ -12,7 +12,7 @@
 
 #include "wtMHproposal.h"
 
-void MH_AlterSwap(WtMHproposal *MHp, WtNetwork *nwp);
+WtMH_P_FN(MH_AlterSwap);
 
 #endif 
 
