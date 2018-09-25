@@ -5,7 +5,7 @@
  *  open source, and has the attribution requirements (GPL Section 7) at
  *  http://statnet.org/attribution
  *
- *  Copyright 2008-2016 Statnet Commons
+ *  Copyright 2008-2018 Statnet Commons
  */
 #ifndef WTCHANGESTAT_RANK_H
 #define WTCHANGESTAT_RANK_H
@@ -52,7 +52,7 @@
       double w=0;						\
       {subroutine}						\
       v++;							\
-    } /* Now, v==INVAL(e), so */				\
+    }/* Now, v==INVAL(e), so */					\
     double w=INWT(e);						\
     {subroutine}						\
     v++;							\

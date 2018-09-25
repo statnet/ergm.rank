@@ -5,21 +5,16 @@
  *  open source, and has the attribution requirements (GPL Section 7) at
  *  http://statnet.org/attribution
  *
- *  Copyright 2008-2016 Statnet Commons
+ *  Copyright 2008-2018 Statnet Commons
  */
 #include "wtMHproposals.h"
-
-/* Shorthand. */
-#define Mtail (MHp->toggletail)
-#define Mhead (MHp->togglehead)
-#define Mweight (MHp->toggleweight)
 
 /*********************
  void MH_AlterSwap
 
  Default MH algorithm for ERGM over complete orderings
 *********************/
-void MH_AlterSwap(WtMHproposal *MHp, WtNetwork *nwp)  {  
+WtMH_P_FN(MH_AlterSwap){  
   Vertex tail, head1, head2;
   
   if(MHp->ntoggles == 0) { // Initialize AlterSwap 
