@@ -1,5 +1,5 @@
 Package: ergm.rank
-Version: 1.2.0-1320
+Version: 1.2.0-1322
 Date: 2019-05-15
 Title: Fit, Simulate and Diagnose Exponential-Family Models for Rank-Order Relational Data
 Authors@R: c(
@@ -7,9 +7,13 @@ Authors@R: c(
            person("Carter T.", "Butts", role=c("ctb"), email="buttsc@uci.edu"),
 	   person("Mark S.", "Handcock", role=c("ctb"), email="handcock@stat.ucla.edu"),
            person("David R.", "Hunter", role=c("ctb"), email="dhunter@stat.psu.edu"))
-LinkingTo: ergm
-Depends: ergm (>= 3.10), network
-Imports: statnet.common (>= 4.1)
+Depends:
+    ergm (>= 3.10.1),
+    network (>= 1.15)
+Imports:
+    statnet.common (>= 4.2.0)
+LinkingTo:
+    ergm (>= 3.10.1)
 Description: A set of extensions for the 'ergm' package to fit weighted networks whose edge weights are ranks.
 License: GPL-3 + file LICENSE
 URL: http://statnet.org
