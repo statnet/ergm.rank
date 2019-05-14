@@ -8,7 +8,7 @@
 %  Copyright 2008-2019 Statnet Commons
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \name{NEWS}
-\title{NEWS file for the \code{\link[=ergm.count-package]{ergm.count}} package}
+\title{NEWS file for the \code{\link[=ergm.rank-package]{ergm.rank}} package}
 \encoding{UTF-8}
 
 % When a release is forked, copy the sections to a new release and
