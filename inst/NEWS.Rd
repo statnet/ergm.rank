@@ -61,7 +61,7 @@
 %% }
 
 
-\section{Changes in version 3.2.0}{
+\section{Changes in version 1.2.0}{
 
   \subsection{BUG FIXES}{
     \itemize{
