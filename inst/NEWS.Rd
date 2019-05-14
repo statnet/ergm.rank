@@ -17,9 +17,9 @@
 
   % \subsection{NEW FEATURES}{
   %   \itemize{
-  %   } 
+  %   }
   % }
-  
+
   %% \subsection{OTHER USER-VISIBLE CHANGES}{
   %%   \itemize{
   %%   }
@@ -61,14 +61,51 @@
 %% }
 
 
+\section{Changes in version 3.2.0}{
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Updated for \code{\link[ergm:ergm-package]{ergm}} 3.10 API changes.
+    }
+  }
+}
+
+
+
+
+
+\section{Changes in version 1.1.0}{
+
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item Package development has been migrated to GitHub.
+    }
+  }
+
+  \subsection{OTHER USER-VISIBLE CHANGES}{
+    \itemize{
+      \item \code{statnet.common} is now Imported rather than Depended-on.
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Updated for \code{\link[ergm:ergm-package]{ergm}} 3.9 API changes.
+
+      \item Symbol registration added.
+    }
+  }
+}
+
+
 \section{Changes in version 1.0.0}{
 
   \subsection{NEW FEATURES}{
     \itemize{
       \item This is an initial public release.
-      
+
       \item A number of reference measures and statistics for rank data have been
       implemented. See \code{? 'ergm.rank-package'} and \code{? 'ergm-references'} for help.
-    } 
+    }
   }
 }
