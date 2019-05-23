@@ -8,7 +8,7 @@ Authors@R: c(
 	   person("Mark S.", "Handcock", role=c("ctb"), email="handcock@stat.ucla.edu"),
            person("David R.", "Hunter", role=c("ctb"), email="dhunter@stat.psu.edu"))
 Depends:
-    ergm (>= 4),
+    ergm (>= 4.0),
     network (>= 1.15)
 Imports:
     statnet.common (>= 4.2.0)
