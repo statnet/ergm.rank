@@ -59,7 +59,7 @@ nws <- simulate(nw0~rank.nonconformity("all")+
                   rank.nodeicov(~poly(v,2))+
                   rank.edgecov("m")+
                   rank.inconsistency(nw0,"r",xa),
-                coef=rep(0,10),response="r", reference=~DiscUnif(1, n-1), nsim=S, statsonly=FALSE)
+                coef=rep(0,10),response="r", reference=~DiscUnif(1, n-1), nsim=S)
 
 d.stats <- attr(nws,"stats")
 
@@ -99,7 +99,7 @@ nws <- simulate(nw1~rank.nonconformity("all")+
                   rank.nodeicov("v")+
                   rank.nodeicov(~poly(v,2))+
                   rank.edgecov("m")+
-                  rank.inconsistency(nw0,"r",xa), coef=rep(0,10),response="r", reference=~CompleteOrder, nsim=S, statsonly=FALSE)
+                  rank.inconsistency(nw0,"r",xa), coef=rep(0,10),response="r", reference=~CompleteOrder, nsim=S)
 
 d.stats <- attr(nws,"stats")
 
