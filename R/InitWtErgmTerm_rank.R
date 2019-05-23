@@ -119,17 +119,32 @@ InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, response, ...) {
 }
 
 
-InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, response, ...) {
-  a <- check.ErgmTerm(nw, arglist, directed=TRUE,
-                     varnames = c("attrname","transform","transformname"),
-                     vartypes = c("character","function","character"),
-                     defaultvalues = list(NULL,identity,""),
-                     required = c(TRUE,FALSE,FALSE))
-  attrname<-a$attrname
-  f<-a$transform
-  f.name<-a$transformname
-  coef.names <- paste("nodeicov.rank",f.name,attrname,sep=".")
-  nodecov <- f(get.node.attr(nw, attrname, "nodeicov", numeric=TRUE))
+InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, response, ..., ergm.rank.version=packageVersion("ergm.rank")) {
+  if(ergm.rank.version <= as.package_version("1.2.0")){
+    ### Check the network and arguments to make sure they are appropriate.
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attrname","transform","transformname"),
+                        vartypes = c("character","function","character"),
+                        defaultvalues = list(NULL,function(x)x,""),
+                        required = c(TRUE,FALSE,FALSE))
+    ### Process the arguments
+    attrname<-a$attrname
+    f<-a$transform
+    f.name<-a$transformname
+    coef.names <- paste(paste("nodeicov.rank",f.name,sep=""),attrname,sep=".")
+    nodecov <- f(get.node.attr(nw, attrname, "nodeicov", numeric=TRUE))
+  }else{
+    ### Check the network and arguments to make sure they are appropriate.
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attr"),
+                        vartypes = c(ERGM_VATTR_SPEC),
+                        defaultvalues = list(NULL),
+                        required = c(TRUE))
+    ### Process the arguments
+    nodecov <- ergm_get_vattr(a$attr, nw, accept="numeric", multiple="matrix")
+    coef.names <- paste("nodeicov.rank",attr(nodecov, "name"),sep=".")
+    if(is.matrix(nodecov)) coef.names <- paste(coef.names, NVL(colnames(nodecov), seq_len(ncol(nodecov))), sep=".")
+  }
   list(name="nodeicov_rank", soname="ergm.rank",
        coef.names=coef.names,
        inputs=c(nodecov),

@@ -56,9 +56,10 @@ nws <- simulate(nw0~rank.nonconformity("all")+
                   rank.nonconformity("localAND")+
                   rank.deference+
                   rank.nodeicov("v")+
+                  rank.nodeicov(~poly(v,2))+
                   rank.edgecov("m")+
                   rank.inconsistency(nw0,"r",xa),
-                coef=rep(0,8),response="r", reference=~DiscUnif(1, n-1), nsim=S, statsonly=FALSE)
+                coef=rep(0,10),response="r", reference=~DiscUnif(1, n-1), nsim=S, statsonly=FALSE)
 
 d.stats <- attr(nws,"stats")
 
@@ -69,6 +70,8 @@ c.stats <- t(sapply(lapply(nws,as.matrix,attrname="r"),
                                   localAND.nonconformity(m),
                                   deference(m),
                                   nodeicov(m, xv),
+                                  nodeicov(m, poly(xv,2)[,1]),
+                                  nodeicov(m, poly(xv,2)[,2]),
                                   edgecov(m, xm),
                                   inconsistency(m, m0, xa))))
 
@@ -78,6 +81,7 @@ s.stats <- summary(nws~rank.nonconformity("all")+
                   rank.nonconformity("localAND")+
                   rank.deference+
                   rank.nodeicov("v")+
+                  rank.nodeicov(~poly(v,2))+
                   rank.edgecov("m")+
                   rank.inconsistency(nw0,"r",xa), response="r")
 
@@ -93,8 +97,9 @@ nws <- simulate(nw1~rank.nonconformity("all")+
                   rank.nonconformity("localAND")+
                   rank.deference+
                   rank.nodeicov("v")+
+                  rank.nodeicov(~poly(v,2))+
                   rank.edgecov("m")+
-                  rank.inconsistency(nw0,"r",xa), coef=rep(0,8),response="r", reference=~CompleteOrder, nsim=S, statsonly=FALSE)
+                  rank.inconsistency(nw0,"r",xa), coef=rep(0,10),response="r", reference=~CompleteOrder, nsim=S, statsonly=FALSE)
 
 d.stats <- attr(nws,"stats")
 
@@ -105,6 +110,8 @@ c.stats <- t(sapply(lapply(nws,as.matrix,attrname="r"),
                                   localAND.nonconformity(m),
                                   deference(m),
                                   nodeicov(m, xv),
+                                  nodeicov(m, poly(xv,2)[,1]),
+                                  nodeicov(m, poly(xv,2)[,2]),
                                   edgecov(m, xm),
                                   inconsistency(m, m0, xa))))
 
@@ -114,6 +121,7 @@ s.stats <- summary(nws~rank.nonconformity("all")+
                   rank.nonconformity("localAND")+
                   rank.deference+
                   rank.nodeicov("v")+
+                  rank.nodeicov(~poly(v,2))+
                   rank.edgecov("m")+
                   rank.inconsistency(nw0,"r",xa), response="r")
 

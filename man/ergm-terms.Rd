@@ -79,8 +79,8 @@
       mean. \code{wtname} can be used to label this term.
     }
 
-    \item{\code{rank.nodeicov(attrname, transform, transformname)}}{\emph{Attractiveness/Popularity covariates:}
-      Models the effect of a nodal covariate on the propensity of an
+    \item{\code{rank.nodeicov(attr)}}{\emph{Attractiveness/Popularity covariates:}
+      Models the effect of one or more nodal covariates on the propensity of an
       actor to be ranked highly by the others. See the
       \code{\link[ergm]{nodeicov}} ERGM term documentation for arguments.
     }
