@@ -1,6 +1,5 @@
 # `ergm.rank`: Fit, Simulate and Diagnose Exponential-Family Models for Rank-Order Relational Data
 
-[![Build Status](https://travis-ci.org/statnet/ergm.rank.svg?branch=master)](https://travis-ci.org/statnet/ergm.rank)
 [![rstudio mirror downloads](https://cranlogs.r-pkg.org/badges/ergm.rank?color=2ED968)](https://cranlogs.r-pkg.org/)
 [![cran version](https://www.r-pkg.org/badges/version/ergm.rank)](https://cran.r-project.org/package=ergm.rank)
 [![R build status](https://github.com/statnet/ergm.rank/workflows/R-CMD-check/badge.svg)](https://github.com/statnet/ergm.rank/actions)
