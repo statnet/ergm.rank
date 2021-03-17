@@ -15,7 +15,11 @@ Imports:
     utils
 LinkingTo:
     ergm
+Suggests:
+    knitr,
+    rmarkdown
 Description: A set of extensions for the 'ergm' package to fit weighted networks whose edge weights are ranks.
 License: GPL-3 + file LICENSE
 URL: http://statnet.org
 BugReports: https://github.com/statnet/ergm.rank/issues
+VignetteBuilder: rmarkdown, knitr

@@ -1,0 +1,380 @@
+---
+title: ERGMs for Rank-Order Relational Data
+author: "Pavel N. Krivitsky, Carter T. Butts, and the Statnet Team"
+vignette: >
+  %\VignetteIndexEntry{ERGMs for Rank-Order Relational Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+bibliography: valued.bib
+---
+
+```{r setup, include = FALSE}
+library(knitr)
+opts_chunk$set(echo=TRUE,tidy=TRUE,error=FALSE,message=FALSE)
+```
+
+
+
+<!-- % Frequently used symbols -->
+\def\y{\boldsymbol{y}}
+\def\Y{\boldsymbol{Y}}
+\def\covariate{\boldsymbol{x}}
+\def\weight{\boldsymbol{w}}
+\def\covariates{\mathbb{X}}
+\def\e{\boldsymbol{e}}
+\def\actors{{N}}
+\newcommand{\actorsnot}[1]{\actors\setsub\left\{#1\right\}}
+\newcommand{\distuples}[1]{\actors^{#1\ne}}
+\def\nactors{ n }
+\def\cnmap{\boldsymbol{\eta}}
+\def\linpred{\boldsymbol{\eta}}
+\def\linpar{\boldsymbol{\beta}}
+\def\sendeff{\boldsymbol{\delta}}
+\def\recveff{\boldsymbol{\gamma}}
+\def\Z{\boldsymbol{Z}}
+\def\nnatpar{ p }
+\def\latdim{ d }
+\def\curvpar{\boldsymbol{\theta}}
+\def\curvpars{\boldsymbol{\Theta}}
+\def\natcurvpars{\boldsymbol{\Theta}_{\text{N}}}
+\def\designpar{\boldsymbol{\psi}}
+\def\ncurvpar{ q }
+\def\meanpar{\boldsymbol{\mu}}
+\def\genstatsymbol{g}
+\def\genstats{\boldsymbol{\genstatsymbol}}
+\newcommand{\genstat}[1]{\boldsymbol{\genstatsymbol}_{\text{#1}}}
+\def\target{\boldsymbol{t}}
+\def\Design{\boldsymbol{D}}
+\def\design{\boldsymbol{d}}
+\def\dyadvals{\mathbb{S}}
+\def\maxdyadvals{ s }
+\def\Borel{ \mathfrak{B} }
+
+\def\changeijv{\boldsymbol{\Delta}\sij}
+\newcommand{\promote}[2]{\Delta_{#1,#2}^\nearrow}
+\def\setsub{\backslash}
+
+\newcommand{\EN}[3]{\left#1 #3 \right#2}
+\newcommand{\en}[3]{#1 #3 #2}
+
+
+\newcommand{\E}{\text{E}}
+\newcommand{\Var}{\text{Var}}
+\newcommand{\logit}{\text{logit}}
+\newcommand{\N}{\text{N}}
+\newcommand{\Geometric}{\text{Geometric}}
+\newcommand{\Multinomial}{\text{Multinomial}}
+\newcommand{\Inv}{\text{Inv}}
+\newcommand{\MVN}{\text{MVN}}
+\newcommand{\Bernoulli}{\text{Bernoulli}}
+\newcommand{\Exponential}{\text{Exponential}}
+\newcommand{\ERGM}{\text{ERGM}}
+\newcommand{\RandomChoose}{\text{RandomChoose}}
+\newcommand{\0}{0}
+\def\dysY{\mathbb{Y}}
+\def\netsY{\mathcal{Y}}
+\def\iid{{\stackrel{\mathrm{i.i.d.}}{\sim}}}
+\def\ind{{\stackrel{\mathrm{ind.}}{\sim}}}
+\newcommand{\LN}{\text{LN}}
+\newcommand{\InvChiSq}{\text{Inv}\chi^2}
+\newcommand{\Dirichlet}{\text{Dirichlet}}
+\newcommand{\Poisson}{\text{Poisson}}
+\newcommand{\Binomial}{\text{Binomial}}
+\newcommand{\Uniform}{\text{Uniform}}
+\newcommand{\Prob}{\text{Pr}}
+\newcommand{\Lik}{\text{L}}
+\newcommand{\lateff}{\text{d}}
+
+
+\def\M{P}
+\def\h{h}
+\def\Mteg{\M_{\curvpar;\cnmap,\genstats}}
+\def\Mref{\M_\h}
+\def\Mtheg{\M_{\curvpar;\Mref,\cnmap,\genstats}}
+
+
+\def\sigY{\mathsf{Y}}
+
+\def\Pteg{\Prob_{\curvpar;\genstats}}
+\def\Pheg{\Prob_{\h,\genstats}}
+\def\Eteg{\E_{\curvpar;\genstats}}
+\def\fteg{f_{\curvpar;\genstats}}
+\DeclareMathOperator{\Odds}{Odds}
+\def\offset{_\text{o}}
+\def\normc{\kappa}
+\def\ceg{\normc_{\genstats}}
+\def\cegoff{\normc_{\genstats\offset,\cnmap,\genstats}}
+\def\cheg{\normc_{\h,\genstats}}
+\def\chegoff{\normc_{\h,\genstat\offset,\genstats}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\ilogit}{\text{logit}^{-1}}
+\def\reals{\mathbb{R}}
+\def\naturals{\mathbb{N}}
+\def\BB{\mathbb{B}}
+\def\ij{{i,j}}
+\def\ji{{j,i}}
+\def\pij{{(i,j)}}
+\def\pji{{(j,i)}}
+\def\ipjp{{i',j'}}
+\def\pipjp{{(i',j')}}
+\def\tij{\oplus\pij}
+\def\ijdysY{{\pij\in\dysY}}
+\def\ynetsY{{\y\in\netsY}}
+\def\ypnetsY{{\y'\in\netsY}}
+\def\sij{_{i,j}}
+\def\sijk{_{i,j,k}}
+\def\sik{_{i,k}}
+\def\l{l}
+\def\sil{_{i,\l}}
+\def\sji{_{j,i}}
+\def\sli{_{\l,i}}
+\def\slj{_{\l,j}}
+\def\slk{_{\l,k}}
+\def\sipjp{_{i',j'}}
+\def\Yij{\Y\!\sij}
+\def\yij{\y\sij}
+\def\Yji{\Y\!\sji}
+\def\yji{\y\sji}
+\def\ytij{\y\tij}
+\def\Yyij{\Yij=\yij}
+\def\Yy{\Y=\y}
+\def\sobs{_{\text{obs}}}
+\def\smis{_{\text{mis}}}
+\def\Yobs{\Y\sobs}
+\def\yobs{\y\sobs}
+\def\Ymis{\Y\smis}
+\def\ymis{\y\smis}
+\def\Yyobs{\Yobs=\yobs}
+\def\Yymis{\Ymis=\ymis}
+\def\half{\frac{1}{2}}
+\def\jplus{j^+}
+\makeatletter
+\newcommand{\myrel}[3][.3]{\binrel@{#3}%
+  \binrel@@{\mathop{\kern\z@#3}\limits^{\vbox to #1\ex@{\kern-\tw@\ex@
+\hbox{\scriptsize #2}\vss}}}}
+\makeatother
+\newcommand{\pref}[1][]{\myrel{\ensuremath{\,\,#1}}{\succ}}
+\newcommand{\npref}[1][]{\myrel[-0.2]{\ensuremath{#1}}{\nsucc}}
+\newcommand{\indiff}[1][]{\myrel{\ensuremath{#1}}{\cong}}
+
+
+\newcommand{\yat}[1]{\y^{t#1}}
+\newcommand{\Yat}[1]{\Y^{t#1}}
+\newcommand{\Yyat}[1]{\Yat{#1}=\yat{#1}}
+\newcommand{\Yya}[1]{\Y^{#1}=y^{#1}}
+
+<!-- %\newcommand{\natpar}[1][]{\cnmap#1(\curvpar)} -->
+<!-- %\newcommand{\natparS}[1]{\cnmap(\curvpar^{#1})} -->
+\newcommand{\natpar}[1][]{\curvpar#1}
+\newcommand{\natparS}[1]{\curvpar^{#1}}
+
+<!-- % exp with parentheses -->
+\newcommand{\myexp}[1]{\exp\mathchoice{\left(#1\right)}{(#1)}{(#1)}{(#1)}}
+\newcommand{\I}[1]{\mathbb{I}\left(#1\right)}
+\newcommand{\egopref}[4]{#1_{#2:\,#3\succ #4}}
+\newcommand{\ypref}[3]{\egopref{\y}{#1}{#2}{#3}}
+\newcommand{\yvpref}[3]{\egopref{\yv}{#1}{#2}{#3}}
+<!-- %\newcommand{\egopref}[4]{\I{#1_{#2,#3}\pref #1_{#2,#4}}} -->
+\newcommand{\egoswapr}[4]{#1^{#2:\,#3\rightleftarrows#4}}
+
+\def\ipromotej{\promote{i}{j}}
+\newcommand{\promotev}[2]{\boldsymbol{\Delta}_{#1,#2}^\nearrow}
+\def\ipromotejv{\promotev{i}{j}}
+
+
+\newcommand{\pkg}[1]{\texttt{#1}}
+\newcommand{\proglang}[1]{\textsf{#1}}
+
+\def\indep{\perp\!\!\!\perp}
+\newcommand{\condind}[3]{#1 \indep #2 \,|\, #3}
+\newcommand{\code}[1]{\Q{#1}}
+
+\providecommand{\abs}[1]{\left\lvert#1\right\rvert}
+
+\def\t{^{\mathsf{T}}}
+\def\c{^{\mathsf{c}}}
+\newcommand{\fromthru}[2]{\left\{#1\,..\,#2\right\}}
+
+\newcommand{\innerprod}[2]{{#1}^\top{#2}}
+
+\newcommand{\centercol}[1]{\multicolumn{1}{c}{#1}}
+\newcommand{\coef}[2]{$#1$ $(#2)$}
+\newcommand{\scoef}[2]{$\mathbf{#1}$ $(#2)$}
+
+\def\Mct{\mu}
+\def\Mlbg{\lambda}
+\def\drefdct{\frac{d\Mref}{d\Mct}}
+\def\drefdlbg{\frac{d\Mref}{d\Mlbg}}
+\def\dtegdref{\frac{d\Mteg}{d\Mref}}
+\def\dtegdct{\frac{d\Mteg}{d\Mct}}
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+<style>
+.nobullet li {
+  list-style-type: none;
+}
+</style>
+
+   
+---
+
+## Coverage
+
+This vignette covers modelling of rank-order relational data in the `ergm` framework. The reader is strongly encouraged to first work through the vignette on valued ERGMs in the `ergm.count` package and read the article by @KrBu12e.
+
+## Modeling ordinal relational data using `ergm.rank`
+
+```{r}
+library(ergm.rank)
+```
+
+Note that the implementations so far are *very* slow, so we will only do a short example.
+
+### References
+Suppose that we reprsent ranking (or ordinal rating) of $j$ by $i$ by the value of $\yij$. What reference can we use for ranks?
+
+```{r eval=FALSE}
+help("ergm-references", "ergm.rank")
+```
+
+### Terms
+For details, see @KrBu12e. It's not meaningful to
+
+* compare ranks across different egos.
+* take rank difference within an ego.
+
+The only thing we are allowed to do is to ask if $i$ has ranked $j$ over $k$.
+
+Therefore, ordinal relational data call for their own sufficient statistics. These will depend on
+$$
+\begin{equation*}
+\ypref{i}{j}{k}\equiv\begin{cases}
+  1 & \text{if $j\stackrel{i}{\succ}k$ i.e.,  $i$ ranks $j$ above $k$;} \\
+  0 & \text{otherwise.}
+\end{cases}
+\end{equation*}
+$$
+We may interpret them using the *promotion statistic*
+$$\ipromotejv \genstats(\y)\equiv \genstats(\egoswapr{\y}{i}{j}{\jplus})-\genstats(\y).$$
+
+Let $\distuples{k}$ be the set of possible $k$-tuples of actor indices where no actors are repeated. Then,
+
+* **`rank.deference`: *Deference (aversion)*:** Measures the amount of "deference" in the network: configurations where an ego $i$ ranks an alter $j$ over another alter $k$, but $j$, in turn, ranks $k$ over $i$:
+$$ \genstat{D}(\y) = \sum_{(i,j,\l)\in \distuples{3}} \ypref{\l}{j}{i}\ypref{i}{\l}{j} $$
+$$ \ipromotej \genstat{D}(\y) = 2\en(){\ypref{\jplus}{i}{j}+\ypref{j}{\jplus}{i} - 1}. $$
+  A lower-than-chance
+  value of this statistic and/or a negative coefficient implies a form
+  of mutuality in the network.
+  
+* **`rank.edgecov(x, attrname)`: *Dyadic covariates*:** Models the effect of a dyadic covariate on the propensity of an ego $i$ to rank alter $j$ highly:
+$$ \genstat{A}(\y;\covariate) = \sum_{(i,j,k)\in \distuples{3}} \ypref{i}{j}{k}(\covariate_j-\covariate_k).$$
+$$ \ipromotej \genstat{A}(\y;\covariate)= 2(\covariate_{j}-\covariate_{\jplus}),$$
+  See the `?rank.edgecov` ERGM term documentation for arguments.
+  
+* **`rank.inconsistency(x, attrname, weights, wtname, wtcenter)`: *(Weighted) Inconsistency*:**
+  Measures the amount of disagreement between rankings of the focus
+  network and a fixed covariate network `x`, by couting the number of pairwise
+  comparisons for which the two networks disagree. `x` can be a `network` with an edge
+  attribute `attrname` containing the ranks or a matrix of
+  appropriate dimension containing the ranks. If `x` is not
+  given, it defaults to the LHS network, and if `attrname` is
+  not given, it defaults to the `response` edge attribute.
+  $$\genstat{I}(\y;\y') = \sum_{(i,j,k)\in\distuples{3}_s} \left[ \ypref{i}{j}{k}\en(){1-\egopref{\y'}{i}{j}{k}} + \left(1-\ypref{i}{j}{k}\right) \egopref{\y'}{i}{j}{k} \right],$$ 
+with promotion statistic being simply 
+$$ \ipromotej \genstat{I}(\y;\y') = 2(\egopref{\y'}{i}{\jplus}{j}-\egopref{\y'}{i}{j}{\jplus}).$$
+  Optionally, the count can be weighted by the `weights`
+  argument, which can be either a 3D $n\times n\times n$-array
+  whose $(i,j,k)$th element gives the weight for the
+  comparison by $i$ of $j$ and $k$ or a function taking
+  three arguments,  $i$, $j$, and $k$, and returning
+  the weight of this comparison. If `wtcenter=TRUE`, the
+  calculated weights will be centered around their
+  mean. `wtname` can be used to label this term.
+  
+* **`rank.nodeicov(attrname, transform, transformname)`: *Attractiveness/Popularity covariates*:**  Models the effect of a nodal covariate on the propensity of an
+  actor to be ranked highly by the others.
+$$ \genstat{A}(\y;\covariate) = \sum_{(i,j,k)\in \distuples{3}} \ypref{i}{j}{k}(\covariate_j-\covariate_k).$$
+$$ \ipromotej \genstat{A}(\y;\covariate)= 2(\covariate_{j}-\covariate_{\jplus}), $$
+  See the `?nodeicov` ERGM term documentation for arguments.
+
+* **`rank.nonconformity(to, par)`: *Nonconformity*:**
+  Measures the amount of ``nonconformity'' in the network: configurations where an ego
+  $i$ ranks an alter $j$ over another alter $k$, but
+  ego $l$ ranks $k$ over $j$.
+  
+    This statistic has an argument `to`, which controls
+    to whom an ego may conform:
+
+    + **`"all"` (the default)** Nonconformity to all
+    egos is counted:
+    $$ \genstat{GNC}(\y) = \sum_{(i,j,k,\l)\in \distuples{4}}\ypref{\l}{j}{k}\left(1-\ypref{i}{j}{k}\right) $$
+    $$ \ipromotej \genstat{GNC}(\y) = 2\sum_{\l \in \actorsnot{i,j,\jplus}}\en(){\ypref{\l}{\jplus}{j}-\ypref{\l}{j}{\jplus}}. $$
+    A lower-than-chance
+    value of this statistic and/or a negative coefficient implies a
+    degree of consensus in the network.
+    
+    + **`"localAND"` (*Local nonconformity*)**
+    Nonconformity of $i$ to ego $l$ regarding the relative ranking
+    of $j$ and $k$ is only counted if $i$ ranks $l$
+    over both $j$ and $k$:
+    $$\genstat{LNC}(\y) = \sum_{(i,j,k,\l)\in \distuples{4}} \ypref{i}{\l}{j} \ypref{i}{\l}{k} \ypref{\l}{j}{k} (1-\ypref{i}{j}{k})$$
+$$
+\begin{align*}
+  \ipromotej \genstat{LNC}(\y)=\sum_{k\in \actorsnot{i,j,\jplus}}(&  \ypref{i}{k}{\jplus}\ypref{k}{\jplus}{j}-\ypref{i}{k}{\jplus}\ypref{k}{j}{\jplus}\\
+  \vphantom{\sum_{k\in \actorsnot{i,j,\jplus}}}&+\ypref{k}{i}{\jplus}\ypref{k}{\jplus}{j}-\ypref{k}{i}{j}\ypref{k}{j}{\jplus}\\
+  \vphantom{\sum_{k\in \actorsnot{i,j,\jplus}}}&+\ypref{j}{k}{\jplus}\ypref{i}{\jplus}{k}-\ypref{\jplus}{k}{j}\ypref{i}{j}{k}). 
+\end{align*}
+$$
+    A lower-than-chance
+    value of this statistic and/or a negative coefficient implies a
+    form of hierarchical transitivity in the network.
+
+### Example
+
+Consider the Newcomb's fraternity data:
+```{r collapse=TRUE}
+data(newcomb)
+as.matrix(newcomb[[1]], attrname="rank")
+as.matrix(newcomb[[1]], attrname="descrank")
+```
+
+Let's fit a model for the two types of nonconformity and deference at the first time point:
+
+```{r results="hide"}
+newc.fit1<- ergm(newcomb[[1]]~rank.nonconformity+rank.nonconformity("localAND")+rank.deference,response="descrank",reference=~CompleteOrder,control=control.ergm(MCMLE.trustregion=1000, MCMC.burnin=4096, MCMC.interval=32, CD.conv.min.pval=0.05),eval.loglik=FALSE)
+```
+
+```{r collapse=TRUE}
+summary(newc.fit1)
+```
+
+Check diagnostics:
+
+```{r results="hide", fig.show="hide"}
+mcmc.diagnostics(newc.fit1)
+```
+
+```{r results="hide"}
+newc.fit15 <- ergm(newcomb[[15]]~rank.nonconformity+rank.nonconformity("localAND")+rank.deference,response="descrank",reference=~CompleteOrder,control=control.ergm(MCMLE.trustregion=1000, MCMC.burnin=4096, MCMC.interval=32, CD.conv.min.pval=0.05),eval.loglik=FALSE)
+```
+
+```{r collapse=TRUE}
+summary(newc.fit15)
+```
+
+Check diagnostics:
+```{r results="hide", fig.show="hide"}
+mcmc.diagnostics(newc.fit15)
+```
+
+
+## References
+
+
