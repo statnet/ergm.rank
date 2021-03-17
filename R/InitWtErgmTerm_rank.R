@@ -7,7 +7,7 @@
 #
 #  Copyright 2008-2019 Statnet Commons
 #######################################################################
-InitWtErgmTerm.rank.deference<-function(nw, arglist, response, ...) {
+InitWtErgmTerm.rank.deference<-function(nw, arglist, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
                       varnames = NULL,
                       vartypes = NULL,
@@ -20,7 +20,7 @@ InitWtErgmTerm.rank.deference<-function(nw, arglist, response, ...) {
        dependence=TRUE, auxiliaries=~.sociomatrix("numeric"))
 }
 
-InitWtErgmTerm.rank.edgecov <- function(nw, arglist, response, ...) {
+InitWtErgmTerm.rank.edgecov <- function(nw, arglist, ...) {
   ### Check the network and arguments to make sure they are appropriate.
   a <- check.ErgmTerm(nw, arglist, 
                       varnames = c("x", "attrname"),
@@ -50,11 +50,11 @@ InitWtErgmTerm.rank.edgecov <- function(nw, arglist, response, ...) {
 }
 
 
-InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, response, ...) {
+InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
                      varnames = c("x","attrname","weights","wtname","wtcenter"),
                      vartypes = c("matrix,network","character","array,function","character","logical"),
-                     defaultvalues = list(nw,response,NULL,NULL,FALSE),
+                     defaultvalues = list(nw,nw%ergmlhs%"response",NULL,NULL,FALSE),
                      required = c(FALSE,FALSE,FALSE,FALSE,FALSE))
 
   name<-"inconsistency_rank"
@@ -119,7 +119,7 @@ InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, response, ...) {
 }
 
 
-InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, response, ..., ergm.rank.version=packageVersion("ergm.rank")) {
+InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, ..., ergm.rank.version=packageVersion("ergm.rank")) {
   if(ergm.rank.version <= as.package_version("1.2.0")){
     ### Check the network and arguments to make sure they are appropriate.
     a <- check.ErgmTerm(nw, arglist, directed=TRUE,
@@ -151,7 +151,7 @@ InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, response, ..., ergm.rank.ve
        dependence=TRUE, auxiliaries=~.sociomatrix("numeric"))
 }
 
-InitWtErgmTerm.rank.nonconformity<-function(nw, arglist, response, ...) {
+InitWtErgmTerm.rank.nonconformity<-function(nw, arglist, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
                       varnames = c("to","par"),
                       vartypes = c("character","numeric"),
@@ -169,7 +169,7 @@ InitWtErgmTerm.rank.nonconformity<-function(nw, arglist, response, ...) {
     coef.names <- paste("nonconformity.over",inputs,sep=".")
     name <- "nonconformity_thresholds"
   }else if(to=="geometric"){
-    inputs <- c(a$par,max(nw %e% response))
+    inputs <- c(a$par,max(nw %e% (nw%ergmlhs%"response")))
     coef.names <- paste("nonconformity.gw.",a$par,sep=".")
     name <- "nonconformity_decay"
   }else if(to=="local1"){

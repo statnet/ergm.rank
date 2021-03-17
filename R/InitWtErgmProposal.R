@@ -7,7 +7,7 @@
 #
 #  Copyright 2008-2019 Statnet Commons
 #######################################################################
-InitWtErgmProposal.AlterSwap <- function(arguments, nw, response) {
+InitWtErgmProposal.AlterSwap <- function(arguments, nw) {
   MHproposal <- list(name = "AlterSwap", inputs=NULL)
   MHproposal
 }
