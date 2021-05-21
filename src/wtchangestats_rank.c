@@ -17,7 +17,7 @@ WtC_CHANGESTAT_FN(c_edgecov_rank){
       double v12_new = weight;
       for (Vertex v3=1; v3 <= N_NODES; v3++){
 	if(v3==v2 || v3==v1) continue;
-	double v123_covdiff=INPUT_PARAM[1 + (v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[1 + (v1-1)*N_NODES + (v3-1)];
+	double v123_covdiff=INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
 	if(v123_covdiff==0) continue; // If covariate value is 0, don't bother looking up the ranking of v3 by v1.
 	double v13_old=sm[v1][v3];
 	if(v12_old>v13_old)
@@ -39,7 +39,7 @@ WtS_CHANGESTAT_FN(s_edgecov_rank){
       double v12=sm[v1][v2];
       for (Vertex v3=1; v3 <= N_NODES; v3++){
 	if(v3==v2 || v3==v1) continue;
-	double v123_covdiff = INPUT_PARAM[1 + (v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[1 + (v1-1)*N_NODES + (v3-1)];
+	double v123_covdiff = INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
 	if(v123_covdiff!=0 && v12>sm[v1][v3]) // Short-circuit the lookup of ranking of v3 by v1 if covariate is 0.
 	  CHANGE_STAT[0] += v123_covdiff;
       }
@@ -53,12 +53,12 @@ WtC_CHANGESTAT_FN(c_inconsistency_rank){
       Vertex v1=tail;
       Vertex v2=head;
       double v12_old = sm[tail][head];
-      double v12_ref = INPUT_PARAM[1 + (v1-1)*N_NODES+(v2-1)];
+      double v12_ref = INPUT_PARAM[(v1-1)*N_NODES+(v2-1)];
       double v12_new = weight;
       for(Vertex v3=1; v3 <= N_NODES; v3++){
 	if(v3==v2 || v3==v1) continue;
 	double v13= sm[v1][v3];
-	double v13_ref=INPUT_PARAM[1 + (v1-1)*N_NODES+(v3-1)];
+	double v13_ref=INPUT_PARAM[(v1-1)*N_NODES+(v3-1)];
 	if((v12_old>v13)!=(v12_ref>v13_ref)) CHANGE_STAT[0]--;
 	if((v12_new>v13)!=(v12_ref>v13_ref)) CHANGE_STAT[0]++;
 	if((v13>v12_old)!=(v13_ref>v12_ref)) CHANGE_STAT[0]--;
@@ -71,12 +71,12 @@ WtS_CHANGESTAT_FN(s_inconsistency_rank){
   for(Vertex v1=1; v1 <= N_NODES; v1++){
     for(Vertex v2=1; v2 <= N_NODES; v2++){
       if(v2==v1) continue;
-      double v12 = sm[v1][v2], v12_ref = INPUT_PARAM[1 + (v1-1)*N_NODES+(v2-1)];
+      double v12 = sm[v1][v2], v12_ref = INPUT_PARAM[(v1-1)*N_NODES+(v2-1)];
       for(Vertex v3=1; v3 <= N_NODES; v3++){
 	if(v3==v2 || v3==v1) continue;
 	unsigned int 
 	  v123 = v12>sm[v1][v3],
-	  v123_ref = v12_ref>INPUT_PARAM[1 + (v1-1)*N_NODES+(v3-1)];
+	  v123_ref = v12_ref>INPUT_PARAM[(v1-1)*N_NODES+(v3-1)];
 	if(v123!=v123_ref) CHANGE_STAT[0]++;
       }
     }
@@ -88,17 +88,17 @@ WtC_CHANGESTAT_FN(c_inconsistency_cov_rank){
       unsigned int cov_start = N_NODES*N_NODES;
       Vertex v1=tail;
       Vertex v2=head;
-      double v12_ref = INPUT_PARAM[1 + (v1-1)*N_NODES+(v2-1)];
+      double v12_ref = INPUT_PARAM[(v1-1)*N_NODES+(v2-1)];
       double v12_old = sm[tail][head];
       double v12_new = weight;
       
       for(Vertex v3=1; v3 <= N_NODES; v3++){
 	if(v3==v2 || v3==v1) continue;
-	double v123_cov = INPUT_PARAM[1 + cov_start + (v1-1)*N_NODES*N_NODES + (v2-1)*N_NODES + (v3-1)];
-	double v132_cov = INPUT_PARAM[1 + cov_start + (v1-1)*N_NODES*N_NODES + (v3-1)*N_NODES + (v2-1)];
+	double v123_cov = INPUT_PARAM[cov_start + (v1-1)*N_NODES*N_NODES + (v2-1)*N_NODES + (v3-1)];
+	double v132_cov = INPUT_PARAM[cov_start + (v1-1)*N_NODES*N_NODES + (v3-1)*N_NODES + (v2-1)];
 	if(v123_cov!=0 || v123_cov!=0){
 	  double v13=sm[v1][v3];
-	  double v13_ref=INPUT_PARAM[1 + (v1-1)*N_NODES+(v3-1)];
+	  double v13_ref=INPUT_PARAM[(v1-1)*N_NODES+(v3-1)];
 
 	  if(v123_cov!=0){
 	    if((v12_old>v13)!=(v12_ref>v13_ref)) CHANGE_STAT[0]-=v123_cov;
@@ -119,14 +119,14 @@ WtS_CHANGESTAT_FN(s_inconsistency_cov_rank){
   for(Vertex v1=1; v1 <= N_NODES; v1++){
     for(Vertex v2=1; v2 <= N_NODES; v2++){
       if(v2==v1) continue;
-      double v12 = sm[v1][v2], v12_ref = INPUT_PARAM[1 + (v1-1)*N_NODES+(v2-1)];
+      double v12 = sm[v1][v2], v12_ref = INPUT_PARAM[(v1-1)*N_NODES+(v2-1)];
       for(Vertex v3=1; v3 <= N_NODES; v3++){
 	if(v3==v2 || v3==v1) continue;
-	double v123_cov = INPUT_PARAM[1 + cov_start + (v1-1)*N_NODES*N_NODES + (v2-1)*N_NODES + (v3-1)];
+	double v123_cov = INPUT_PARAM[cov_start + (v1-1)*N_NODES*N_NODES + (v2-1)*N_NODES + (v3-1)];
 	if(v123_cov==0) continue;
 	unsigned int 
 	  v123 = v12>sm[v1][v3],
-	  v123_ref = v12_ref>INPUT_PARAM[1 + (v1-1)*N_NODES+(v3-1)];
+	  v123_ref = v12_ref>INPUT_PARAM[(v1-1)*N_NODES+(v3-1)];
 	if(v123!=v123_ref) 
 	  CHANGE_STAT[0]+=v123_cov;
       }
@@ -187,7 +187,7 @@ WtC_CHANGESTAT_FN(c_nodeicov_rank){
 	if(v3==v2 || v3==v1) continue;
 	double v13_old=sm[v1][v3];
 	for(unsigned int j=0, o=0; j<N_CHANGE_STATS; j++, o+=oshift){
-	  double v23_covdiff = INPUT_PARAM[1 + v2+o-1] - INPUT_PARAM[1 + v3+o-1];
+	  double v23_covdiff = INPUT_PARAM[v2+o-1] - INPUT_PARAM[v3+o-1];
 	  if(v12_old>v13_old)
 	    CHANGE_STAT[j] -= v23_covdiff;
 	  if(v12_old<v13_old)
@@ -211,7 +211,7 @@ WtS_CHANGESTAT_FN(s_nodeicov_rank){
 	if(v3==v2 || v3==v1) continue;
 	if(v12>sm[v1][v3]){
 	  for(unsigned int j=0, o=0; j<N_CHANGE_STATS; j++, o+=oshift){
-	    CHANGE_STAT[j] += INPUT_PARAM[1 + v2+o-1] - INPUT_PARAM[1 + v3+o-1];
+	    CHANGE_STAT[j] += INPUT_PARAM[v2+o-1] - INPUT_PARAM[v3+o-1];
 	  }
 	}
       }
@@ -554,7 +554,7 @@ WtS_CHANGESTAT_FN(s_nonconformity_decay){
   for(Vertex v1=1; v1 <= N_NODES; v1++){
     for(Vertex v2=1; v2 <= N_NODES; v2++){
       if(v2==v1) continue;
-      double e = pow(INPUT_PARAM[1 + 1],INPUT_PARAM[1 + 0]-sm[v1][v2]);
+      double e = pow(INPUT_PARAM[1],INPUT_PARAM[0]-sm[v1][v2]);
       for(Vertex v3=1; v3 <= N_NODES; v3++){
 	if(v3==v2 || v3==v1) continue;
 	double v13=sm[v1][v3], v23=sm[v2][v3];
@@ -579,7 +579,7 @@ WtS_CHANGESTAT_FN(s_nonconformity_thresholds){
       if(v2==v1) continue;
       double v12 = sm[v1][v2];
       unsigned int i;
-      for(i=0; i<N_CHANGE_STATS; i++) if(v12>=INPUT_PARAM[1 + i]) break;
+      for(i=0; i<N_CHANGE_STATS; i++) if(v12>=INPUT_PARAM[i]) break;
       if(i==N_CHANGE_STATS) continue;
       for(Vertex v3=1; v3 <= N_NODES; v3++){
 	if(v3==v2 || v3==v1) continue;
