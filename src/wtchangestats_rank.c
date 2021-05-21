@@ -7,7 +7,8 @@
  *
  *  Copyright 2008-2019 Statnet Commons
  */
-#include "wtchangestats_rank.h"
+
+#include "wtchangestat_rank.h"
 
 WtC_CHANGESTAT_FN(c_edgecov_rank){
   GET_AUX_STORAGE(double *, sm);

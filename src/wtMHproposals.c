@@ -7,7 +7,8 @@
  *
  *  Copyright 2008-2019 Statnet Commons
  */
-#include "wtMHproposals.h"
+
+#include "ergm_wtMHproposal.h"
 
 /*********************
  void MH_AlterSwap
