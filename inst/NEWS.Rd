@@ -60,6 +60,20 @@
   % }
 %% }
 
+\section{Changes in version 4.0.0}{
+
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item A vignette demonstrating the package's functionality has been added.
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Updated for \code{\link[ergm:ergm-package]{ergm}} 4.0 API changes.
+    }
+  }
+}
 
 \section{Changes in version 1.2.0}{
 
