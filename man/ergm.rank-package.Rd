@@ -46,7 +46,7 @@ Rank-Order Relational Data. \url{http://arxiv.org/abs/1210.0493}
 \code{\link{ergm-terms}}, \code{\link{ergm-references}}
 }
 \author{
-Pavel N. Krivitsky \email{pavel@uow.edu.au}
+Pavel N. Krivitsky \email{pavel@statnet.org}
 }
 \keyword{models}
 \keyword{package}

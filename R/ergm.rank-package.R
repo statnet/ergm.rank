@@ -29,7 +29,7 @@
 #' 
 #' @name ergm.rank-package
 #' @docType package
-#' @author Pavel N. Krivitsky \email{pavel@@uow.edu.au}
+#' @author Pavel N. Krivitsky \email{pavel@@statnet.org}
 #' @seealso \code{\link{ergm-terms}}, \code{\link{ergm-references}}
 #' @references Krivitsky PN (2012). Exponential-Family Random Graph Models for
 #' Valued Networks. \emph{Electronic Journal of Statistics}, 2012, 6,
