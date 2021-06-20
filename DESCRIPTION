@@ -19,7 +19,7 @@ Suggests:
     covr,
     knitr,
     rmarkdown
-Description: A set of extensions for the 'ergm' package to fit weighted networks whose edge weights are ranks.
+Description: A set of extensions for the 'ergm' package to fit weighted networks whose edge weights are ranks. See Krivitsky and Butts (2017) <doi:10.1177/0081175017692623> and Krivitsky, Hunter, Morris, and Klumb (2021) <arXiv:2106.04997>.
 License: GPL-3 + file LICENSE
 URL: http://statnet.org
 BugReports: https://github.com/statnet/ergm.rank/issues
