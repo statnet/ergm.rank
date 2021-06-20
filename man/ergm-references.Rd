@@ -80,10 +80,9 @@
 \references{
 Krivitsky PN (2012). Exponential-Family Random Graph Models for Valued
 Networks. \emph{Electronic Journal of Statistics}, 2012, 6,
-1100-1128. \doi{doi:10.1214/12-EJS696}
+1100-1128. \doi{10.1214/12-EJS696}
 
-Krivitsky, PN and Butts, CT (2012). Exponential-Family Random Graph Models for Rank-Order Relational Data. \url{http://arxiv.org/abs/1210.0493}
-}
+Krivitsky PN and Butts CT (2017). Exponential-Family Random Graph Models for Rank-Order Relational Data. \emph{Sociological Methodology}, 2017, 47, 68-112. \doi{10.1177/0081175017692623}
 
 \seealso{ergm, network, \%v\%, \%n\%, sna,
          summary.ergm, print.ergm}

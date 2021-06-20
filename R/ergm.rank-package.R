@@ -45,7 +45,8 @@
 #' 1100-1128. c("\\Sexpr[results=rd,stage=build]{tools:::Rd_expr_doi(\"#1\")}",
 #' "doi:10.1214/12-EJS696")\Sexpr{tools:::Rd_expr_doi("doi:10.1214/12-EJS696")}
 #' 
-#' Krivitsky PN and Butts CT (2012). Exponential-Family Random Graph Models for
-#' Rank-Order Relational Data. \url{http://arxiv.org/abs/1210.0493}
-#' @keywords package models
+#' Krivitsky PN and Butts CT (2017). Exponential-Family Random Graph
+#' Models for Rank-Order Relational Data. \emph{Sociological
+#' Methodology}, 2017, 47, 68-112. \doi{10.1177/0081175017692623}
+#' @keywords package
 NULL

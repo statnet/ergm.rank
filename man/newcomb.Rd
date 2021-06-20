@@ -8,7 +8,7 @@
 An object of class \code{network.list} of length 15.
 }
 \source{
-\url{http://vlado.fmf.uni-lj.si/pub/networks/data/ucinet/ucidata.htm#newfrat}
+\url{https://vlado.fmf.uni-lj.si/pub/networks/data/ucinet/ucidata.htm#newfrat}
 }
 \usage{
 newcomb
@@ -36,13 +36,13 @@ preference.} }
 \section{Licenses and Citation}{
  If the source of the data set does not
 specified otherwise, this data set is protected by the Creative Commons
-License \url{http://creativecommons.org/licenses/by-nc-nd/2.5/}.
+License \url{https://creativecommons.org/licenses/by-nc-nd/2.5/}.
 
 When publishing results obtained using this data set the original authors
 should be cited.  In addition this should be cited as:
 
 Vladimir Batagelj and Andrej Mrvar (2006): \emph{Pajek datasets} \cr
-\url{http://vlado.fmf.uni-lj.si/pub/networks/data/}
+\url{https://vlado.fmf.uni-lj.si/pub/networks/data/}
 }
 
 \examples{

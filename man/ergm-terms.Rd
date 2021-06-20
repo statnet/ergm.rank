@@ -120,18 +120,12 @@
 }
 \references{
   \itemize{
-    \item Handcock M. S., Hunter D. R., Butts C. T., Goodreau S. G.,
-      Krivitsky P. N. and Morris M.
-(2012). _Fit, Simulate and Diagnose Exponential-Family Models for
-Networks_. Version 3.1.  Project home
-page at <URL: http://www.statnet.org>, <URL:
-CRAN.R-project.org/package=ergm>.
   
 \item Krivitsky P. N. (2012). Exponential-Family Random Graph Models for
-Valued Networks. \emph{Electronic Journal of Statistics}, 2012, 6,
-1100-1128. \doi{doi:10.1214/12-EJS696}
+Valued Networks. \emph{Electronic Journal of Statistics}, 6,
+1100-1128. \doi{10.1214/12-EJS696}
 
-\item Krivitsky PN and Butts CT (2012). Exponential-Family Random Graph Models for Rank-Order Relational Data. \url{http://arxiv.org/abs/1210.0493}
+\item Krivitsky PN and Butts CT (2017). Exponential-Family Random Graph Models for Rank-Order Relational Data. \emph{Sociological Methodology}, 2017, 47, 68-112. \doi{10.1177/0081175017692623}
 
 
 }
