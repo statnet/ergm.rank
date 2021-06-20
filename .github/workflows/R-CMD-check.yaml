@@ -230,6 +230,10 @@ jobs:
             build_args <- c("--no-manual", "--no-build-vignettes")
           }
 
+          if(Sys.getenv("ENABLE_statnet_TESTS") == "true"){
+            check_args <- c(check_args, "--run-donttest")
+          }
+
           error_on <- if(Sys.getenv("FAIL_ON_WARN") == "true") "warning" else "error"
 
           if(Sys.getenv("USE_UBSAN") == "true"){
