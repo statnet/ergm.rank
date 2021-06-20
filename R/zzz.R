@@ -7,12 +7,14 @@
 #
 #  Copyright 2008-2019 Statnet Commons
 #######################################################################
-.onAttach <- function(lib, pkg){
+#' @useDynLib ergm.rank
+#' @import statnet.common ergm network
+.onAttach <- function(libname, pkgname){
   sm <- statnetStartupMessage("ergm.rank",c("statnet"),FALSE)
   if(!is.null(sm)) packageStartupMessage(sm)
 }
 
-.onLoad <- function(lib, pkg){
+.onLoad <- function(libname, pkgname){
   .RegisterProposals()
 }
 

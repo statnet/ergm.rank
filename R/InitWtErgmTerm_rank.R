@@ -107,6 +107,7 @@ InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, ...) {
       a$weights<-mk.inconsist.cov(network.size(nw),a$weights)
     }
 
+#' @importFrom stats na.omit
     if(a$wtcenter) a$weights <- a$weights - mean(na.omit(c(a$weights)))
 
     a$weights[is.na(a$weights)] <- 0
@@ -118,7 +119,7 @@ InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, ...) {
        inputs = inputs, dependence = FALSE, auxiliaries=~.sociomatrix("numeric"))
 }
 
-
+#' @importFrom utils packageVersion
 InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, ..., ergm.rank.version=packageVersion("ergm.rank")) {
   if(ergm.rank.version <= as.package_version("1.2.0")){
     ### Check the network and arguments to make sure they are appropriate.
