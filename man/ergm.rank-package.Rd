@@ -30,7 +30,7 @@ model networks whose dyad values are ranks. Examples include preferences,
 valued ties reduced to ranks, etc..
 
 For detailed information on how to download and install the software, go to
-the Statnet project website: \url{statnet.org}. A tutorial, support
+the Statnet project website: \url{https://statnet.org}. A tutorial, support
 newsgroup, references and links to further resources are provided there.
 }
 \references{
