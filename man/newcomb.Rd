@@ -5,13 +5,10 @@
 \alias{newcomb}
 \title{Newcomb's Fraternity Networks}
 \format{
-An object of class \code{network.list} of length 15.
+A list of 15 networks.
 }
 \source{
 \url{https://vlado.fmf.uni-lj.si/pub/networks/data/ucinet/ucidata.htm#newfrat}
-}
-\usage{
-newcomb
 }
 \description{
 These 14 networks record weekly sociometric preference rankings from 17 men
@@ -65,7 +62,6 @@ newcomb.1.2.fit <- ergm(newcomb[[2]]~
 mcmc.diagnostics(newcomb.1.2.fit)
 summary(newcomb.1.2.fit)
 }
-
 }
 \references{
 See the link above.  Newcomb T. (1961). The acquaintance

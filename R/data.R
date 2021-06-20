@@ -26,8 +26,10 @@
 #' man from \code{1} through \code{16}, with \code{1} being the highest
 #' preference.} \item{list("descrank")}{the same, but \code{1} indicates lowest
 #' preference.} }
-#' 
-#' 
+#'
+#' @name newcomb
+#' @docType data
+#' @format A list of 15 networks.
 #' @section Licenses and Citation: If the source of the data set does not
 #' specified otherwise, this data set is protected by the Creative Commons
 #' License \url{https://creativecommons.org/licenses/by-nc-nd/2.5/}.
@@ -70,5 +72,4 @@
 #' mcmc.diagnostics(newcomb.1.2.fit)
 #' summary(newcomb.1.2.fit)
 #' }
-#' 
-"newcomb"
+NULL
