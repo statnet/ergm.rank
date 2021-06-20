@@ -8,7 +8,7 @@
 A list of 15 networks.
 }
 \source{
-\url{https://vlado.fmf.uni-lj.si/pub/networks/data/ucinet/ucidata.htm#newfrat}
+\url{http://vlado.fmf.uni-lj.si/pub/networks/data/ucinet/ucidata.htm#newfrat}
 }
 \description{
 These 14 networks record weekly sociometric preference rankings from 17 men
@@ -39,7 +39,7 @@ When publishing results obtained using this data set the original authors
 should be cited.  In addition this should be cited as:
 
 Vladimir Batagelj and Andrej Mrvar (2006): \emph{Pajek datasets} \cr
-\url{https://vlado.fmf.uni-lj.si/pub/networks/data/}
+\url{http://vlado.fmf.uni-lj.si/pub/networks/data/}
 }
 
 \examples{

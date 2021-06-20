@@ -38,7 +38,7 @@
 #' should be cited.  In addition this should be cited as:
 #' 
 #' Vladimir Batagelj and Andrej Mrvar (2006): \emph{Pajek datasets} \cr
-#' \url{https://vlado.fmf.uni-lj.si/pub/networks/data/}
+#' \url{http://vlado.fmf.uni-lj.si/pub/networks/data/}
 #' @references See the link above.  Newcomb T. (1961). The acquaintance
 #' process. New York: Holt, Reinhard and Winston.
 #' 
@@ -50,7 +50,7 @@
 #' networks, I. Blockmodels of roles and positions. American Journal of
 #' Sociology, 81, 730-780.
 #' @source
-#' \url{https://vlado.fmf.uni-lj.si/pub/networks/data/ucinet/ucidata.htm#newfrat}
+#' \url{http://vlado.fmf.uni-lj.si/pub/networks/data/ucinet/ucidata.htm#newfrat}
 #' @keywords datasets
 #' @examples
 #' 
