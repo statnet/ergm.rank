@@ -56,8 +56,7 @@ newcomb.1.2.fit <- ergm(newcomb[[2]]~
                         rank.deference+rank.nonconformity("all")+
                         rank.nonconformity("localAND"),
                         response="descrank", reference=~CompleteOrder,
-                        control=control.ergm(MCMLE.trustregion=10000,
-                                             MCMC.interval=10))
+                        control=control.ergm(MCMC.interval=10))
 # Check MCMC diagnostics (barely adequate).
 mcmc.diagnostics(newcomb.1.2.fit)
 summary(newcomb.1.2.fit)
