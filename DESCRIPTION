@@ -25,6 +25,7 @@ URL: http://statnet.org
 BugReports: https://github.com/statnet/ergm.rank/issues
 VignetteBuilder: rmarkdown, knitr
 RoxygenNote: 7.1.1
+Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
 Remotes:
     github::statnet/network@master,

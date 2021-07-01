@@ -12,8 +12,6 @@
 \alias{references-ergm}
 \alias{ergm.references}
 \alias{references.ergm}
-\alias{CompleterOrder}
-\alias{InitErgmReference.CompleteOrder}
 \alias{InitWtErgmProposal.AlterSwap}
 \docType{methods}
 
@@ -37,10 +35,6 @@
   Reference measures currently available are:
   \describe{
     
-    \item{\code{CompleteOrder}}{A uniform distribution over the possible
-      complete orderings of the alters by each ego.
-    }
-
     \item{\code{DiscUnif(a,b)}}{
       A discrete uniform distribution used as a baseline distribution
       for ranks. See \code{\link[ergm:ergm-references]{DiscUnif}}

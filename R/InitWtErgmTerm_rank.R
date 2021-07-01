@@ -7,6 +7,21 @@
 #
 #  Copyright 2008-2021 Statnet Commons
 ################################################################################
+
+#' @name rank.deference-ergmTerm
+#' @title Deference (aversion)
+#' @description Deference (aversion)
+#' @details Measures the
+#'   amount of "deference" in the network: configurations where an ego
+#'   \eqn{i} ranks an alter \eqn{j} over another alter \eqn{k} , but
+#'   \eqn{j} , in turn, ranks \eqn{k} over \eqn{i} . A lower-than-chance
+#'   value of this statistic and/or a negative coefficient implies a form
+#'   of mutuality in the network.
+#'
+#' @usage
+#' # valued: rank.deference
+#'
+#' @template ergmTerm-general
 InitWtErgmTerm.rank.deference<-function(nw, arglist, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
                       varnames = NULL,
@@ -20,6 +35,18 @@ InitWtErgmTerm.rank.deference<-function(nw, arglist, ...) {
        dependence=TRUE, auxiliaries=~.sociomatrix("numeric"))
 }
 
+#' @name rank.edgecov-ergmTerm
+#' @title Dyadic covariates
+#' @description Dyadic covariates
+#' @details Models the effect of a dyadic covariate on the propensity of an ego
+#'   \eqn{i} to rank alter \eqn{j} highly.
+#'
+#' @usage
+#' # valued: rank.edgecov(x, attrname)
+#'
+#' @template ergmTerm-x-attrname
+#'
+#' @template ergmTerm-general
 InitWtErgmTerm.rank.edgecov <- function(nw, arglist, ...) {
   ### Check the network and arguments to make sure they are appropriate.
   a <- check.ErgmTerm(nw, arglist, 
@@ -49,7 +76,29 @@ InitWtErgmTerm.rank.edgecov <- function(nw, arglist, ...) {
   list(name="edgecov_rank", coef.names = paste(cn,"rank",sep="."), inputs = inputs, dependence=TRUE, soname="ergm.rank", auxiliaries=~.sociomatrix("numeric"))
 }
 
-
+#' @name rank.inconsistency-ergmTerm
+#' @title (Weighted) Inconsistency
+#' @description (Weighted) Inconsistency
+#' @details Measures the amount of disagreement between rankings of the focus
+#'   network and a fixed covariate network `x` , by couting the number of pairwise
+#'   comparisons for which the two networks disagree.
+#'
+#' @usage
+#' # valued: rank.inconsistency(x, attrname, weights, wtname, wtcenter)
+#' @param x,attrname `x` can be a [`network`] with an edge attribute `attrname` containing the ranks or a matrix of
+#'   appropriate dimension containing the ranks. If `x` is not
+#'   given, it defaults to the LHS network, and if `attrname` is
+#'   not given, it defaults to the `response` edge attribute.
+#' @param weights optional parameter to weigh the counts. Can be either a 3D \eqn{n\times n\times n} -array
+#'    whose \eqn{(i,j,k)} th element gives the weight for the
+#'   comparison by \eqn{i} of \eqn{j} and \eqn{k} or a function taking
+#'   three arguments, \eqn{i} , \eqn{j} , and \eqn{k} , and returning
+#'   the weight of this comparison.
+#' @param wtname,wtcenter If `wtcenter=TRUE` , the
+#'   calculated weights will be centered around their
+#'   mean. `wtname` can be used to label this term.
+#'
+#' @template ergmTerm-general
 InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
                      varnames = c("x","attrname","weights","wtname","wtcenter"),
@@ -120,6 +169,17 @@ InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, ...) {
 }
 
 #' @importFrom utils packageVersion
+#' @name rank.nodeicov-ergmTerm
+#' @title Attractiveness/Popularity covariates
+#' @description Attractiveness/Popularity covariates
+#' @details Models the effect of one or more nodal covariates on the propensity of an
+#'   actor to be ranked highly by the others.
+#'
+#' @usage
+#' # rank.nodeicov(attr)
+#' @template ergmTerm-attr
+#'
+#' @template ergmTerm-general
 InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, ..., ergm.rank.version=packageVersion("ergm.rank")) {
   if(ergm.rank.version <= as.package_version("1.2.0")){
     ### Check the network and arguments to make sure they are appropriate.
@@ -152,6 +212,34 @@ InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, ..., ergm.rank.version=pack
        dependence=TRUE, auxiliaries=~.sociomatrix("numeric"))
 }
 
+#' @name rank.nonconformity-ergmTerm
+#' @title Nonconformity
+#' @description Nonconformity
+#' @details Measures the amount of "nonconformity" in the network: configurations where an ego
+#'   \eqn{i} ranks an alter \eqn{j} over another alter \eqn{k} , but
+#'   ego \eqn{l} ranks \eqn{k} over \eqn{j} .
+#'
+#' @usage
+#' # rank.nonconformity(to, par)
+#' @param to which controls to whom an ego may conform:
+#'   - `"all"` (the default): Nonconformity to all
+#'   egos is counted. A lower-than-chance
+#'   value of this statistic and/or a negative coefficient implies a
+#'   degree of consensus in the network.
+#'   - `"localAND"`: Nonconformity of \eqn{i} to ego \eqn{l} regarding the relative ranking
+#'   of \eqn{j} and \eqn{k} is only counted if \eqn{i} ranks \eqn{l}
+#'   over both \eqn{j} and \eqn{k} . A lower-than-chance
+#'   value of this statistic and/or a negative coefficient implies a
+#'   form of hierarchical transitivity in the network. This is the
+#'   recommended form of local nonconformity (over `"local1"`
+#'   and `"local2"` ).
+#'   - `"local1"`: Nonconformity of \eqn{i} to ego \eqn{l} regarding the relative ranking
+#'   of \eqn{j} and \eqn{k} is only counted if \eqn{i} ranks \eqn{l} over \eqn{j} .
+#'   - `"local2"`: Nonconformity of \eqn{i} to ego \eqn{l} regarding the relative ranking
+#'   of \eqn{j} and \eqn{k} is only counted if \eqn{i} ranks \eqn{l} over \eqn{k} .
+#' @param par TODO
+#'
+#' @template ergmTerm-general
 InitWtErgmTerm.rank.nonconformity<-function(nw, arglist, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
                       varnames = c("to","par"),

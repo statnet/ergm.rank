@@ -12,16 +12,6 @@
 \alias{ergm.terms}
 \alias{terms-ergm}
 \alias{terms.ergm}
-\alias{rank.deference}
-\alias{rank.edgecov}
-\alias{rank.inconsistency}
-\alias{rank.nodeicov}
-\alias{rank.nonconformity}
-\alias{InitWtErgmTerm.rank.deference}
-\alias{InitWtErgmTerm.rank.edgecov}
-\alias{InitWtErgmTerm.rank.inconsistency}
-\alias{InitWtErgmTerm.rank.nodeicov}
-\alias{InitWtErgmTerm.rank.nonconformity}
 \docType{methods}
 \title{Terms used in Exponential Family Random Graph Models for Ranks}
 \description{
@@ -42,81 +32,6 @@
   These terms have a specialized interpretation, and are therefore
   generally prefixed by \dQuote{\code{rank.}}, though they should take any
   valued data.
-  
-  \describe{
-    
-    \item{\code{rank.deference}}{\emph{Deference (aversion):} Measures the
-      amount of ``deference'' in the network: configurations where an ego
-      \eqn{i} ranks an alter \eqn{j} over another alter \eqn{k}, but
-      \eqn{j}, in turn, ranks \eqn{k} over \eqn{i}. A lower-than-chance
-      value of this statistic and/or a negative coefficient implies a form
-      of mutuality in the network.  
-    }
-
-    \item{\code{rank.edgecov(x, attrname)}}{\emph{Dyadic covariates:}
-      Models the effect of a dyadic covariate on the propensity of an ego
-      \eqn{i} to rank alter \eqn{j} highly. See the
-      \code{\link[ergm]{edgecov}} ERGM term documentation for arguments.
-    }
-
-    \item{\code{rank.inconsistency(x, attrname, weights, wtname,
-      wtcenter)}}{\emph{(Weighted) Inconsistency:}
-      Measures the amount of disagreement between rankings of the focus
-      network and a fixed covariate network \code{x}, by couting the number of pairwise
-      comparisons for which the two networks disagree. \code{x} can be a \code{\link{network}} with an edge
-      attribute \code{attrname} containing the ranks or a matrix of
-      appropriate dimension containing the ranks. If \code{x} is not
-      given, it defaults to the LHS network, and if \code{attrname} is
-      not given, it defaults to the \code{response} edge attribute.
-
-      Optionally, the count can be weighted by the \code{weights}
-      argument, which can be either a 3D \eqn{n\times n\times n}-array
-      whose \eqn{(i,j,k)}th element gives the weight for the
-      comparison by \eqn{i} of \eqn{j} and \eqn{k} or a function taking
-      three arguments,  \eqn{i}, \eqn{j}, and \eqn{k}, and returning
-      the weight of this comparison. If \code{wtcenter=TRUE}, the
-      calculated weights will be centered around their
-      mean. \code{wtname} can be used to label this term.
-    }
-
-    \item{\code{rank.nodeicov(attr)}}{\emph{Attractiveness/Popularity covariates:}
-      Models the effect of one or more nodal covariates on the propensity of an
-      actor to be ranked highly by the others. See the
-      \code{\link[ergm]{nodeicov}} ERGM term documentation for arguments.
-    }
-
-    \item{\code{rank.nonconformity(to, par)}}{\emph{Nonconformity:}
-      Measures the amount of ``nonconformity'' in the network: configurations where an ego
-      \eqn{i} ranks an alter \eqn{j} over another alter \eqn{k}, but
-      ego \eqn{l} ranks \eqn{k} over \eqn{j}.
-
-      This statistic has an argument \code{to}, which controls
-      to whom an ego may conform:
-      \describe{
-	\item{\code{"all"} (the default)}{Nonconformity to all
-	  egos is counted.       A lower-than-chance
-	  value of this statistic and/or a negative coefficient implies a
-	  degree
-	  of consensus in the network.}
-	\item{\code{"localAND"}}{
-	  Nonconformity of \eqn{i} to ego \eqn{l} regarding the relative ranking
-	  of \eqn{j} and \eqn{k} is only counted if \eqn{i} ranks \eqn{l}
-	  over both \eqn{j} and \eqn{k}. A lower-than-chance
-	  value of this statistic and/or a negative coefficient implies a
-	  form of hierarchical transitivity in the network. This is the
-	  recommended form of local nonconformity (over \code{"local1"}
-	  and \code{"local2"}).}
-	\item{\code{"local1"}}{
-	  Nonconformity of \eqn{i} to ego \eqn{l} regarding the relative ranking
-	  of \eqn{j} and \eqn{k} is only counted if \eqn{i} ranks \eqn{l}
-	  over \eqn{j}.}
-	\item{\code{"local2"}}{
-	  Nonconformity of \eqn{i} to ego \eqn{l} regarding the relative ranking
-	  of \eqn{j} and \eqn{k} is only counted if \eqn{i} ranks \eqn{l}
-	  over \eqn{k}.}
-      }
-    }  
-  }
 }
 \references{
   \itemize{
