@@ -5,7 +5,7 @@
 \alias{InitWtErgmTerm.rank.nonconformity}
 \title{Nonconformity}
 \usage{
-# rank.nonconformity(to, par)
+# valued: rank.nonconformity(to, par)
 }
 \arguments{
 \item{to}{which controls to whom an ego may conform:

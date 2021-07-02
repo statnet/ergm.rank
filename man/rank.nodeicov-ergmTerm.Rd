@@ -5,7 +5,7 @@
 \alias{InitWtErgmTerm.rank.nodeicov}
 \title{Attractiveness/Popularity covariates}
 \usage{
-# rank.nodeicov(attr)
+# valued: rank.nodeicov(attr)
 }
 \arguments{
 \item{attr}{quantitative attribute (see Specifying Vertex attributes and Levels (\code{?nodal_attributes}) for details.)}

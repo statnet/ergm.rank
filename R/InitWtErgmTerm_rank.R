@@ -176,7 +176,7 @@ InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, ...) {
 #'   actor to be ranked highly by the others.
 #'
 #' @usage
-#' # rank.nodeicov(attr)
+#' # valued: rank.nodeicov(attr)
 #' @template ergmTerm-attr
 #'
 #' @template ergmTerm-general
@@ -220,7 +220,7 @@ InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, ..., ergm.rank.version=pack
 #'   ego \eqn{l} ranks \eqn{k} over \eqn{j} .
 #'
 #' @usage
-#' # rank.nonconformity(to, par)
+#' # valued: rank.nonconformity(to, par)
 #' @param to which controls to whom an ego may conform:
 #'   - `"all"` (the default): Nonconformity to all
 #'   egos is counted. A lower-than-chance
