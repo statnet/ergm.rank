@@ -14,3 +14,4 @@ appveyor.yml
 ^.github$
 ^codecov\.yml$
 ^README.md$
+^man-roxygen$
