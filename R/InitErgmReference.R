@@ -7,6 +7,15 @@
 #
 #  Copyright 2008-2021 Statnet Commons
 ################################################################################
+
+#' @name CompleteOrder-ergmReference
+#' @title A uniform distribution over the possible complete orderings of the alters by each ego
+#' @description A uniform distribution over the possible complete orderings of the alters by each ego
+#'
+#' @usage
+#' # CompleteOrder
+#'
+#' @template ergmReference-general
 InitErgmReference.CompleteOrder <- function(nw, arglist, ...){
   a <- check.ErgmTerm(nw, arglist)
   list(name="CompleteOrder", init_methods = c("CD","zeros"))
