@@ -31,7 +31,10 @@
 #' This package contains functions specific to using \code{\link{ergm}} to
 #' model networks whose dyad values are ranks. Examples include preferences,
 #' valued ties reduced to ranks, etc..
-#' 
+#'
+#' These terms have a specialized interpretation, and are therefore generally
+#' prefixed by "`rank.`", though they should take any valued data.
+#'
 #' For detailed information on how to download and install the software, go to
 #' the Statnet project website: \url{https://statnet.org}. A tutorial, support
 #' newsgroup, references and links to further resources are provided there.
