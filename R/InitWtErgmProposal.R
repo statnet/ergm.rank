@@ -7,6 +7,14 @@
 #
 #  Copyright 2008-2021 Statnet Commons
 ################################################################################
+
+#' @templateVar name AlterSwap
+#' @aliases InitWtErgmProposal.AlterSwap
+#' @title TODO
+#' @description TODO
+#' @template ergmProposal
+NULL
+
 InitWtErgmProposal.AlterSwap <- function(arguments, nw) {
   MHproposal <- list(name = "AlterSwap", inputs=NULL)
   MHproposal
