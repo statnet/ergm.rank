@@ -12,7 +12,7 @@
 #' @aliases InitWtErgmProposal.AlterSwap
 #' @title TODO
 #' @description TODO
-#' @template ergmProposal
+#' @template ergmProposal-general
 NULL
 
 InitWtErgmProposal.AlterSwap <- function(arguments, nw) {
