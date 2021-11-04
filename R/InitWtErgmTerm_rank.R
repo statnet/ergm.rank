@@ -8,7 +8,7 @@
 #  Copyright 2008-2021 Statnet Commons
 ################################################################################
 
-#' @name rank.deference-ergmTerm
+#' @templateVar name rank.deference
 #' @title Deference (aversion)
 #' @description Deference (aversion)
 #' @details Measures the
@@ -35,7 +35,7 @@ InitWtErgmTerm.rank.deference<-function(nw, arglist, ...) {
        dependence=TRUE, auxiliaries=~.sociomatrix("numeric"))
 }
 
-#' @name rank.edgecov-ergmTerm
+#' @templateVar name rank.edgecov
 #' @title Dyadic covariates
 #' @description Dyadic covariates
 #' @details Models the effect of a dyadic covariate on the propensity of an ego
@@ -76,7 +76,7 @@ InitWtErgmTerm.rank.edgecov <- function(nw, arglist, ...) {
   list(name="edgecov_rank", coef.names = paste(cn,"rank",sep="."), inputs = inputs, dependence=TRUE, soname="ergm.rank", auxiliaries=~.sociomatrix("numeric"))
 }
 
-#' @name rank.inconsistency-ergmTerm
+#' @templateVar name rank.inconsistency
 #' @title (Weighted) Inconsistency
 #' @description (Weighted) Inconsistency
 #' @details Measures the amount of disagreement between rankings of the focus
@@ -169,7 +169,7 @@ InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, ...) {
 }
 
 #' @importFrom utils packageVersion
-#' @name rank.nodeicov-ergmTerm
+#' @templateVar name rank.nodeicov
 #' @title Attractiveness/Popularity covariates
 #' @description Attractiveness/Popularity covariates
 #' @details Models the effect of one or more nodal covariates on the propensity of an
@@ -212,7 +212,7 @@ InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, ..., ergm.rank.version=pack
        dependence=TRUE, auxiliaries=~.sociomatrix("numeric"))
 }
 
-#' @name rank.nonconformity-ergmTerm
+#' @templateVar name rank.nonconformity
 #' @title Nonconformity
 #' @description Nonconformity
 #' @details Measures the amount of "nonconformity" in the network: configurations where an ego
