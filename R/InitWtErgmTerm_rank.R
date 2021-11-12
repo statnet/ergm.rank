@@ -21,7 +21,7 @@
 #' @usage
 #' # valued: rank.deference
 #'
-#' @template ergmTerm-general
+#' @template ergm/ergmTerm-general
 InitWtErgmTerm.rank.deference<-function(nw, arglist, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
                       varnames = NULL,
@@ -44,9 +44,9 @@ InitWtErgmTerm.rank.deference<-function(nw, arglist, ...) {
 #' @usage
 #' # valued: rank.edgecov(x, attrname)
 #'
-#' @template ergmTerm-x-attrname
+#' @template ergm/ergmTerm-x-attrname
 #'
-#' @template ergmTerm-general
+#' @template ergm/ergmTerm-general
 InitWtErgmTerm.rank.edgecov <- function(nw, arglist, ...) {
   ### Check the network and arguments to make sure they are appropriate.
   a <- check.ErgmTerm(nw, arglist, 
@@ -98,7 +98,7 @@ InitWtErgmTerm.rank.edgecov <- function(nw, arglist, ...) {
 #'   calculated weights will be centered around their
 #'   mean. `wtname` can be used to label this term.
 #'
-#' @template ergmTerm-general
+#' @template ergm/ergmTerm-general
 InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
                      varnames = c("x","attrname","weights","wtname","wtcenter"),
@@ -177,9 +177,9 @@ InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, ...) {
 #'
 #' @usage
 #' # valued: rank.nodeicov(attr)
-#' @template ergmTerm-attr
+#' @template ergm/ergmTerm-attr
 #'
-#' @template ergmTerm-general
+#' @template ergm/ergmTerm-general
 InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, ..., ergm.rank.version=packageVersion("ergm.rank")) {
   if(ergm.rank.version <= as.package_version("1.2.0")){
     ### Check the network and arguments to make sure they are appropriate.
@@ -239,7 +239,7 @@ InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, ..., ergm.rank.version=pack
 #'   of \eqn{j} and \eqn{k} is only counted if \eqn{i} ranks \eqn{l} over \eqn{k} .
 #' @param par TODO
 #'
-#' @template ergmTerm-general
+#' @template ergm/ergmTerm-general
 InitWtErgmTerm.rank.nonconformity<-function(nw, arglist, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
                       varnames = c("to","par"),

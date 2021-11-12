@@ -10,3 +10,6 @@
 \description{
 A uniform distribution over the possible complete orderings of the alters by each ego
 }
+\seealso{
+\code{\link{ergmReference}} for index of reference distributions currently visible to the package.
+}

@@ -17,3 +17,6 @@ Attractiveness/Popularity covariates
 Models the effect of one or more nodal covariates on the propensity of an
 actor to be ranked highly by the others.
 }
+\seealso{
+\code{\link{ergmTerm}} for index of model terms currently visible to the package.
+}
