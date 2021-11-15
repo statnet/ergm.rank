@@ -55,8 +55,10 @@ InitWtErgmTerm.rank.edgecov <- function(nw, arglist, ...) {
                       defaultvalues = list(NULL, NULL),
                       required = c(TRUE, FALSE))
   ### Process the arguments
-  if(is.network(a$x))
+  if(is.network(a$x)){
+    if(! a$attrname %in% list.edge.attributes(a$x)) ergm_Init_abort(paste0("Specified network ", sQuote(deparse1(sys.call(0)[[3]][[2]])), " does not have an edge attribute ", sQuote(a$attrname)))
     xm<-as.matrix.network(a$x,matrix.type="adjacency",a$attrname)
+  }
   else if(is.character(a$x))
     xm<-get.network.attribute(nw,a$x)
   else
@@ -66,10 +68,9 @@ InitWtErgmTerm.rank.edgecov <- function(nw, arglist, ...) {
     # Note: the sys.call business grabs the name of the x object from the 
     # user's call.  Not elegant, but it works as long as the user doesn't
     # pass anything complicated.
-    cn<-paste("edgecov", as.character(sys.call(0)[[3]][2]), 
-              as.character(a$attrname), sep = ".")
+    cn<-paste("edgecov", deparse1(sys.call(0)[[3]][[2]]), a$attrname, sep = ".")
   } else {
-    cn<-paste("edgecov", as.character(sys.call(0)[[3]][2]), sep = ".")
+    cn<-paste("edgecov", deparse1(sys.call(0)[[3]][[2]]), sep = ".")
   }
 
   inputs <- c(as.double(t(xm))) # Need to transpose to produce row-major arrangement.
@@ -121,14 +122,14 @@ InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, ...) {
   sc03 <- sys.call(0)[[3]]
   coef.names <- "inconsistency"  # This might be modified later
   if (length(sc03)>1) 
-    coef.names <- paste("inconsistency", as.character(sc03[[2]]), sep=".")
+    coef.names <- paste("inconsistency", deparse1(sc03[[2]]), sep=".")
   
   if(!is.null(a$attrname) && length(sc03)>1){
-    coef.names<-paste("inconsistency", as.character(sc03[2]),
-                      as.character(a$attrname), sep = ".")
+    coef.names<-paste("inconsistency", deparse1(sc03[[2]]),
+                      deparse1(a$attrname), sep = ".")
   }else if (length(sc03)>1) {
-    coef.names<-paste("inconsistency", as.character(sc03[2]),
-                      as.character(sys.call(0)[[3]][3]), sep = ".")
+    coef.names<-paste("inconsistency", deparse1(sc03[[2]]),
+                      deparse1(sys.call(0)[[3]]), sep = ".")
   }
 
   # A column-major matrix of choices.
