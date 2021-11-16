@@ -54,27 +54,10 @@ InitWtErgmTerm.rank.edgecov <- function(nw, arglist, ...) {
                       vartypes = c("matrix,network,character", "character"),
                       defaultvalues = list(NULL, NULL),
                       required = c(TRUE, FALSE))
-  ### Process the arguments
-  if(is.network(a$x)){
-    if(! a$attrname %in% list.edge.attributes(a$x)) ergm_Init_abort(paste0("Specified network ", sQuote(deparse1(sys.call(0)[[3]][[2]])), " does not have an edge attribute ", sQuote(a$attrname)))
-    xm<-as.matrix.network(a$x,matrix.type="adjacency",a$attrname)
-  }
-  else if(is.character(a$x))
-    xm<-get.network.attribute(nw,a$x)
-  else
-    xm<-as.matrix(a$x)
-  ### Construct the list to return
-  if(!is.null(a$attrname)) {
-    # Note: the sys.call business grabs the name of the x object from the 
-    # user's call.  Not elegant, but it works as long as the user doesn't
-    # pass anything complicated.
-    cn<-paste("edgecov", deparse1(sys.call(0)[[3]][[2]]), a$attrname, sep = ".")
-  } else {
-    cn<-paste("edgecov", deparse1(sys.call(0)[[3]][[2]]), sep = ".")
-  }
+  l <- ergm_edgecov_args("edgecov.rank", nw, arglist); xm <- l$xm; cn <- l$cn
 
   inputs <- c(as.double(t(xm))) # Need to transpose to produce row-major arrangement.
-  list(name="edgecov_rank", coef.names = paste(cn,"rank",sep="."), inputs = inputs, dependence=TRUE, soname="ergm.rank", auxiliaries=~.sociomatrix("numeric"))
+  list(name="edgecov_rank", coef.names = cn, inputs = inputs, dependence=TRUE, soname="ergm.rank", auxiliaries=~.sociomatrix("numeric"))
 }
 
 #' @templateVar name rank.inconsistency
