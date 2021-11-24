@@ -340,7 +340,7 @@ $$
 
 Consider the Newcomb's fraternity data:
 ```{r collapse=TRUE}
-data(newcomb)
+data(newcomb, package="statnet.data")
 as.matrix(newcomb[[1]], attrname="rank")
 as.matrix(newcomb[[1]], attrname="descrank")
 ```
