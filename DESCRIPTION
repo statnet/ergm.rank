@@ -13,7 +13,8 @@ Depends:
     network (>= 1.15)
 Imports:
     statnet.common (>= 4.2.0),
-    utils
+    utils,
+    statnet.data
 LinkingTo:
     ergm
 Suggests:
@@ -31,4 +32,5 @@ Encoding: UTF-8
 Remotes:
     github::statnet/network@master,
     github::statnet/statnet.common@master,
-    github::statnet/ergm@master
+    github::statnet/ergm@master,
+    github::statnet/statnet.data@master
