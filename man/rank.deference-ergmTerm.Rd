@@ -8,9 +8,6 @@
 # valued: rank.deference
 }
 \description{
-Deference (aversion)
-}
-\details{
 Measures the
 amount of "deference" in the network: configurations where an ego
 \eqn{i} ranks an alter \eqn{j} over another alter \eqn{k} , but
