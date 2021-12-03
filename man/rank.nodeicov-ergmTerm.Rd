@@ -11,9 +11,6 @@
 \item{attr}{quantitative attribute (see Specifying Vertex attributes and Levels (\code{?nodal_attributes}) for details.)}
 }
 \description{
-Attractiveness/Popularity covariates
-}
-\details{
 Models the effect of one or more nodal covariates on the propensity of an
 actor to be ranked highly by the others.
 }

@@ -30,9 +30,6 @@ of \eqn{j} and \eqn{k} is only counted if \eqn{i} ranks \eqn{l} over \eqn{k} .
 \item{par}{TODO}
 }
 \description{
-Nonconformity
-}
-\details{
 Measures the amount of "nonconformity" in the network: configurations where an ego
 \eqn{i} ranks an alter \eqn{j} over another alter \eqn{k} , but
 ego \eqn{l} ranks \eqn{k} over \eqn{j} .

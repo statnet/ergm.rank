@@ -16,9 +16,6 @@ the name of the quantitative edge attribute to use for covariate values
 of zero).}
 }
 \description{
-Dyadic covariates
-}
-\details{
 Models the effect of a dyadic covariate on the propensity of an ego
 \eqn{i} to rank alter \eqn{j} highly.
 }

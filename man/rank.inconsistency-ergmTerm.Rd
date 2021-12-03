@@ -24,9 +24,6 @@ calculated weights will be centered around their
 mean. \code{wtname} can be used to label this term.}
 }
 \description{
-(Weighted) Inconsistency
-}
-\details{
 Measures the amount of disagreement between rankings of the focus
 network and a fixed covariate network \code{x} , by couting the number of pairwise
 comparisons for which the two networks disagree.

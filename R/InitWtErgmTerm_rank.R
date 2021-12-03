@@ -10,8 +10,7 @@
 
 #' @templateVar name rank.deference
 #' @title Deference (aversion)
-#' @description Deference (aversion)
-#' @details Measures the
+#' @description Measures the
 #'   amount of "deference" in the network: configurations where an ego
 #'   \eqn{i} ranks an alter \eqn{j} over another alter \eqn{k} , but
 #'   \eqn{j} , in turn, ranks \eqn{k} over \eqn{i} . A lower-than-chance
@@ -37,8 +36,7 @@ InitWtErgmTerm.rank.deference<-function(nw, arglist, ...) {
 
 #' @templateVar name rank.edgecov
 #' @title Dyadic covariates
-#' @description Dyadic covariates
-#' @details Models the effect of a dyadic covariate on the propensity of an ego
+#' @description Models the effect of a dyadic covariate on the propensity of an ego
 #'   \eqn{i} to rank alter \eqn{j} highly.
 #'
 #' @usage
@@ -62,8 +60,7 @@ InitWtErgmTerm.rank.edgecov <- function(nw, arglist, ...) {
 
 #' @templateVar name rank.inconsistency
 #' @title (Weighted) Inconsistency
-#' @description (Weighted) Inconsistency
-#' @details Measures the amount of disagreement between rankings of the focus
+#' @description Measures the amount of disagreement between rankings of the focus
 #'   network and a fixed covariate network `x` , by couting the number of pairwise
 #'   comparisons for which the two networks disagree.
 #'
@@ -155,8 +152,7 @@ InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, ...) {
 #' @importFrom utils packageVersion
 #' @templateVar name rank.nodeicov
 #' @title Attractiveness/Popularity covariates
-#' @description Attractiveness/Popularity covariates
-#' @details Models the effect of one or more nodal covariates on the propensity of an
+#' @description Models the effect of one or more nodal covariates on the propensity of an
 #'   actor to be ranked highly by the others.
 #'
 #' @usage
@@ -198,8 +194,7 @@ InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, ..., ergm.rank.version=pack
 
 #' @templateVar name rank.nonconformity
 #' @title Nonconformity
-#' @description Nonconformity
-#' @details Measures the amount of "nonconformity" in the network: configurations where an ego
+#' @description Measures the amount of "nonconformity" in the network: configurations where an ego
 #'   \eqn{i} ranks an alter \eqn{j} over another alter \eqn{k} , but
 #'   ego \eqn{l} ranks \eqn{k} over \eqn{j} .
 #'
