@@ -60,6 +60,46 @@
   % }
 %% }
 
+
+\section{Changes in version 4.1}{
+
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item{
+        Term, reference, and proposal documentation now use \pkg{ergm} 4.2 documentation format for indexing and cross-referencing.
+      }
+    }
+  }
+
+  \subsection{OTHER USER-VISIBLE CHANGES}{
+    \itemize{
+      \item{
+        \code{\link[=ergmTerm-rank.edgecov]{rank.edgecov}} now uses the standard interpretation and formatting for its arguments and coefficient names.
+      }
+    }
+  }
+
+  \subsection{DEPRECATED & DEFUNCT}{
+    \itemize{
+      \item{
+        References to \code{trustregion} have been excised.
+      }
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item{
+        (Experimental) decaying form of \code{\link[=ergmTerm-rank.nonconformity]{rank.nonconformity}} has been fixed.
+      }
+      \item{
+        Various documentation fixes.
+      }
+    }
+  }
+}
+
+
 \section{Changes in version 4.0.0}{
 
   \subsection{NEW FEATURES}{
