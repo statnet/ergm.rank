@@ -1,5 +1,5 @@
 Package: ergm.rank
-Version: 4.1-1424
+Version: 4.1.0
 Date: 2022-05-26
 Title: Fit, Simulate and Diagnose Exponential-Family Models for Rank-Order Relational Data
 Authors@R: c(
@@ -28,7 +28,3 @@ VignetteBuilder: rmarkdown, knitr
 RoxygenNote: 7.2.0
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
-Remotes:
-    github::statnet/network@master,
-    github::statnet/statnet.common@master,
-    github::statnet/ergm@master
