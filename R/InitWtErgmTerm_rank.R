@@ -12,8 +12,8 @@
 #' @title Deference (aversion)
 #' @description Measures the
 #'   amount of "deference" in the network: configurations where an ego
-#'   \eqn{i} ranks an alter \eqn{j} over another alter \eqn{k} , but
-#'   \eqn{j} , in turn, ranks \eqn{k} over \eqn{i} . A lower-than-chance
+#'   \eqn{i} ranks an alter \eqn{j} over another alter \eqn{k}, but
+#'   \eqn{j}, in turn, ranks \eqn{k} over \eqn{i} . A lower-than-chance
 #'   value of this statistic and/or a negative coefficient implies a form
 #'   of mutuality in the network.
 #'
@@ -74,7 +74,7 @@ InitWtErgmTerm.rank.edgecov <- function(nw, arglist, ...) {
 #' @param weights optional parameter to weigh the counts. Can be either a 3D \eqn{n\times n\times n} -array
 #'    whose \eqn{(i,j,k)} th element gives the weight for the
 #'   comparison by \eqn{i} of \eqn{j} and \eqn{k} or a function taking
-#'   three arguments, \eqn{i} , \eqn{j} , and \eqn{k} , and returning
+#'   three arguments, \eqn{i}, \eqn{j}, and \eqn{k}, and returning
 #'   the weight of this comparison.
 #' @param wtname,wtcenter If `wtcenter=TRUE` , the
 #'   calculated weights will be centered around their
@@ -196,7 +196,7 @@ InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, ..., ergm.rank.version=pack
 #' @templateVar name rank.nonconformity
 #' @title Nonconformity
 #' @description Measures the amount of "nonconformity" in the network: configurations where an ego
-#'   \eqn{i} ranks an alter \eqn{j} over another alter \eqn{k} , but
+#'   \eqn{i} ranks an alter \eqn{j} over another alter \eqn{k}, but
 #'   ego \eqn{l} ranks \eqn{k} over \eqn{j} .
 #'
 #' @usage
@@ -217,7 +217,13 @@ InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, ..., ergm.rank.version=pack
 #'   of \eqn{j} and \eqn{k} is only counted if \eqn{i} ranks \eqn{l} over \eqn{j} .
 #'   - `"local2"`: Nonconformity of \eqn{i} to ego \eqn{l} regarding the relative ranking
 #'   of \eqn{j} and \eqn{k} is only counted if \eqn{i} ranks \eqn{l} over \eqn{k} .
-#' @param par TODO
+#'   - `"thresholds"`: Nonconformity of \eqn{i} to ego \eqn{l} regarding the relative ranking
+#'   of \eqn{j} and \eqn{k} is only counted if \eqn{i} ranks \eqn{l} above `par`, where `par`
+#'   can be a vector with multiple thresholds.
+#'   - `"geometric"`: Nonconformity of \eqn{i} to ego \eqn{l} regarding the relative ranking
+#'   of \eqn{j} and \eqn{k} is weighted by `par` taken to the power of the rank of \eqn{l} by \eqn{i} , where `par`
+#'   is a scalar.
+#' @param par additional parameters for some types of nonconformity.
 #'
 #' @template ergmTerm-general
 InitWtErgmTerm.rank.nonconformity<-function(nw, arglist, ...) {
@@ -253,7 +259,7 @@ InitWtErgmTerm.rank.nonconformity<-function(nw, arglist, ...) {
     inputs <- NULL
     coef.names <- "nonconformity.localAND"
     name <- "localAND_nonconformity"
-  }
+  }else ergm_Init_abort("Unsupported type of nonconformity: ", sQuote(to), ".")
   
   list(name=name,
        coef.names=coef.names,

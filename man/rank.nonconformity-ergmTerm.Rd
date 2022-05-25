@@ -25,12 +25,18 @@ and \code{"local2"} ).
 of \eqn{j} and \eqn{k} is only counted if \eqn{i} ranks \eqn{l} over \eqn{j} .
 \item \code{"local2"}: Nonconformity of \eqn{i} to ego \eqn{l} regarding the relative ranking
 of \eqn{j} and \eqn{k} is only counted if \eqn{i} ranks \eqn{l} over \eqn{k} .
+\item \code{"thresholds"}: Nonconformity of \eqn{i} to ego \eqn{l} regarding the relative ranking
+of \eqn{j} and \eqn{k} is only counted if \eqn{i} ranks \eqn{l} above \code{par}, where \code{par}
+can be a vector with multiple thresholds.
+\item \code{"geometric"}: Nonconformity of \eqn{i} to ego \eqn{l} regarding the relative ranking
+of \eqn{j} and \eqn{k} is weighted by \code{par} taken to the power of the rank of \eqn{l} by \eqn{i} , where \code{par}
+is a scalar.
 }}
 
-\item{par}{TODO}
+\item{par}{additional parameters for some types of nonconformity.}
 }
 \description{
 Measures the amount of "nonconformity" in the network: configurations where an ego
-\eqn{i} ranks an alter \eqn{j} over another alter \eqn{k} , but
+\eqn{i} ranks an alter \eqn{j} over another alter \eqn{k}, but
 ego \eqn{l} ranks \eqn{k} over \eqn{j} .
 }

@@ -10,8 +10,8 @@
 \description{
 Measures the
 amount of "deference" in the network: configurations where an ego
-\eqn{i} ranks an alter \eqn{j} over another alter \eqn{k} , but
-\eqn{j} , in turn, ranks \eqn{k} over \eqn{i} . A lower-than-chance
+\eqn{i} ranks an alter \eqn{j} over another alter \eqn{k}, but
+\eqn{j}, in turn, ranks \eqn{k} over \eqn{i} . A lower-than-chance
 value of this statistic and/or a negative coefficient implies a form
 of mutuality in the network.
 }
