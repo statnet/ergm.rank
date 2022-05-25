@@ -15,3 +15,7 @@ amount of "deference" in the network: configurations where an ego
 value of this statistic and/or a negative coefficient implies a form
 of mutuality in the network.
 }
+\concept{directed}
+\concept{ordinal}
+\concept{triad-related}
+\concept{valued}

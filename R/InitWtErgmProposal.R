@@ -10,9 +10,11 @@
 
 #' @templateVar name AlterSwap
 #' @aliases InitWtErgmProposal.AlterSwap
-#' @title TODO
-#' @description TODO
+#' @title A proposal that swaps values of two alters incident on an ego
+#' @description This proposal randomly selects two dyads \eqn{(i,j)} and \eqn{(i,j')} with a common sender and proposes to swap their values if distinct.
 #' @template ergmProposal-general
+#' @concept valued
+#' @concept ordinal
 NULL
 
 InitWtErgmProposal.AlterSwap <- function(arguments, nw) {

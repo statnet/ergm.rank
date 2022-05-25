@@ -16,6 +16,8 @@
 #' # CompleteOrder
 #'
 #' @template ergmReference-general
+#' @concept valued
+#' @concept ordinal
 InitErgmReference.CompleteOrder <- function(nw, arglist, ...){
   a <- check.ErgmTerm(nw, arglist)
   list(name="CompleteOrder", init_methods = c("CD","zeros"))

@@ -13,3 +13,5 @@ A uniform distribution over the possible complete orderings of the alters by eac
 \seealso{
 \code{\link{ergmReference}} for index of reference distributions currently visible to the package.
 }
+\concept{ordinal}
+\concept{valued}

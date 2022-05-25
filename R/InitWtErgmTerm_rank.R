@@ -21,6 +21,10 @@
 #' # valued: rank.deference
 #'
 #' @template ergmTerm-general
+#' @concept valued
+#' @concept directed
+#' @concept triad-related
+#' @concept ordinal
 InitWtErgmTerm.rank.deference<-function(nw, arglist, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
                       varnames = NULL,
@@ -45,6 +49,9 @@ InitWtErgmTerm.rank.deference<-function(nw, arglist, ...) {
 #' @template ergmTerm-x-attrname
 #'
 #' @template ergmTerm-general
+#' @concept valued
+#' @concept directed
+#' @concept ordinal
 InitWtErgmTerm.rank.edgecov <- function(nw, arglist, ...) {
   ### Check the network and arguments to make sure they are appropriate.
   a <- check.ErgmTerm(nw, arglist, 
@@ -81,6 +88,9 @@ InitWtErgmTerm.rank.edgecov <- function(nw, arglist, ...) {
 #'   mean. `wtname` can be used to label this term.
 #'
 #' @template ergmTerm-general
+#' @concept valued
+#' @concept directed
+#' @concept ordinal
 InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
                      varnames = c("x","attrname","weights","wtname","wtcenter"),
@@ -161,6 +171,10 @@ InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, ...) {
 #' @template ergmTerm-attr
 #'
 #' @template ergmTerm-general
+#' @concept valued
+#' @concept directed
+#' @concept ordinal
+#' @concept quantitative nodal attribute
 InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, ..., ergm.rank.version=packageVersion("ergm.rank")) {
   if(ergm.rank.version <= as.package_version("1.2.0")){
     ### Check the network and arguments to make sure they are appropriate.
@@ -226,6 +240,10 @@ InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, ..., ergm.rank.version=pack
 #' @param par additional parameters for some types of nonconformity.
 #'
 #' @template ergmTerm-general
+#' @concept valued
+#' @concept directed
+#' @concept ordinal
+#' @concept triad-related
 InitWtErgmTerm.rank.nonconformity<-function(nw, arglist, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
                       varnames = c("to","par"),

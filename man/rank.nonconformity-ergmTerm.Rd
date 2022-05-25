@@ -40,3 +40,7 @@ Measures the amount of "nonconformity" in the network: configurations where an e
 \eqn{i} ranks an alter \eqn{j} over another alter \eqn{k}, but
 ego \eqn{l} ranks \eqn{k} over \eqn{j} .
 }
+\concept{directed}
+\concept{ordinal}
+\concept{triad-related}
+\concept{valued}

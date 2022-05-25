@@ -28,3 +28,6 @@ Measures the amount of disagreement between rankings of the focus
 network and a fixed covariate network \code{x} , by couting the number of pairwise
 comparisons for which the two networks disagree.
 }
+\concept{directed}
+\concept{ordinal}
+\concept{valued}

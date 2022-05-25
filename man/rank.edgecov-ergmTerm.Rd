@@ -19,3 +19,6 @@ of zero).}
 Models the effect of a dyadic covariate on the propensity of an ego
 \eqn{i} to rank alter \eqn{j} highly.
 }
+\concept{directed}
+\concept{ordinal}
+\concept{valued}
