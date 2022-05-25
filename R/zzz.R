@@ -16,8 +16,13 @@
 
 .onLoad <- function(libname, pkgname){
   .RegisterProposals()
+  .RegisterKeywords()
 }
 
 .RegisterProposals <- function(){
   ergm_proposal_table("c", "CompleteOrder", "",  0, "random", "AlterSwap")
+}
+
+.RegisterKeywords <- function(){
+  ergm_keyword(name="ordinal", short="ordinal", description="depends on edge values only through their rank among other edge values", popular=TRUE, package="ergm.rank")
 }
