@@ -21,4 +21,5 @@ Models the effect of a dyadic covariate on the propensity of an ego
 }
 \concept{directed}
 \concept{ordinal}
+\concept{quantitative dyadic attribute}
 \concept{valued}

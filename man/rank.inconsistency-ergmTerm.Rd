@@ -30,4 +30,5 @@ comparisons for which the two networks disagree.
 }
 \concept{directed}
 \concept{ordinal}
+\concept{quantitative triadic attribute}
 \concept{valued}
