@@ -52,6 +52,7 @@ InitWtErgmTerm.rank.deference<-function(nw, arglist, ...) {
 #' @concept valued
 #' @concept directed
 #' @concept ordinal
+#' @concept quantitative dyadic attribute
 InitWtErgmTerm.rank.edgecov <- function(nw, arglist, ...) {
   ### Check the network and arguments to make sure they are appropriate.
   a <- check.ErgmTerm(nw, arglist, 
@@ -91,6 +92,7 @@ InitWtErgmTerm.rank.edgecov <- function(nw, arglist, ...) {
 #' @concept valued
 #' @concept directed
 #' @concept ordinal
+#' @concept quantitative triadic attribute
 InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
                      varnames = c("x","attrname","weights","wtname","wtcenter"),
