@@ -5,7 +5,7 @@
  *  open source, and has the attribution requirements (GPL Section 7) at
  *  https://statnet.org/attribution .
  *
- *  Copyright 2008-2021 Statnet Commons
+ *  Copyright 2008-2022 Statnet Commons
  */
 
 #include "wtchangestat_rank.h"
@@ -555,7 +555,7 @@ WtS_CHANGESTAT_FN(s_nonconformity_decay){
   for(Vertex v1=1; v1 <= N_NODES; v1++){
     for(Vertex v2=1; v2 <= N_NODES; v2++){
       if(v2==v1) continue;
-      double e = pow(INPUT_PARAM[1],INPUT_PARAM[0]-sm[v1][v2]);
+      double e = pow(INPUT_PARAM[0],INPUT_PARAM[1]-sm[v1][v2]);
       for(Vertex v3=1; v3 <= N_NODES; v3++){
 	if(v3==v2 || v3==v1) continue;
 	double v13=sm[v1][v3], v23=sm[v2][v3];

@@ -14,3 +14,7 @@
 Models the effect of one or more nodal covariates on the propensity of an
 actor to be ranked highly by the others.
 }
+\concept{directed}
+\concept{ordinal}
+\concept{quantitative nodal attribute}
+\concept{valued}

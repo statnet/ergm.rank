@@ -5,15 +5,15 @@
 #  open source, and has the attribution requirements (GPL Section 7) at
 #  https://statnet.org/attribution .
 #
-#  Copyright 2008-2021 Statnet Commons
+#  Copyright 2008-2022 Statnet Commons
 ################################################################################
 
 #' @templateVar name rank.deference
 #' @title Deference (aversion)
 #' @description Measures the
 #'   amount of "deference" in the network: configurations where an ego
-#'   \eqn{i} ranks an alter \eqn{j} over another alter \eqn{k} , but
-#'   \eqn{j} , in turn, ranks \eqn{k} over \eqn{i} . A lower-than-chance
+#'   \eqn{i} ranks an alter \eqn{j} over another alter \eqn{k}, but
+#'   \eqn{j}, in turn, ranks \eqn{k} over \eqn{i} . A lower-than-chance
 #'   value of this statistic and/or a negative coefficient implies a form
 #'   of mutuality in the network.
 #'
@@ -21,6 +21,10 @@
 #' # valued: rank.deference
 #'
 #' @template ergmTerm-general
+#' @concept valued
+#' @concept directed
+#' @concept triad-related
+#' @concept ordinal
 InitWtErgmTerm.rank.deference<-function(nw, arglist, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
                       varnames = NULL,
@@ -45,14 +49,19 @@ InitWtErgmTerm.rank.deference<-function(nw, arglist, ...) {
 #' @template ergmTerm-x-attrname
 #'
 #' @template ergmTerm-general
+#' @concept valued
+#' @concept directed
+#' @concept ordinal
+#' @concept quantitative dyadic attribute
 InitWtErgmTerm.rank.edgecov <- function(nw, arglist, ...) {
   ### Check the network and arguments to make sure they are appropriate.
   a <- check.ErgmTerm(nw, arglist, 
                       varnames = c("x", "attrname"),
                       vartypes = c("matrix,network,character", "character"),
                       defaultvalues = list(NULL, NULL),
-                      required = c(TRUE, FALSE))
-  l <- ergm_edgecov_args("edgecov.rank", nw, arglist); xm <- l$xm; cn <- l$cn
+                      required = c(TRUE, FALSE),
+                      argexpr = substitute(arglist))
+  l <- ergm_edgecov_args("edgecov.rank", nw, a); xm <- l$xm; cn <- l$cn
 
   inputs <- c(as.double(t(xm))) # Need to transpose to produce row-major arrangement.
   list(name="edgecov_rank", coef.names = cn, inputs = inputs, dependence=TRUE, soname="ergm.rank", auxiliaries=~.sociomatrix("numeric"))
@@ -73,13 +82,17 @@ InitWtErgmTerm.rank.edgecov <- function(nw, arglist, ...) {
 #' @param weights optional parameter to weigh the counts. Can be either a 3D \eqn{n\times n\times n} -array
 #'    whose \eqn{(i,j,k)} th element gives the weight for the
 #'   comparison by \eqn{i} of \eqn{j} and \eqn{k} or a function taking
-#'   three arguments, \eqn{i} , \eqn{j} , and \eqn{k} , and returning
+#'   three arguments, \eqn{i}, \eqn{j}, and \eqn{k}, and returning
 #'   the weight of this comparison.
 #' @param wtname,wtcenter If `wtcenter=TRUE` , the
 #'   calculated weights will be centered around their
 #'   mean. `wtname` can be used to label this term.
 #'
 #' @template ergmTerm-general
+#' @concept valued
+#' @concept directed
+#' @concept ordinal
+#' @concept quantitative triadic attribute
 InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
                      varnames = c("x","attrname","weights","wtname","wtcenter"),
@@ -160,6 +173,10 @@ InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, ...) {
 #' @template ergmTerm-attr
 #'
 #' @template ergmTerm-general
+#' @concept valued
+#' @concept directed
+#' @concept ordinal
+#' @concept quantitative nodal attribute
 InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, ..., ergm.rank.version=packageVersion("ergm.rank")) {
   if(ergm.rank.version <= as.package_version("1.2.0")){
     ### Check the network and arguments to make sure they are appropriate.
@@ -195,7 +212,7 @@ InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, ..., ergm.rank.version=pack
 #' @templateVar name rank.nonconformity
 #' @title Nonconformity
 #' @description Measures the amount of "nonconformity" in the network: configurations where an ego
-#'   \eqn{i} ranks an alter \eqn{j} over another alter \eqn{k} , but
+#'   \eqn{i} ranks an alter \eqn{j} over another alter \eqn{k}, but
 #'   ego \eqn{l} ranks \eqn{k} over \eqn{j} .
 #'
 #' @usage
@@ -216,9 +233,19 @@ InitWtErgmTerm.rank.nodeicov<-function (nw, arglist, ..., ergm.rank.version=pack
 #'   of \eqn{j} and \eqn{k} is only counted if \eqn{i} ranks \eqn{l} over \eqn{j} .
 #'   - `"local2"`: Nonconformity of \eqn{i} to ego \eqn{l} regarding the relative ranking
 #'   of \eqn{j} and \eqn{k} is only counted if \eqn{i} ranks \eqn{l} over \eqn{k} .
-#' @param par TODO
+#'   - `"thresholds"`: Nonconformity of \eqn{i} to ego \eqn{l} regarding the relative ranking
+#'   of \eqn{j} and \eqn{k} is only counted if \eqn{i} ranks \eqn{l} above `par`, where `par`
+#'   can be a vector with multiple thresholds.
+#'   - `"geometric"`: Nonconformity of \eqn{i} to ego \eqn{l} regarding the relative ranking
+#'   of \eqn{j} and \eqn{k} is weighted by `par` taken to the power of the rank of \eqn{l} by \eqn{i} , where `par`
+#'   is a scalar.
+#' @param par additional parameters for some types of nonconformity.
 #'
 #' @template ergmTerm-general
+#' @concept valued
+#' @concept directed
+#' @concept ordinal
+#' @concept triad-related
 InitWtErgmTerm.rank.nonconformity<-function(nw, arglist, ...) {
   a <- check.ErgmTerm(nw, arglist, directed=TRUE,
                       varnames = c("to","par"),
@@ -252,7 +279,7 @@ InitWtErgmTerm.rank.nonconformity<-function(nw, arglist, ...) {
     inputs <- NULL
     coef.names <- "nonconformity.localAND"
     name <- "localAND_nonconformity"
-  }
+  }else ergm_Init_abort("Unsupported type of nonconformity: ", sQuote(to), ".")
   
   list(name=name,
        coef.names=coef.names,

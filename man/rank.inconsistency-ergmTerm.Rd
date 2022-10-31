@@ -16,7 +16,7 @@ not given, it defaults to the \code{response} edge attribute.}
 \item{weights}{optional parameter to weigh the counts. Can be either a 3D \eqn{n\times n\times n} -array
 whose \eqn{(i,j,k)} th element gives the weight for the
 comparison by \eqn{i} of \eqn{j} and \eqn{k} or a function taking
-three arguments, \eqn{i} , \eqn{j} , and \eqn{k} , and returning
+three arguments, \eqn{i}, \eqn{j}, and \eqn{k}, and returning
 the weight of this comparison.}
 
 \item{wtname, wtcenter}{If \code{wtcenter=TRUE} , the
@@ -28,3 +28,7 @@ Measures the amount of disagreement between rankings of the focus
 network and a fixed covariate network \code{x} , by couting the number of pairwise
 comparisons for which the two networks disagree.
 }
+\concept{directed}
+\concept{ordinal}
+\concept{quantitative triadic attribute}
+\concept{valued}

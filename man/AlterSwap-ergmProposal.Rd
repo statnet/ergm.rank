@@ -3,12 +3,14 @@
 \name{AlterSwap-ergmProposal}
 \alias{AlterSwap-ergmProposal}
 \alias{InitWtErgmProposal.AlterSwap}
-\title{TODO}
+\title{A proposal that swaps values of two alters incident on an ego}
 \description{
-TODO
+This proposal randomly selects two dyads \eqn{(i,j)} and \eqn{(i,j')} with a common sender and proposes to swap their values if distinct.
 }
 \details{
 \if{html}{\Sexpr[results=rd,stage=render]{ergm:::.formatProposalsHtml(ergm:::.buildProposalsList(proposal="AlterSwap"))}}
 \if{text}{\Sexpr[results=rd,stage=render]{ergm:::.formatProposalsText(ergm:::.buildProposalsList(proposal="AlterSwap"))}}
 \if{latex}{\Sexpr[results=rd,stage=render]{ergm:::.formatProposalsLatex(ergm:::.buildProposalsList(proposal="AlterSwap"))}}
 }
+\concept{ordinal}
+\concept{valued}

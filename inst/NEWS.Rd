@@ -5,7 +5,7 @@
 %  open source, and has the attribution requirements (GPL Section 7) at
 %  https://statnet.org/attribution .
 %
-%  Copyright 2008-2021 Statnet Commons
+%  Copyright 2008-2022 Statnet Commons
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \name{NEWS}
 \title{NEWS file for the \code{\link[=ergm.rank-package]{ergm.rank}} package}
@@ -59,6 +59,46 @@
   %   }
   % }
 %% }
+
+
+\section{Changes in version 4.1}{
+
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item{
+        Term, reference, and proposal documentation now use \pkg{ergm} 4.2 documentation format for indexing and cross-referencing.
+      }
+    }
+  }
+
+  \subsection{OTHER USER-VISIBLE CHANGES}{
+    \itemize{
+      \item{
+        \code{\link[=ergmTerm-rank.edgecov]{rank.edgecov}} now uses the standard interpretation and formatting for its arguments and coefficient names.
+      }
+    }
+  }
+
+  \subsection{DEPRECATED & DEFUNCT}{
+    \itemize{
+      \item{
+        References to \code{trustregion} have been excised.
+      }
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item{
+        (Experimental) decaying form of \code{\link[=ergmTerm-rank.nonconformity]{rank.nonconformity}} has been fixed.
+      }
+      \item{
+        Various documentation fixes.
+      }
+    }
+  }
+}
+
 
 \section{Changes in version 4.0.0}{
 
