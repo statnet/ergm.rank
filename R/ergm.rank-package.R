@@ -10,30 +10,25 @@
 #' Fit, Simulate and Diagnose Exponential-Family Models for Rank-Order
 #' Relational Data
 #' 
-#' \code{\link[=ergm.rank-package]{ergm.rank}} is a set of extensions to
-#' package \code{\link[=ergm-package]{ergm}} to fit and simulate from
-#' exponential-family random graph models for networks whose edge weights are
-#' ranks. For a list of functions type \code{help(package='ergm')} and
-#' \code{help(package='ergm.rank')}
-#' 
-#' Mainly, it implements the \code{CompleteOrder} reference measure for valued
-#' ERGMs (\link[=ergm-references]{documented here}), and provides some
-#' rank-order change statistics (\link[=ergm-terms]{documented here}).
-#' 
-#' For a complete list of the functions, use \code{library(help="ergm")} and
-#' \code{library(help="ergm.rank")} or read the rest of the manual.
+#' \code{\link[=ergm.rank-package]{ergm.rank}} is a set of extensions
+#' to package \code{\link[=ergm-package]{ergm}} to fit and simulate
+#' from exponential-family random graph models for networks whose edge
+#' weights are ranks. Mainly, it implements the
+#' \code{\link[=CompleteOrder-ergmReference]{CompleteOrder}} reference
+#' measure for valued ERGMs and provides some rank-order change
+#' statistics (`search.ergmTerms("ordinal")` for a list).
 #' 
 #' When publishing results obtained using this package, please cite the
 #' original authors as described in \code{citation(package="ergm.rank")}.
 #' 
 #' All programs derived from this package must cite it.
 #' 
-#' This package contains functions specific to using \code{\link{ergm}} to
-#' model networks whose dyad values are ranks. Examples include preferences,
-#' valued ties reduced to ranks, etc..
-#'
-#' These terms have a specialized interpretation, and are therefore generally
-#' prefixed by "`rank.`", though they should take any valued data.
+#' This package contains functions specific to using
+#' \code{\link{ergm}} to model networks whose dyad values are
+#' ranks. Examples include preferences, valued ties reduced to ranks,
+#' etc.. These terms have a specialized interpretation, and are
+#' therefore generally prefixed by "`rank.`", though they should take
+#' any valued data.
 #'
 #' For detailed information on how to download and install the software, go to
 #' the Statnet project website: \url{https://statnet.org}. A tutorial, support
