@@ -47,9 +47,21 @@ Models for Rank-Order Relational Data. \emph{Sociological
 Methodology}, 2017, 47, 68-112. \doi{10.1177/0081175017692623}
 }
 \seealso{
-\code{\link{ergm-terms}}, \code{\link{ergm-references}}
+Useful links:
+\itemize{
+  \item \url{https://statnet.org}
+  \item Report bugs at \url{https://github.com/statnet/ergm.rank/issues}
+}
+
 }
 \author{
-Pavel N. Krivitsky \email{pavel@statnet.org}
+\strong{Maintainer}: Pavel N. Krivitsky \email{pavel@statnet.org} (\href{https://orcid.org/0000-0002-9101-3362}{ORCID})
+
+Other contributors:
+\itemize{
+  \item Carter T. Butts \email{buttsc@uci.edu} [contributor]
+  \item Mark S. Handcock \email{handcock@stat.ucla.edu} [contributor]
+  \item David R. Hunter \email{dhunter@stat.psu.edu} [contributor]
 }
-\keyword{package}
+
+}
