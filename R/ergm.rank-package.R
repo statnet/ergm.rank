@@ -45,8 +45,7 @@
 #' @seealso \code{\link{ergm-terms}}, \code{\link{ergm-references}}
 #' @references Krivitsky PN (2012). Exponential-Family Random Graph Models for
 #' Valued Networks. \emph{Electronic Journal of Statistics}, 2012, 6,
-#' 1100-1128. c("\\Sexpr[results=rd,stage=build]{tools:::Rd_expr_doi(\"#1\")}",
-#' "doi:10.1214/12-EJS696")\Sexpr{tools:::Rd_expr_doi("doi:10.1214/12-EJS696")}
+#' 1100-1128. \doi{10.1214/12-EJS696}
 #' 
 #' Krivitsky PN and Butts CT (2017). Exponential-Family Random Graph
 #' Models for Rank-Order Relational Data. \emph{Sociological
