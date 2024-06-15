@@ -9,6 +9,7 @@
 ################################################################################
 #' @useDynLib ergm.rank
 #' @import statnet.common ergm network
+#' @importFrom Rdpack reprompt
 .onAttach <- function(libname, pkgname){
   sm <- statnetStartupMessage("ergm.rank",c("statnet"),FALSE)
   if(!is.null(sm)) packageStartupMessage(sm)

@@ -15,8 +15,8 @@
 #' from exponential-family random graph models for networks whose edge
 #' weights are ranks. Mainly, it implements the
 #' \code{\link[=CompleteOrder-ergmReference]{CompleteOrder}} reference
-#' measure for valued ERGMs and provides some rank-order change
-#' statistics (`search.ergmTerms("ordinal")` for a list).
+#' measure for valued ERGMs \insertCite{Kr12e,KrHu23e}{ergm.rank} and provides some rank-order change
+#' statistics (`search.ergmTerms("ordinal")` for a list) \insertCite{KrBu17e}{ergm.rank}.
 #' 
 #' When publishing results obtained using this package, please cite the
 #' original authors as described in \code{citation(package="ergm.rank")}.
@@ -35,11 +35,5 @@
 #' newsgroup, references and links to further resources are provided there.
 #' 
 #' @name ergm.rank-package
-#' @references Krivitsky PN (2012). Exponential-Family Random Graph Models for
-#' Valued Networks. \emph{Electronic Journal of Statistics}, 2012, 6,
-#' 1100-1128. \doi{10.1214/12-EJS696}
-#' 
-#' Krivitsky PN and Butts CT (2017). Exponential-Family Random Graph
-#' Models for Rank-Order Relational Data. \emph{Sociological
-#' Methodology}, 2017, 47, 68-112. \doi{10.1177/0081175017692623}
+#' @references  \insertAllCited{}
 "_PACKAGE"
