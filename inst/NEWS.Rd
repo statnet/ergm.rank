@@ -5,7 +5,7 @@
 %  open source, and has the attribution requirements (GPL Section 7) at
 %  https://statnet.org/attribution .
 %
-%  Copyright 2008-2022 Statnet Commons
+%  Copyright 2008-2024 Statnet Commons
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \name{NEWS}
 \title{NEWS file for the \code{\link[=ergm.rank-package]{ergm.rank}} package}
@@ -60,8 +60,17 @@
   % }
 %% }
 
+\section{Changes in version 4.1.1}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item A number of fixes and corrections to package documentation.
+    }
+  }
+}
 
-\section{Changes in version 4.1}{
+
+
+\section{Changes in version 4.1.0}{
 
   \subsection{NEW FEATURES}{
     \itemize{

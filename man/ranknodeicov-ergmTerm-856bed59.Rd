@@ -8,11 +8,16 @@
 # valued: rank.nodeicov(attr)
 }
 \arguments{
-\item{attr}{quantitative attribute (see Specifying Vertex attributes and Levels (\code{?nodal_attributes}) for details.)}
+\item{attr}{a vertex attribute specification (see Specifying Vertex attributes and Levels (\code{?nodal_attributes}) for details.)}
 }
 \description{
 Models the effect of one or more nodal covariates on the propensity of an
 actor to be ranked highly by the others.
+}
+\seealso{
+\code{\link{ergmTerm}} for index of model terms currently visible to the package.
+
+\Sexpr[results=rd,stage=render]{ergm:::.formatTermKeywords("ergmTerm", "rank.nodeicov", "subsection")}
 }
 \concept{directed}
 \concept{ordinal}

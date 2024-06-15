@@ -3,6 +3,7 @@
 import(ergm)
 import(network)
 import(statnet.common)
+importFrom(Rdpack,reprompt)
 importFrom(stats,na.omit)
 importFrom(utils,packageVersion)
 useDynLib(ergm.rank)

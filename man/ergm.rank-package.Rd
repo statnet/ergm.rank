@@ -2,54 +2,55 @@
 % Please edit documentation in R/ergm.rank-package.R
 \docType{package}
 \name{ergm.rank-package}
+\alias{ergm.rank}
 \alias{ergm.rank-package}
 \title{Fit, Simulate and Diagnose Exponential-Family Models for Rank-Order
 Relational Data}
 \description{
-\code{\link[=ergm.rank-package]{ergm.rank}} is a set of extensions to
-package \code{\link[=ergm-package]{ergm}} to fit and simulate from
-exponential-family random graph models for networks whose edge weights are
-ranks. For a list of functions type \code{help(package='ergm')} and
-\code{help(package='ergm.rank')}
+\code{\link[=ergm.rank-package]{ergm.rank}} is a set of extensions
+to package \code{\link[=ergm-package]{ergm}} to fit and simulate
+from exponential-family random graph models for networks whose edge
+weights are ranks. Mainly, it implements the
+\code{\link[=CompleteOrder-ergmReference]{CompleteOrder}} reference
+measure for valued ERGMs \insertCite{Kr12e,KrHu23e}{ergm.rank} and provides some rank-order change
+statistics (\code{search.ergmTerms("ordinal")} for a list) \insertCite{KrBu17e}{ergm.rank}.
 }
 \details{
-Mainly, it implements the \code{CompleteOrder} reference measure for valued
-ERGMs (\link[=ergm-references]{documented here}), and provides some
-rank-order change statistics (\link[=ergm-terms]{documented here}).
-
-For a complete list of the functions, use \code{library(help="ergm")} and
-\code{library(help="ergm.rank")} or read the rest of the manual.
-
 When publishing results obtained using this package, please cite the
 original authors as described in \code{citation(package="ergm.rank")}.
 
 All programs derived from this package must cite it.
 
-This package contains functions specific to using \code{\link{ergm}} to
-model networks whose dyad values are ranks. Examples include preferences,
-valued ties reduced to ranks, etc..
-
-These terms have a specialized interpretation, and are therefore generally
-prefixed by "\code{rank.}", though they should take any valued data.
+This package contains functions specific to using
+\code{\link{ergm}} to model networks whose dyad values are
+ranks. Examples include preferences, valued ties reduced to ranks,
+etc.. These terms have a specialized interpretation, and are
+therefore generally prefixed by "\code{rank.}", though they should take
+any valued data.
 
 For detailed information on how to download and install the software, go to
 the Statnet project website: \url{https://statnet.org}. A tutorial, support
 newsgroup, references and links to further resources are provided there.
 }
 \references{
-Krivitsky PN (2012). Exponential-Family Random Graph Models for
-Valued Networks. \emph{Electronic Journal of Statistics}, 2012, 6,
-1100-1128. c("\\Sexpr[results=rd,stage=build]{tools:::Rd_expr_doi(\"#1\")}",
-"doi:10.1214/12-EJS696")\Sexpr{tools:::Rd_expr_doi("doi:10.1214/12-EJS696")}
-
-Krivitsky PN and Butts CT (2017). Exponential-Family Random Graph
-Models for Rank-Order Relational Data. \emph{Sociological
-Methodology}, 2017, 47, 68-112. \doi{10.1177/0081175017692623}
+\insertAllCited{}
 }
 \seealso{
-\code{\link{ergm-terms}}, \code{\link{ergm-references}}
+Useful links:
+\itemize{
+  \item \url{https://statnet.org}
+  \item Report bugs at \url{https://github.com/statnet/ergm.rank/issues}
+}
+
 }
 \author{
-Pavel N. Krivitsky \email{pavel@statnet.org}
+\strong{Maintainer}: Pavel N. Krivitsky \email{pavel@statnet.org} (\href{https://orcid.org/0000-0002-9101-3362}{ORCID})
+
+Other contributors:
+\itemize{
+  \item Carter T. Butts \email{buttsc@uci.edu} [contributor]
+  \item Mark S. Handcock \email{handcock@stat.ucla.edu} [contributor]
+  \item David R. Hunter \email{dhunter@stat.psu.edu} [contributor]
 }
-\keyword{package}
+
+}
