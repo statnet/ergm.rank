@@ -58,8 +58,8 @@ bibentry(bibtype = "Article",
 
 bibentry("Article",
          title = "Exponential-family Random Graph Models for Rank-order Relational Data",
-         author = personList(person("Pavel N.", "Krivitsky"),
-                             person("Carter T.", "Butts")),
+         author = c(person("Pavel N.", "Krivitsky"),
+                    person("Carter T.", "Butts")),
          doi = "10.1177/0081175017692623",
          journal = "Sociological Methodology", year = 2017,
          volume = 47, number = 1, pages = "68-112")
