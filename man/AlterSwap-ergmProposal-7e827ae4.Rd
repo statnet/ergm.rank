@@ -12,5 +12,11 @@ This proposal randomly selects two dyads \eqn{(i,j)} and \eqn{(i,j')} with a com
 \if{text}{\Sexpr[results=rd,stage=render]{ergm:::.formatProposalsText(ergm:::.buildProposalsList(proposal="AlterSwap"))}}
 \if{latex}{\Sexpr[results=rd,stage=render]{ergm:::.formatProposalsLatex(ergm:::.buildProposalsList(proposal="AlterSwap"))}}
 }
+\seealso{
+\code{\link{ergmProposal}} for index of proposals currently visible to the package.
+
+\Sexpr[results=rd,stage=render]{ergm:::.formatTermKeywords("ergmProposal", "AlterSwap", "subsection")}
+}
 \concept{ordinal}
 \concept{valued}
+\keyword{internal}

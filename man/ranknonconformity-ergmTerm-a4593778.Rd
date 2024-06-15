@@ -40,6 +40,11 @@ Measures the amount of "nonconformity" in the network: configurations where an e
 \eqn{i} ranks an alter \eqn{j} over another alter \eqn{k}, but
 ego \eqn{l} ranks \eqn{k} over \eqn{j} .
 }
+\seealso{
+\code{\link{ergmTerm}} for index of model terms currently visible to the package.
+
+\Sexpr[results=rd,stage=render]{ergm:::.formatTermKeywords("ergmTerm", "rank.nonconformity", "subsection")}
+}
 \concept{directed}
 \concept{ordinal}
 \concept{triad-related}

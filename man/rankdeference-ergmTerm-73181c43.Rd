@@ -15,6 +15,11 @@ amount of "deference" in the network: configurations where an ego
 value of this statistic and/or a negative coefficient implies a form
 of mutuality in the network.
 }
+\seealso{
+\code{\link{ergmTerm}} for index of model terms currently visible to the package.
+
+\Sexpr[results=rd,stage=render]{ergm:::.formatTermKeywords("ergmTerm", "rank.deference", "subsection")}
+}
 \concept{directed}
 \concept{ordinal}
 \concept{triad-related}
