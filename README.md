@@ -5,7 +5,7 @@
 [![Coverage status](https://codecov.io/gh/statnet/ergm.rank/branch/master/graph/badge.svg)](https://codecov.io/github/statnet/ergm.rank?branch=master)
 [![R build status](https://github.com/statnet/ergm.rank/workflows/R-CMD-check/badge.svg)](https://github.com/statnet/ergm.rank/actions)
 
-A set of extensions for the 'ergm' package to fit weighted networks whose edge weights are ranks. See Krivitsky and Butts (2017) <doi:10.1177/0081175017692623> and Krivitsky, Hunter, Morris, and Klumb (2021) <arXiv:2106.04997>.
+A set of extensions for the 'ergm' package to fit weighted networks whose edge weights are ranks. See Krivitsky and Butts (2017) <doi:10.1177/0081175017692623> and Krivitsky, Hunter, Morris, and Klumb (2023) <doi:10.18637/jss.v105.i06>.
 
 ## Public and Private repositories
 
