@@ -65,7 +65,7 @@ WtI_CHANGESTAT_FN(i__dsociomatrix){
     });
 
   ALLOC_AUX_SOCIOMATRIX(Pair, sm);
-  for (Vertex t = 1; t <= N_NODES; t++) {
+  for (Vertex t = 1; t <= N_NODES; t++) { // Initialisation of look-up look-down structure
     for (Vertex j = 1; j <= N_NODES; j++) {
       if (t == j || R[t][j] == 0) continue;
 
@@ -76,8 +76,8 @@ WtI_CHANGESTAT_FN(i__dsociomatrix){
       for (Vertex k = 1; k <= N_NODES; k++) {
         if (k == t || k == j || R[t][k] == 0) continue;
 
-        if (R[t][k] == r_j + 1) below = k;
-        if (R[t][k] == r_j - 1) above = k;
+        if (R[t][k] == r_j + 1 || R[t][k] == r_j) below = k; // Tie broken by index
+        if (R[t][k] == r_j - 1 || R[t][k] == r_j) above = k;
       }
 
       sm[t][j][0] = below;
