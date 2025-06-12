@@ -10,8 +10,8 @@
 #include "ergm_wtedgetree.h"
 #include "ergm_wtchangestat.h"
 #include "ergm_storage.h"
+#include <math.h>
 
-typedef unsigned int Vertex;
 typedef Vertex Pair[2];
 
 /*WtC_CHANGESTAT_FN(c_test_abs_sum_minus_5){
@@ -64,7 +64,7 @@ WtI_CHANGESTAT_FN(i__dsociomatrix){
       R[t][h] = w;
     });
 
-  ALLOC_AUX_SOCIOMATRIX(Pair, sm);
+  ALLOC_AUX_SOCIOMATRIX(Pair, udsm);
   for (Vertex t = 1; t <= N_NODES; t++) { // Initialisation of look-up look-down structure
     for (Vertex j = 1; j <= N_NODES; j++) {
       if (t == j || R[t][j] == 0) continue;
@@ -72,22 +72,33 @@ WtI_CHANGESTAT_FN(i__dsociomatrix){
       double r_j = R[t][j];
       Vertex below = 0;
       Vertex above = 0;
+      double min_above = INFINITY;
+      double min_below = INFINITY;
+        for (Vertex k = 1; k <= N_NODES; k++) {
+          if (k == t || k == j || R[t][k] == 0) continue;
 
-      for (Vertex k = 1; k <= N_NODES; k++) {
-        if (k == t || k == j || R[t][k] == 0) continue;
+          else if (R[t][k] > r_j) {
+            if (R[t][k] - r_j < min_below) { // New difference between R[t][k] and R[t][j] that's smaller but below
+              min_below = R[t][k] - r_j;
+              below = k;
+            }
+          }
+          else if (R[t][k] < r_j) {
+            if (r_j - R[t][k] < min_above) { // New difference between R[t][k] and R[t][j] that's smaller but above
+              min_above = r_j - R[t][k];
+              above = k;
+            }
+          }
+        }
 
-        if (R[t][k] == r_j + 1 || R[t][k] == r_j) below = k; // Tie broken by index
-        if (R[t][k] == r_j - 1 || R[t][k] == r_j) above = k;
-      }
-
-      sm[t][j][0] = below;
-      sm[t][j][1] = above;
+      udsm[t][j][0] = below;
+      udsm[t][j][1] = above;
     }
   }
 }
 
 WtU_CHANGESTAT_FN(u__dsociomatrix){
-  GET_AUX_STORAGE(Pair, sm);
+  GET_AUX_STORAGE(Pair, udsm);
 }
 
 WtF_CHANGESTAT_FN(f__dsociomatrix){
