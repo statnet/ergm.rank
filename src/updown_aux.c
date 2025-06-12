@@ -56,9 +56,8 @@ WtU_CHANGESTAT_FN(u_test_abs_sum_minus_5_no_s){u_test_abs_sum_minus_5(tail, head
 
 
 
-WtI_CHANGESTAT_FN(i__dsociomatrix){
+WtI_CHANGESTAT_FN(i__updown){
   double R[N_NODES][N_NODES];
-  
   // Now, populate the sociomatrix.
   EXEC_THROUGH_NET_EDGES(t, h, e, w, {
       R[t][h] = w;
@@ -96,11 +95,11 @@ WtI_CHANGESTAT_FN(i__dsociomatrix){
   }
 }
 
-WtU_CHANGESTAT_FN(u__dsociomatrix){
+WtU_CHANGESTAT_FN(u__updown){
   GET_AUX_STORAGE(Pair, udsm);
 }
 
-WtF_CHANGESTAT_FN(f__dsociomatrix){
+WtF_CHANGESTAT_FN(f__updown){
   FREE_AUX_SOCIOMATRIX;
 }
 
