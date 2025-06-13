@@ -12,7 +12,10 @@
 #include "ergm_storage.h"
 #include <math.h>
 
-typedef Vertex Pair[2];
+typedef struct {
+  Vertex up;
+  Vertex down;
+} Pair;
 
 /*WtC_CHANGESTAT_FN(c_test_abs_sum_minus_5){
   GET_STORAGE(double, stored_sum_ptr);
@@ -54,43 +57,38 @@ WtC_CHANGESTAT_FN(c_test_abs_sum_minus_5_no_s){c_test_abs_sum_minus_5(tail, head
 WtI_CHANGESTAT_FN(i_test_abs_sum_minus_5_no_s){i_test_abs_sum_minus_5(mtp, nwp);}
 WtU_CHANGESTAT_FN(u_test_abs_sum_minus_5_no_s){u_test_abs_sum_minus_5(tail, head, weight, mtp, nwp, edgestate);}*/
 
-
+static inline Rboolean rank_above(Vertex j, double r_j, Vertex k, double r_k) {
+  return(r_j>r_k || (r_j == r_k && j > k));
+} 
 
 WtI_CHANGESTAT_FN(i__updown){
-  GET_AUX_STORAGE(double *, R);
-  // Now, populate the sociomatrix.
-  EXEC_THROUGH_NET_EDGES(t, h, e, w, {
-      R[t][h] = w;
-    });
+  GET_AUX_STORAGE(1, double *, R);
 
   ALLOC_AUX_SOCIOMATRIX(Pair, udsm);
   for (Vertex t = 1; t <= N_NODES; t++) { // Initialisation of look-up look-down structure
     for (Vertex j = 1; j <= N_NODES; j++) {
-      if (t == j || R[t][j] == 0) continue;
+      if (t == j) continue;
 
       double r_j = R[t][j];
       Vertex below = 0;
       Vertex above = 0;
-      double min_above = INFINITY;
-      double min_below = INFINITY;
       for (Vertex k = 1; k <= N_NODES; k++) {
-        if (k == t || k == j || R[t][k] == 0) continue;
+        if (k == t || k == j) continue;
 
-        else if (R[t][k] > r_j) {
-          if (R[t][k] - r_j < min_below) { // New difference between R[t][k] and R[t][j] that's smaller but below
-              min_below = R[t][k] - r_j;
-              below = k;
-          }
+        double r_k = R[t][k];
+
+        if (below == 0 && rank_above(j, r_j, k, r_k)) {below = k; continue;} // Take first below
+        if (above == 0 && rank_above(k, r_k, j, r_j)) {above = k; continue;} // Take first above
+
+        if (rank_above(j, r_j, k, r_k)) {
+          if (rank_above(k, r_k, below, R[t][below])) below = k; // This k is 'closer' from below
         }
-        else if (R[t][k] < r_j) {
-          if (r_j - R[t][k] < min_above) { // New difference between R[t][k] and R[t][j] that's smaller but above
-            min_above = r_j - R[t][k];
-            above = k;
-          }
+        if (rank_above(k, r_k, j, r_j)) {
+          if (rank_above(above, R[t][above], k, r_k)) above = k; // This k is 'closer' from above
         }
       }
-      udsm[t][j][0] = below;
-      udsm[t][j][1] = above;
+      udsm[t][j].down = below;
+      udsm[t][j].up = above;
     }
   }
 }
