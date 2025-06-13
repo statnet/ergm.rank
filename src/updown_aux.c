@@ -58,7 +58,7 @@ WtI_CHANGESTAT_FN(i_test_abs_sum_minus_5_no_s){i_test_abs_sum_minus_5(mtp, nwp);
 WtU_CHANGESTAT_FN(u_test_abs_sum_minus_5_no_s){u_test_abs_sum_minus_5(tail, head, weight, mtp, nwp, edgestate);}*/
 
 static inline Rboolean rank_above(Vertex j, double r_j, Vertex k, double r_k) {
-  return(r_j>r_k || (r_j == r_k && j > k));
+  return(r_j > r_k || (r_j == r_k && j > k));
 } 
 
 WtI_CHANGESTAT_FN(i__updown){
