@@ -15,7 +15,7 @@ typedef struct {
   Vertex down;
 } Pair;
 
-WtC_CHANGESTAT_FN(c_edgecov_rank){
+WtC_CHANGESTAT_FN(c_edgecov_rank) {
 	GET_AUX_STORAGE(1, double *, sm);
     Vertex v1=tail;
     Vertex v2=head;
@@ -35,21 +35,38 @@ WtC_CHANGESTAT_FN(c_edgecov_rank){
 	if(v12_new<v13_old)
 	  CHANGE_STAT[0] -= v123_covdiff;
     }
-} 
+}
 
-WtS_CHANGESTAT_FN(s_edgecov_rank){
+// We're checking if weight of v12 is greater than v13, which is the same as 1's ranking of 2 is above ranking of 3
+// Maybe find the bottom guy (v[i][k].below = 0), and then iterate up until v[i][k].above = 0?
+
+WtS_CHANGESTAT_FN(s_edgecov_rank) {
   GET_AUX_STORAGE(1, double *, sm);
-  for (Vertex v1=1; v1 <= N_NODES; v1++){
+  GET_AUX_STORAGE(Pair *, udsm);
+  /*for (Vertex v1=1; v1 <= N_NODES; v1++) {
     for (Vertex v2=1; v2 <= N_NODES; v2++){
       if(v2==v1) continue;
       double v12=sm[v1][v2];
-      for (Vertex v3=1; v3 <= N_NODES; v3++){
+      for (Vertex v3=1; v3 <= N_NODES; v3++) {
 	if(v3==v2 || v3==v1) continue;
 	double v123_covdiff = INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
 	if(v123_covdiff!=0 && v12>sm[v1][v3]) // Short-circuit the lookup of ranking of v3 by v1 if covariate is 0.
 	  CHANGE_STAT[0] += v123_covdiff;
       }
     }
+  }*/
+  for (Vertex v1=1; v1 <= N_NODES; v1++) {
+	for (Vertex v2=1; v2 <= N_NODES; v2++) {
+		Vertex v3 = udsm[v1][v2].down;
+		if (v3 == 0) continue; // Skip, at bottom
+		while (v3 != 0) { // Iterate down until bottom, since its ordered
+			double v123_covdiff = INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
+			if (v123_covdiff !=0 && sm[v1][v2] != sm[v1][v3]) {
+				CHANGE_STAT[0] += v123_covdiff;
+			}
+			v3 = udsm[v1][v2].down;
+		}
+	}
   }
 }
 
@@ -142,7 +159,7 @@ WtS_CHANGESTAT_FN(s_inconsistency_cov_rank){
 
 WtC_CHANGESTAT_FN(c_deference){
   GET_AUX_STORAGE(1, double *, sm);
-      for(Vertex v1=1; v1 <= N_NODES; v1++){
+    for(Vertex v1=1; v1 <= N_NODES; v1++){
 	for(Vertex v3=1; v3 <= N_NODES; v3++){
 	  if(v3==v1) continue;
 	  double v31_old = sm[v3][v1];
