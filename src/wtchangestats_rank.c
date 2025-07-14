@@ -17,11 +17,46 @@ typedef struct {
 
 WtC_CHANGESTAT_FN(c_edgecov_rank) {
 	GET_AUX_STORAGE(1, double *, sm);
+	GET_AUX_STORAGE(Pair *, udsm);
     Vertex v1=tail;
     Vertex v2=head;
     double v12_old = sm[tail][head];
     double v12_new = weight;
-    for (Vertex v3=1; v3 <= N_NODES; v3++){
+	Vertex v3 = udsm[v1][v2].down;
+	if (v3 != 0) { // Skip, at bottom
+		while (v3 != 0) { // Iterate down until bottom, since its ordered
+			double v123_covdiff = INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
+			if (sm[v1][v2] > sm[v1][v3]) {
+				CHANGE_STAT[0] += v123_covdiff;
+			}
+			if (v12_new > sm[v1][v3]) {
+				CHANGE_STAT[0] += v123_covdiff;
+			}
+			if (v12_new < sm[v1][v3]) {
+				CHANGE_STAT[0] -= v123_covdiff;
+			}
+			v3 = udsm[v1][v2].down;
+		}
+	}
+
+	v3 = udsm[v1][v2].up;
+	if (v3 != 0) { // Skip, at top
+		while (v3 != 0) { // Iterate down until top, since its ordered
+			double v123_covdiff = INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
+			if (sm[v1][v2] < sm[v1][v3]) {
+				CHANGE_STAT[0] += v123_covdiff;
+			}
+			if (v12_new > sm[v1][v3]) {
+				CHANGE_STAT[0] += v123_covdiff;
+			}
+			if (v12_new < sm[v1][v3]) {
+				CHANGE_STAT[0] -= v123_covdiff;
+			}
+			v3 = udsm[v1][v2].up;
+		}
+	}
+	
+    /*for (Vertex v3=1; v3 <= N_NODES; v3++){
 	if(v3==v2 || v3==v1) continue;
 	double v123_covdiff=INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
 	if(v123_covdiff==0) continue; // If covariate value is 0, don't bother looking up the ranking of v3 by v1.
@@ -34,7 +69,7 @@ WtC_CHANGESTAT_FN(c_edgecov_rank) {
 	  CHANGE_STAT[0] += v123_covdiff;
 	if(v12_new<v13_old)
 	  CHANGE_STAT[0] -= v123_covdiff;
-    }
+    }*/
 }
 
 // We're checking if weight of v12 is greater than v13, which is the same as 1's ranking of 2 is above ranking of 3
@@ -61,7 +96,7 @@ WtS_CHANGESTAT_FN(s_edgecov_rank) {
 		if (v3 == 0) continue; // Skip, at bottom
 		while (v3 != 0) { // Iterate down until bottom, since its ordered
 			double v123_covdiff = INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
-			if (v123_covdiff !=0 && sm[v1][v2] != sm[v1][v3]) {
+			if (v123_covdiff != 0 && sm[v1][v2] > sm[v1][v3]) {
 				CHANGE_STAT[0] += v123_covdiff;
 			}
 			v3 = udsm[v1][v2].down;
@@ -91,6 +126,7 @@ WtC_CHANGESTAT_FN(c_inconsistency_rank){
 
 WtS_CHANGESTAT_FN(s_inconsistency_rank){ 
   GET_AUX_STORAGE(1, double *, sm);
+  GET_AUX_STORAGE(Pair *, udsm);
   for(Vertex v1=1; v1 <= N_NODES; v1++){
     for(Vertex v2=1; v2 <= N_NODES; v2++){
       if(v2==v1) continue;
@@ -271,7 +307,8 @@ WtC_CHANGESTAT_FN(c_nonconformity){
       }
 }
 
-WtS_CHANGESTAT_FN(s_nonconformity){ 
+// for i, j, k and l, +1 nonconformity if i and j disagree on their ranking of k and l
+WtS_CHANGESTAT_FN(s_nonconformity) { 
   GET_AUX_STORAGE(1, double *, sm);
   for(Vertex v1=1; v1 <= N_NODES; v1++){
     for(Vertex v2=1; v2 < v1; v2++){
