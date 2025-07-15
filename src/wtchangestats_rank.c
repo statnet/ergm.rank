@@ -50,7 +50,7 @@ WtC_CHANGESTAT_FN(c_edgecov_rank) {
 		}
 	}
 	
-    for (Vertex v3=1; v3 <= N_NODES; v3++){
+    /*for (Vertex v3=1; v3 <= N_NODES; v3++){
 	if(v3==v2 || v3==v1) continue;
 	double v123_covdiff=INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
 	if(v123_covdiff==0) continue; // If covariate value is 0, don't bother looking up the ranking of v3 by v1.
@@ -63,7 +63,7 @@ WtC_CHANGESTAT_FN(c_edgecov_rank) {
 	  CHANGE_STAT[0] += v123_covdiff;
 	if(v12_new<v13_old)
 	  CHANGE_STAT[0] -= v123_covdiff;
-    }
+    }*/
 }
 
 // We're checking if weight of v12 is greater than v13, which is the same as 1's ranking of 2 is above ranking of 3
