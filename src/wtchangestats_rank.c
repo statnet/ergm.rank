@@ -22,6 +22,33 @@ WtC_CHANGESTAT_FN(c_edgecov_rank) {
     Vertex v2=head;
     double v12_old = sm[tail][head];
     double v12_new = weight;
+	if (v12_new > v12_old) { // New is above, so iterate upwards
+		Vertex v3 = v2;
+		while (udsm[v1][v3].down != 0 && sm[v1][udsm[v1][v3].down] == v12_old) { // iterate down to look for alters with same rank value
+			v3 = udsm[v1][v3].down;
+		}
+		// Now at bottom alter with same rank value, can iterate up now
+		while (sm[v1][v3] != v12_new) {
+			if(v3==v2 || v3==v1) continue;
+			double v123_covdiff=INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
+			if(v123_covdiff==0) continue; // If covariate value is 0, don't bother looking up the ranking of v3 by v1.
+			CHANGE_STAT[0] += 2*v123_covdiff;
+			v3 = udsm[v1][v3].up;
+		}
+	} else { // New is below, so iterate downwards
+		Vertex v3 = v2;
+		while (udsm[v1][v3].up != 0 && sm[v1][udsm[v1][v3].up] == v12_old) { // iterate up to look for alters with same rank value
+			v3 = udsm[v1][v3].up;
+		}
+		// Now at top alter with same rank value, can iterate down now
+		while (sm[v1][v3] != v12_new) {
+			if(v3==v2 || v3==v1) continue;
+			double v123_covdiff=INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
+			if(v123_covdiff==0) continue; // If covariate value is 0, don't bother looking up the ranking of v3 by v1.
+			CHANGE_STAT[0] -= 2*v123_covdiff;
+			v3 = udsm[v1][v3].down;
+		}
+	}
 	
     for (Vertex v3=1; v3 <= N_NODES; v3++){
 	if(v3==v2 || v3==v1) continue;
@@ -45,7 +72,7 @@ WtC_CHANGESTAT_FN(c_edgecov_rank) {
 WtS_CHANGESTAT_FN(s_edgecov_rank) {
   GET_AUX_STORAGE(1, double *, sm);
   GET_AUX_STORAGE(Pair *, udsm);
-  /*for (Vertex v1=1; v1 <= N_NODES; v1++) {
+  for (Vertex v1=1; v1 <= N_NODES; v1++) {
     for (Vertex v2=1; v2 <= N_NODES; v2++){
       if(v2==v1) continue;
       double v12=sm[v1][v2];
@@ -56,8 +83,8 @@ WtS_CHANGESTAT_FN(s_edgecov_rank) {
 	  CHANGE_STAT[0] += v123_covdiff;
       }
     }
-  }*/
-  for (Vertex v1=1; v1 <= N_NODES; v1++) {
+  }
+  /*for (Vertex v1=1; v1 <= N_NODES; v1++) {
 	for (Vertex v2=1; v2 <= N_NODES; v2++) {
 		if(v2==v1) continue;
 		Vertex v3 = udsm[v1][v2].down;
@@ -72,7 +99,7 @@ WtS_CHANGESTAT_FN(s_edgecov_rank) {
 			v3 = udsm[v1][v2].down;
 		}
 	}
-  }
+  }*/
 }
 
 
@@ -102,7 +129,7 @@ WtS_CHANGESTAT_FN(s_inconsistency_rank){
     for(Vertex v2=1; v2 <= N_NODES; v2++){
       	if(v2==v1) continue;
       	double v12 = sm[v1][v2], v12_ref = INPUT_PARAM[(v1-1)*N_NODES+(v2-1)];
-	  	Vertex v3 = udsm[v1][v2].down;
+	  	/*Vertex v3 = udsm[v1][v2].down;
 		if (v3 == 0) continue; // Skip, at bottom
 		while (v3 != 0) { // Iterate down until bottom, since its ordered
 			if(v3!=v2 && v3!=v1) {
@@ -112,16 +139,16 @@ WtS_CHANGESTAT_FN(s_inconsistency_rank){
 				if(v123!=v123_ref) CHANGE_STAT[0]++;
 			}
 			v3 = udsm[v1][v3].down;
-		}
+		}*/
 
 
-      /*for(Vertex v3=1; v3 <= N_NODES; v3++){
+      for(Vertex v3=1; v3 <= N_NODES; v3++){
 	if(v3==v2 || v3==v1) continue;
 	unsigned int 
 	  v123 = v12>sm[v1][v3],
 	  v123_ref = v12_ref>INPUT_PARAM[(v1-1)*N_NODES+(v3-1)];
 	if(v123!=v123_ref) CHANGE_STAT[0]++;
-      }*/
+      }
     }
   }
 }
