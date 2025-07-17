@@ -62,8 +62,7 @@ static inline Rboolean rank_above(Vertex j, double r_j, Vertex k, double r_k) {
 } 
 
 WtI_CHANGESTAT_FN(i__updown){
-  GET_AUX_STORAGE(1, double *, R);
-
+  GET_AUX_STORAGE(0, double *, R);
   ALLOC_AUX_SOCIOMATRIX(Pair, udsm);
   for (Vertex t = 1; t <= N_NODES; t++) { // Initialisation of look-up look-down structure
     for (Vertex j = 1; j <= N_NODES; j++) {
@@ -94,7 +93,7 @@ WtI_CHANGESTAT_FN(i__updown){
 }
 
 WtU_CHANGESTAT_FN(u__updown){ // Recalculate look-up look-down when something changes
-  GET_AUX_STORAGE(1, double *, R);
+  GET_AUX_STORAGE(0, double *, R);
   GET_AUX_STORAGE(Pair *, udsm);
   for (Vertex t = 1; t <= N_NODES; t++) { // Initialisation of look-up look-down structure
     for (Vertex j = 1; j <= N_NODES; j++) {

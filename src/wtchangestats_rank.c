@@ -16,19 +16,22 @@ typedef struct {
 } Pair;
 
 WtC_CHANGESTAT_FN(c_edgecov_rank) {
-	GET_AUX_STORAGE(1, double *, sm);
-	GET_AUX_STORAGE(Pair *, udsm);
+	GET_AUX_STORAGE(0, double *, sm);
+	GET_AUX_STORAGE(1, Pair *, udsm);
     Vertex v1=tail;
     Vertex v2=head;
     double v12_old = sm[tail][head];
     double v12_new = weight;
-	if (v12_new > v12_old) { // New is above, so iterate upwards
+	// if (v12_new > v12_old) { // New is above, so iterate upwards
 		Vertex v3 = v2;
-		while (udsm[v1][v3].down != 0 && sm[v1][udsm[v1][v3].down] == v12_old) { // iterate down to look for alters with same rank value
-			v3 = udsm[v1][v3].down;
+		if (sm[v1][v3] == 0) {
+			printf("test");
 		}
+		/*while (udsm[v1][v3].down != 0) { // iterate down to look for alters with same rank value
+			// v3 = udsm[v1][v3].down;
+		}*/
 		// Now at bottom alter with same rank value, can iterate up now
-		while (sm[v1][v3] != v12_new) {
+		/*while (sm[v1][v3] != v12_new) {
 			if(v3==v2 || v3==v1) continue;
 			double v123_covdiff=INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
 			if(v123_covdiff==0) continue; // If covariate value is 0, don't bother looking up the ranking of v3 by v1.
@@ -38,8 +41,8 @@ WtC_CHANGESTAT_FN(c_edgecov_rank) {
 				CHANGE_STAT[0] += v123_covdiff;
 			}
 			v3 = udsm[v1][v3].up;
-		}
-	} else { // New is below, so iterate downwards
+		}*/
+	/*} else { // New is below, so iterate downwards
 		Vertex v3 = v2;
 		while (udsm[v1][v3].up != 0 && sm[v1][udsm[v1][v3].up] == v12_old) { // iterate up to look for alters with same rank value
 			v3 = udsm[v1][v3].up;
@@ -56,9 +59,15 @@ WtC_CHANGESTAT_FN(c_edgecov_rank) {
 			}
 			v3 = udsm[v1][v3].down;
 		}
-	}
+	}*/
 	
-    /*for (Vertex v3=1; v3 <= N_NODES; v3++){
+    /*GET_AUX_STORAGE(0, double *, sm);
+	GET_AUX_STORAGE(Pair *, udsm);
+      Vertex v1=tail;
+      Vertex v2=head;
+      double v12_old = sm[tail][head];
+      double v12_new = weight;
+      for (Vertex v3=1; v3 <= N_NODES; v3++){
 	if(v3==v2 || v3==v1) continue;
 	double v123_covdiff=INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
 	if(v123_covdiff==0) continue; // If covariate value is 0, don't bother looking up the ranking of v3 by v1.
@@ -71,20 +80,16 @@ WtC_CHANGESTAT_FN(c_edgecov_rank) {
 	  CHANGE_STAT[0] += v123_covdiff;
 	if(v12_new<v13_old)
 	  CHANGE_STAT[0] -= v123_covdiff;
-    }*/
+      }/**/
 }
 
-// We're checking if weight of v12 is greater than v13, which is the same as 1's ranking of 2 is above ranking of 3
-// Maybe find the bottom guy (v[i][k].below = 0), and then iterate up until v[i][k].above = 0?
-
-WtS_CHANGESTAT_FN(s_edgecov_rank) {
-  GET_AUX_STORAGE(1, double *, sm);
-  GET_AUX_STORAGE(Pair *, udsm);
-  for (Vertex v1=1; v1 <= N_NODES; v1++) {
+WtS_CHANGESTAT_FN(s_edgecov_rank){
+  GET_AUX_STORAGE(double *, sm);
+  for (Vertex v1=1; v1 <= N_NODES; v1++){
     for (Vertex v2=1; v2 <= N_NODES; v2++){
       if(v2==v1) continue;
       double v12=sm[v1][v2];
-      for (Vertex v3=1; v3 <= N_NODES; v3++) {
+      for (Vertex v3=1; v3 <= N_NODES; v3++){
 	if(v3==v2 || v3==v1) continue;
 	double v123_covdiff = INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
 	if(v123_covdiff!=0 && v12>sm[v1][v3]) // Short-circuit the lookup of ranking of v3 by v1 if covariate is 0.
@@ -92,34 +97,17 @@ WtS_CHANGESTAT_FN(s_edgecov_rank) {
       }
     }
   }
-  /*for (Vertex v1=1; v1 <= N_NODES; v1++) {
-	for (Vertex v2=1; v2 <= N_NODES; v2++) {
-		if(v2==v1) continue;
-		Vertex v3 = udsm[v1][v2].down;
-		if (v3 == 0) continue; // Skip, at bottom
-		while (v3 != 0) { // Iterate down until bottom, since its ordered
-			if(v3!=v2 & v3!=v1) {
-				double v123_covdiff = INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
-				if (v123_covdiff != 0 && sm[v1][v2] > sm[v1][v3]) {
-					CHANGE_STAT[0] += v123_covdiff;
-				}
-			}
-			v3 = udsm[v1][v2].down;
-		}
-	}
-  }*/
 }
 
 
 WtC_CHANGESTAT_FN(c_inconsistency_rank){
-  GET_AUX_STORAGE(1, double *, sm);
-  GET_AUX_STORAGE(Pair *, udsm);
-	Vertex v1=tail;
-    Vertex v2=head;
-    double v12_old = sm[tail][head];
-    double v12_ref = INPUT_PARAM[(v1-1)*N_NODES+(v2-1)];
-    double v12_new = weight;
-    for(Vertex v3=1; v3 <= N_NODES; v3++){
+  GET_AUX_STORAGE(double *, sm);
+      Vertex v1=tail;
+      Vertex v2=head;
+      double v12_old = sm[tail][head];
+      double v12_ref = INPUT_PARAM[(v1-1)*N_NODES+(v2-1)];
+      double v12_new = weight;
+      for(Vertex v3=1; v3 <= N_NODES; v3++){
 	if(v3==v2 || v3==v1) continue;
 	double v13= sm[v1][v3];
 	double v13_ref=INPUT_PARAM[(v1-1)*N_NODES+(v3-1)];
@@ -131,25 +119,11 @@ WtC_CHANGESTAT_FN(c_inconsistency_rank){
 }
 
 WtS_CHANGESTAT_FN(s_inconsistency_rank){ 
-  GET_AUX_STORAGE(1, double *, sm);
-  GET_AUX_STORAGE(Pair *, udsm);
+  GET_AUX_STORAGE(double *, sm);
   for(Vertex v1=1; v1 <= N_NODES; v1++){
     for(Vertex v2=1; v2 <= N_NODES; v2++){
-      	if(v2==v1) continue;
-      	double v12 = sm[v1][v2], v12_ref = INPUT_PARAM[(v1-1)*N_NODES+(v2-1)];
-	  	/*Vertex v3 = udsm[v1][v2].down;
-		if (v3 == 0) continue; // Skip, at bottom
-		while (v3 != 0) { // Iterate down until bottom, since its ordered
-			if(v3!=v2 && v3!=v1) {
-				unsigned int 
-				v123 = v12>sm[v1][v3],
-				v123_ref = v12_ref>INPUT_PARAM[(v1-1)*N_NODES+(v3-1)];
-				if(v123!=v123_ref) CHANGE_STAT[0]++;
-			}
-			v3 = udsm[v1][v3].down;
-		}*/
-
-
+      if(v2==v1) continue;
+      double v12 = sm[v1][v2], v12_ref = INPUT_PARAM[(v1-1)*N_NODES+(v2-1)];
       for(Vertex v3=1; v3 <= N_NODES; v3++){
 	if(v3==v2 || v3==v1) continue;
 	unsigned int 
@@ -162,7 +136,7 @@ WtS_CHANGESTAT_FN(s_inconsistency_rank){
 }
 
 WtC_CHANGESTAT_FN(c_inconsistency_cov_rank){
-  GET_AUX_STORAGE(1, double *, sm);
+  GET_AUX_STORAGE(double *, sm);
       unsigned int cov_start = N_NODES*N_NODES;
       Vertex v1=tail;
       Vertex v2=head;
@@ -192,7 +166,7 @@ WtC_CHANGESTAT_FN(c_inconsistency_cov_rank){
 }
 
 WtS_CHANGESTAT_FN(s_inconsistency_cov_rank){ 
-  GET_AUX_STORAGE(1, double *, sm);
+  GET_AUX_STORAGE(double *, sm);
   unsigned int cov_start = N_NODES*N_NODES;
   for(Vertex v1=1; v1 <= N_NODES; v1++){
     for(Vertex v2=1; v2 <= N_NODES; v2++){
@@ -213,8 +187,8 @@ WtS_CHANGESTAT_FN(s_inconsistency_cov_rank){
 }
 
 WtC_CHANGESTAT_FN(c_deference){
-  GET_AUX_STORAGE(1, double *, sm);
-    for(Vertex v1=1; v1 <= N_NODES; v1++){
+  GET_AUX_STORAGE(double *, sm);
+      for(Vertex v1=1; v1 <= N_NODES; v1++){
 	for(Vertex v3=1; v3 <= N_NODES; v3++){
 	  if(v3==v1) continue;
 	  double v31_old = sm[v3][v1];
@@ -240,7 +214,7 @@ WtC_CHANGESTAT_FN(c_deference){
 }
 
 WtS_CHANGESTAT_FN(s_deference){ 
-  GET_AUX_STORAGE(1, double *, sm);
+  GET_AUX_STORAGE(double *, sm);
   for(Vertex v1=1; v1 <= N_NODES; v1++){
     for(Vertex v3=1; v3 <= N_NODES; v3++){
       if(v3==v1) continue;
@@ -256,7 +230,7 @@ WtS_CHANGESTAT_FN(s_deference){
 
 WtC_CHANGESTAT_FN(c_nodeicov_rank){
   unsigned int oshift = N_INPUT_PARAMS / N_CHANGE_STATS;
-  GET_AUX_STORAGE(1, double *, sm);
+  GET_AUX_STORAGE(double *, sm);
       Vertex v1=tail;
       Vertex v2=head;
       double v12_old = sm[tail][head];
@@ -280,7 +254,7 @@ WtC_CHANGESTAT_FN(c_nodeicov_rank){
 
 WtS_CHANGESTAT_FN(s_nodeicov_rank){ 
   unsigned int oshift = N_INPUT_PARAMS / N_CHANGE_STATS;
-  GET_AUX_STORAGE(1, double *, sm);
+  GET_AUX_STORAGE(double *, sm);
   for (Vertex v1=1; v1 <= N_NODES; v1++){
     for (Vertex v2=1; v2 <= N_NODES; v2++){
       if(v2==v1) continue;
@@ -298,7 +272,7 @@ WtS_CHANGESTAT_FN(s_nodeicov_rank){
 }
 
 WtC_CHANGESTAT_FN(c_nonconformity){
-  GET_AUX_STORAGE(1, double *, sm);
+  GET_AUX_STORAGE(double *, sm);
       Vertex v1=tail;
       
       for(Vertex v2=1; v2 <= N_NODES; v2++){
@@ -326,9 +300,8 @@ WtC_CHANGESTAT_FN(c_nonconformity){
       }
 }
 
-// for i, j, k and l, +1 nonconformity if i and j disagree on their ranking of k and l
-WtS_CHANGESTAT_FN(s_nonconformity) { 
-  GET_AUX_STORAGE(1, double *, sm);
+WtS_CHANGESTAT_FN(s_nonconformity){ 
+  GET_AUX_STORAGE(double *, sm);
   for(Vertex v1=1; v1 <= N_NODES; v1++){
     for(Vertex v2=1; v2 < v1; v2++){
       for(Vertex v3=1; v3 <= N_NODES; v3++){
@@ -348,7 +321,7 @@ WtS_CHANGESTAT_FN(s_nonconformity) {
 
 // From Krivitsky and Butts paper, here, v1=i, v2=j, v3=l, v4=k.
 WtC_CHANGESTAT_FN(c_local1_nonconformity){
-  GET_AUX_STORAGE(1, double *, sm);
+  GET_AUX_STORAGE(double *, sm);
       Vertex v1=tail;
       
       for(Vertex v2=1; v2 <= N_NODES; v2++){
@@ -419,7 +392,7 @@ WtC_CHANGESTAT_FN(c_local1_nonconformity){
 
 // From Krivitsky and Butts paper, here, v1=i, v2=j, v3=l, v4=k.
 WtS_CHANGESTAT_FN(s_local1_nonconformity){ 
-  GET_AUX_STORAGE(1, double *, sm);
+  GET_AUX_STORAGE(double *, sm);
   for(Vertex v1=1; v1 <= N_NODES; v1++){
     for(Vertex v2=1; v2 <= N_NODES; v2++){
       if(v2==v1) continue;
@@ -442,7 +415,7 @@ WtS_CHANGESTAT_FN(s_local1_nonconformity){
 
 
 WtC_CHANGESTAT_FN(c_local2_nonconformity){
-  GET_AUX_STORAGE(1, double *, sm);
+  GET_AUX_STORAGE(double *, sm);
       Vertex v1=tail;
       for(Vertex v2=1; v2 <= N_NODES; v2++){
 	if(v2==v1) continue;
@@ -503,7 +476,7 @@ WtC_CHANGESTAT_FN(c_local2_nonconformity){
 }
 
 WtS_CHANGESTAT_FN(s_local2_nonconformity){ 
-  GET_AUX_STORAGE(1, double *, sm);
+  GET_AUX_STORAGE(double *, sm);
   for(Vertex v1=1; v1 <= N_NODES; v1++){
     for(Vertex v2=1; v2 <= N_NODES; v2++){
       if(v2==v1) continue;
@@ -527,7 +500,7 @@ WtS_CHANGESTAT_FN(s_local2_nonconformity){
 
 // From Krivitsky and Butts paper, here, v1=i, v2=j, v3=l, v4=k.
 WtC_CHANGESTAT_FN(c_localAND_nonconformity){
-  GET_AUX_STORAGE(1, double *, sm);
+  GET_AUX_STORAGE(double *, sm);
       Vertex v1=tail;
       
       for(Vertex v2=1; v2 <= N_NODES; v2++){
@@ -602,7 +575,7 @@ WtC_CHANGESTAT_FN(c_localAND_nonconformity){
 
 // From Krivitsky and Butts paper, here, v1=i, v2=j, v3=l, v4=k.
 WtS_CHANGESTAT_FN(s_localAND_nonconformity){ 
-  GET_AUX_STORAGE(1, double *, sm);
+  GET_AUX_STORAGE(double *, sm);
   for(Vertex v1=1; v1 <= N_NODES; v1++){
     for(Vertex v2=1; v2 <= N_NODES; v2++){
       if(v2==v1) continue;
@@ -629,7 +602,7 @@ WtS_CHANGESTAT_FN(s_localAND_nonconformity){
 WtD_FROM_S_FN(d_nonconformity_decay)
 
 WtS_CHANGESTAT_FN(s_nonconformity_decay){ 
-  GET_AUX_STORAGE(1, double *, sm);
+  GET_AUX_STORAGE(double *, sm);
   for(Vertex v1=1; v1 <= N_NODES; v1++){
     for(Vertex v2=1; v2 <= N_NODES; v2++){
       if(v2==v1) continue;
@@ -652,7 +625,7 @@ WtS_CHANGESTAT_FN(s_nonconformity_decay){
 WtD_FROM_S_FN(d_nonconformity_thresholds)
 
 WtS_CHANGESTAT_FN(s_nonconformity_thresholds){ 
-  GET_AUX_STORAGE(1, double *, sm);
+  GET_AUX_STORAGE(double *, sm);
     for(Vertex v1=1; v1 <= N_NODES; v1++){
     for(Vertex v2=1; v2 <= N_NODES; v2++){
       if(v2==v1) continue;
