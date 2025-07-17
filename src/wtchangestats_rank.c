@@ -32,7 +32,11 @@ WtC_CHANGESTAT_FN(c_edgecov_rank) {
 			if(v3==v2 || v3==v1) continue;
 			double v123_covdiff=INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
 			if(v123_covdiff==0) continue; // If covariate value is 0, don't bother looking up the ranking of v3 by v1.
-			CHANGE_STAT[0] += 2*v123_covdiff;
+			if (v12_old < sm[v1][v3]) { // previously below now above
+				CHANGE_STAT[0] += 2*v123_covdiff;
+			} else if (v12_old == sm[v1][v3]) {
+				CHANGE_STAT[0] += v123_covdiff;
+			}
 			v3 = udsm[v1][v3].up;
 		}
 	} else { // New is below, so iterate downwards
@@ -45,7 +49,11 @@ WtC_CHANGESTAT_FN(c_edgecov_rank) {
 			if(v3==v2 || v3==v1) continue;
 			double v123_covdiff=INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
 			if(v123_covdiff==0) continue; // If covariate value is 0, don't bother looking up the ranking of v3 by v1.
-			CHANGE_STAT[0] -= 2*v123_covdiff;
+			if (v12_old > sm[v1][v3]) { // previously above now below
+				CHANGE_STAT[0] -= 2*v123_covdiff;
+			} else if (v12_old == sm[v1][v3]) {
+				CHANGE_STAT[0] -= v123_covdiff;
+			}
 			v3 = udsm[v1][v3].down;
 		}
 	}
