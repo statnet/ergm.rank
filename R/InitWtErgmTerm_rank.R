@@ -289,7 +289,6 @@ InitWtErgmTerm.rank.nonconformity<-function(nw, arglist, ...) {
 
 #' @export
 InitWtErgmTerm..updown <- function(nw, arglist, ...) {
-  cat("InitWtErgmTerm..updown called\n")
   # Validate and extract arguments if any (add below if needed)
   a <- check.ErgmTerm(nw, arglist, directed = TRUE, bipartite = FALSE,
                       varnames = NULL, vartypes = NULL, required = NULL,
@@ -301,6 +300,6 @@ InitWtErgmTerm..updown <- function(nw, arglist, ...) {
     coef.names = c(),               # What shows up in summary/model output
     inputs = NULL,                       # No additional inputs (unless you add them)
     dependence = FALSE,                   # This term depends on the network structure
-    auxiliaries = ~.sociomatrix("numeric") + .sociomatrix("dyad", "Pair")
+    auxiliaries = ~.sociomatrix("numeric")
   )
 }
