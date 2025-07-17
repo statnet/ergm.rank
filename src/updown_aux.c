@@ -67,7 +67,6 @@ WtI_CHANGESTAT_FN(i__updown){
   for (Vertex t = 1; t <= N_NODES; t++) { // Initialisation of look-up look-down structure
     for (Vertex j = 1; j <= N_NODES; j++) {
       if (t == j) continue;
-
       double r_j = R[t][j];
       Vertex below = 0;
       Vertex above = 0;

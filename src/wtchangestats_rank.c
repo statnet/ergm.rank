@@ -17,16 +17,16 @@ typedef struct {
 
 WtC_CHANGESTAT_FN(c_edgecov_rank) {
 	GET_AUX_STORAGE(0, double *, sm);
-	GET_AUX_STORAGE(1, Pair *, udsm);
+	GET_AUX_STORAGE(1, Pair , udsm);
     Vertex v1=tail;
     Vertex v2=head;
     double v12_old = sm[tail][head];
     double v12_new = weight;
 	// if (v12_new > v12_old) { // New is above, so iterate upwards
-		Vertex v3 = v2;
-		if (sm[v1][v3] == 0) {
-			printf("test");
-		}
+	Vertex v3 = v2;
+	if(udsm == NULL) {
+		Rprintf("Error: udsm is NULL\n");
+	}
 		/*while (udsm[v1][v3].down != 0) { // iterate down to look for alters with same rank value
 			// v3 = udsm[v1][v3].down;
 		}*/
@@ -80,7 +80,7 @@ WtC_CHANGESTAT_FN(c_edgecov_rank) {
 	  CHANGE_STAT[0] += v123_covdiff;
 	if(v12_new<v13_old)
 	  CHANGE_STAT[0] -= v123_covdiff;
-      }/**/
+      }*/
 }
 
 WtS_CHANGESTAT_FN(s_edgecov_rank){

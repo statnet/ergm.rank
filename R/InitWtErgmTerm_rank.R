@@ -289,6 +289,7 @@ InitWtErgmTerm.rank.nonconformity<-function(nw, arglist, ...) {
 
 #' @export
 InitWtErgmTerm..updown <- function(nw, arglist, ...) {
+  cat("InitWtErgmTerm..updown called\n")
   # Validate and extract arguments if any (add below if needed)
   a <- check.ErgmTerm(nw, arglist, directed = TRUE, bipartite = FALSE,
                       varnames = NULL, vartypes = NULL, required = NULL,
@@ -296,9 +297,10 @@ InitWtErgmTerm..updown <- function(nw, arglist, ...) {
 
   # Return the list that ergm uses to initialize the term
   list(
-    name = "updown",                      # Must match the C changestat prefix
+    name = "i__updown",                      # Must match the C changestat prefix
     coef.names = c(),               # What shows up in summary/model output
     inputs = NULL,                       # No additional inputs (unless you add them)
     dependence = FALSE,                   # This term depends on the network structure
-    auxiliaries = ~.sociomatrix("numeric"))
+    auxiliaries = ~.sociomatrix("numeric") + .sociomatrix("dyad", "Pair")
+  )
 }
