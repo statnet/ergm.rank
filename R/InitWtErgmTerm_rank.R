@@ -64,7 +64,7 @@ InitWtErgmTerm.rank.edgecov <- function(nw, arglist, ...) {
   l <- ergm_edgecov_args("edgecov.rank", nw, a); xm <- l$xm; cn <- l$cn
 
   inputs <- c(as.double(t(xm))) # Need to transpose to produce row-major arrangement.
-  list(name="edgecov_rank", coef.names = cn, inputs = inputs, dependence=TRUE, soname="ergm.rank", auxiliaries=~.sociomatrix("numeric"))
+  list(name="edgecov_rank", coef.names = cn, inputs = inputs, dependence=TRUE, soname="ergm.rank", auxiliaries=~.sociomatrix("numeric") + .updown)
 }
 
 #' @templateVar name rank.inconsistency
