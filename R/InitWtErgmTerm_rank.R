@@ -296,7 +296,7 @@ InitWtErgmTerm..updown <- function(nw, arglist, ...) {
 
   # Return the list that ergm uses to initialize the term
   list(
-    name = "i__updown",                      # Must match the C changestat prefix
+    name = "_updown",                      # Must match the C changestat prefix
     coef.names = c(),               # What shows up in summary/model output
     inputs = NULL,                       # No additional inputs (unless you add them)
     dependence = FALSE,                   # This term depends on the network structure

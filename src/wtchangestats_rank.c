@@ -16,71 +16,62 @@ typedef struct {
 } Pair;
 
 WtC_CHANGESTAT_FN(c_edgecov_rank) {
-	GET_AUX_STORAGE(0, double *, sm);
-	GET_AUX_STORAGE(1, Pair , udsm);
+  GET_AUX_STORAGE(0, double *, sm);
+  GET_AUX_STORAGE(1, Pair *, udsm);
+  Vertex v1=tail;
+  Vertex v2=head;
+  double v12_old = sm[tail][head];
+  double v12_new = weight;
+  if (v12_new > v12_old) { // New is above, so iterate upwards
+    Vertex v3 = v2;
+    while (udsm[v1][v3].down != 0 && sm[v1][udsm[v1][v3].down] == v12_old) { // iterate down to look for alters with same rank value
+      v3 = udsm[v1][v3].down;
+    }
+    /* Now at bottom alter with same rank value, can iterate up now */
+    for (; v3 && sm[v1][v3] <= v12_new; v3 = udsm[v1][v3].up) {
+      if(v3 == v2 || v3 == v1) continue;
+      double v123_covdiff=INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
+      if(v123_covdiff == 0) continue; // If covariate value is 0, don't bother looking up the ranking of v3 by v1.
+      double v13_old = sm[v1][v3];
+      if (v12_old < v13_old) CHANGE_STAT[0] += v123_covdiff; // previously below
+      if (v12_new > v13_old) CHANGE_STAT[0] += v123_covdiff; // now above
+    }
+  } else { // New is below, so iterate downwards
+    Vertex v3 = v2;
+    while (udsm[v1][v3].up != 0 && sm[v1][udsm[v1][v3].up] == v12_old) { // iterate up to look for alters with same rank value
+      v3 = udsm[v1][v3].up;
+    }
+    // Now at top alter with same rank value, can iterate down now
+    for (; v3 && sm[v1][v3] >= v12_new; v3 = udsm[v1][v3].down) {
+      if(v3 == v2 || v3 == v1) continue;
+      double v123_covdiff=INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
+      if(v123_covdiff == 0) continue; // If covariate value is 0, don't bother looking up the ranking of v3 by v1.
+      double v13_old = sm[v1][v3];
+      if (v12_old > v13_old) CHANGE_STAT[0] -= v123_covdiff; // previously above
+      if (v12_new < v13_old) CHANGE_STAT[0] -= v123_covdiff; // now below
+    }
+  }
+	
+  /*GET_AUX_STORAGE(0, double *, sm);
+    GET_AUX_STORAGE(Pair *, udsm);
     Vertex v1=tail;
     Vertex v2=head;
     double v12_old = sm[tail][head];
     double v12_new = weight;
-	// if (v12_new > v12_old) { // New is above, so iterate upwards
-	Vertex v3 = v2;
-	if(udsm == NULL) {
-		Rprintf("Error: udsm is NULL\n");
-	}
-		/*while (udsm[v1][v3].down != 0) { // iterate down to look for alters with same rank value
-			// v3 = udsm[v1][v3].down;
-		}*/
-		// Now at bottom alter with same rank value, can iterate up now
-		/*while (sm[v1][v3] != v12_new) {
-			if(v3==v2 || v3==v1) continue;
-			double v123_covdiff=INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
-			if(v123_covdiff==0) continue; // If covariate value is 0, don't bother looking up the ranking of v3 by v1.
-			if (v12_old < sm[v1][v3]) { // previously below now above
-				CHANGE_STAT[0] += 2*v123_covdiff;
-			} else if (v12_old == sm[v1][v3]) {
-				CHANGE_STAT[0] += v123_covdiff;
-			}
-			v3 = udsm[v1][v3].up;
-		}*/
-	/*} else { // New is below, so iterate downwards
-		Vertex v3 = v2;
-		while (udsm[v1][v3].up != 0 && sm[v1][udsm[v1][v3].up] == v12_old) { // iterate up to look for alters with same rank value
-			v3 = udsm[v1][v3].up;
-		}
-		// Now at top alter with same rank value, can iterate down now
-		while (sm[v1][v3] != v12_new) {
-			if(v3==v2 || v3==v1) continue;
-			double v123_covdiff=INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
-			if(v123_covdiff==0) continue; // If covariate value is 0, don't bother looking up the ranking of v3 by v1.
-			if (v12_old > sm[v1][v3]) { // previously above now below
-				CHANGE_STAT[0] -= 2*v123_covdiff;
-			} else if (v12_old == sm[v1][v3]) {
-				CHANGE_STAT[0] -= v123_covdiff;
-			}
-			v3 = udsm[v1][v3].down;
-		}
-	}*/
-	
-    /*GET_AUX_STORAGE(0, double *, sm);
-	GET_AUX_STORAGE(Pair *, udsm);
-      Vertex v1=tail;
-      Vertex v2=head;
-      double v12_old = sm[tail][head];
-      double v12_new = weight;
-      for (Vertex v3=1; v3 <= N_NODES; v3++){
-	if(v3==v2 || v3==v1) continue;
-	double v123_covdiff=INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
-	if(v123_covdiff==0) continue; // If covariate value is 0, don't bother looking up the ranking of v3 by v1.
-	double v13_old=sm[v1][v3];
-	if(v12_old>v13_old)
-	  CHANGE_STAT[0] -= v123_covdiff;
-	if(v12_old<v13_old)
-	  CHANGE_STAT[0] += v123_covdiff;
-	if(v12_new>v13_old)
-	  CHANGE_STAT[0] += v123_covdiff;
-	if(v12_new<v13_old)
-	  CHANGE_STAT[0] -= v123_covdiff;
-      }*/
+    for (Vertex v3=1; v3 <= N_NODES; v3++){
+    if(v3==v2 || v3==v1) continue;
+    double v123_covdiff=INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
+    if(v123_covdiff==0) continue; // If covariate value is 0, don't bother looking up the ranking of v3 by v1.
+    double v13_old=sm[v1][v3];
+    if(v12_old>v13_old)
+    CHANGE_STAT[0] -= v123_covdiff;
+    if(v12_old<v13_old)
+    CHANGE_STAT[0] += v123_covdiff;
+    if(v12_new>v13_old)
+    CHANGE_STAT[0] += v123_covdiff;
+    if(v12_new<v13_old)
+    CHANGE_STAT[0] -= v123_covdiff;
+    }*/
 }
 
 WtS_CHANGESTAT_FN(s_edgecov_rank){
