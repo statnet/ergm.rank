@@ -91,6 +91,8 @@ WtI_CHANGESTAT_FN(i__updown){
   }
 }
 
+#define sm(i, j) (((i) == tail && (j) == head) ? weight : R[(i)][(j)])
+
 WtU_CHANGESTAT_FN(u__updown){ // Recalculate look-up look-down when something changes
   GET_AUX_STORAGE(0, Pair *, udsm);
   GET_AUX_STORAGE(1, double *, R);
@@ -98,22 +100,22 @@ WtU_CHANGESTAT_FN(u__updown){ // Recalculate look-up look-down when something ch
     for (Vertex j = 1; j <= N_NODES; j++) {
       if (t == j) continue;
 
-      double r_j = R[t][j];
+      double r_j = sm(t, j);
       Vertex below = 0;
       Vertex above = 0;
       for (Vertex k = 1; k <= N_NODES; k++) {
         if (k == t || k == j) continue;
 
-        double r_k = R[t][k];
+        double r_k = sm(t, k);
 
         if (below == 0 && rank_above(j, r_j, k, r_k)) {below = k; continue;} // Take first below
         if (above == 0 && rank_above(k, r_k, j, r_j)) {above = k; continue;} // Take first above
 
         if (rank_above(j, r_j, k, r_k)) {
-          if (rank_above(k, r_k, below, R[t][below])) below = k; // This k is 'closer' from below
+          if (rank_above(k, r_k, below, sm(t, below))) below = k; // This k is 'closer' from below
         }
         if (rank_above(k, r_k, j, r_j)) {
-          if (rank_above(above, R[t][above], k, r_k)) above = k; // This k is 'closer' from above
+          if (rank_above(above, sm(t, above), k, r_k)) above = k; // This k is 'closer' from above
         }
       }
       udsm[t][j].down = below;
