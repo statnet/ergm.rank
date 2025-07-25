@@ -8,12 +8,84 @@
  *  Copyright 2008-2024 Statnet Commons
  */
 
+#include <functional>
+
+extern "C" {
 #include "wtchangestat_rank.h"
+}
 
 typedef struct {
   Vertex up;
   Vertex down;
 } Pair;
+
+// Iterator for up/down traversal in c_edgecov_rank
+class UpDownIterator {
+public:
+  UpDownIterator(Vertex v1, Vertex v2, double **sm, Pair **udsm, double v12_old, double v12_new, bool up, bool end = false)
+    : v1_(v1), v2_(v2), sm_(sm), udsm_(udsm), v12_old_(v12_old), v12_new_(v12_new), up_(up) {
+    if(end) {
+      v3_ = 0;
+      return;
+    }
+    v3_ = v2_;
+    if(up_) {
+      while (udsm_[v1_][v3_].down && sm_[v1_][udsm_[v1_][v3_].down] == v12_old_) {
+        v3_ = udsm_[v1_][v3_].down;
+      }
+      advance_to_valid_up();
+    } else {
+      while (udsm_[v1_][v3_].up && sm_[v1_][udsm_[v1_][v3_].up] == v12_old_) {
+        v3_ = udsm_[v1_][v3_].up;
+      }
+      advance_to_valid_down();
+    }
+  }
+  Vertex operator*() const { return v3_; }
+  UpDownIterator& operator++() {
+    if(up_) {
+      v3_ = udsm_[v1_][v3_].up;
+      advance_to_valid_up();
+    } else {
+      v3_ = udsm_[v1_][v3_].down;
+      advance_to_valid_down();
+    }
+    return *this;
+  }
+  bool operator!=(const UpDownIterator& other) const { return v3_ != other.v3_; }
+private:
+  void advance_to_valid_up() {
+    while (v3_ && (v3_ == v2_ || v3_ == v1_ || sm_[v1_][v3_] > v12_new_)) {
+      v3_ = udsm_[v1_][v3_].up;
+    }
+  }
+  void advance_to_valid_down() {
+    while (v3_ && (v3_ == v2_ || v3_ == v1_ || sm_[v1_][v3_] < v12_new_)) {
+      v3_ = udsm_[v1_][v3_].down;
+    }
+  }
+  Vertex v1_, v2_, v3_;
+  double **sm_;
+  Pair **udsm_;
+  double v12_old_, v12_new_;
+  bool up_;
+};
+
+class UpDownRange {
+public:
+  UpDownRange(Vertex v1, Vertex v2, double **sm, Pair **udsm, double v12_old, double v12_new, bool up)
+    : v1_(v1), v2_(v2), sm_(sm), udsm_(udsm), v12_old_(v12_old), v12_new_(v12_new), up_(up) {}
+  UpDownIterator begin() const { return UpDownIterator(v1_, v2_, sm_, udsm_, v12_old_, v12_new_, up_, false); }
+  UpDownIterator end() const { return UpDownIterator(v1_, v2_, sm_, udsm_, v12_old_, v12_new_, up_, true); }
+private:
+  Vertex v1_, v2_;
+  double **sm_;
+  Pair **udsm_;
+  double v12_old_, v12_new_;
+  bool up_;
+};
+
+extern "C" {
 
 WtC_CHANGESTAT_FN(c_edgecov_rank) {
   GET_AUX_STORAGE(0, double *, sm);
@@ -22,33 +94,22 @@ WtC_CHANGESTAT_FN(c_edgecov_rank) {
   Vertex v2=head;
   double v12_old = sm[tail][head];
   double v12_new = weight;
+
   if (v12_new > v12_old) { // New is above, so iterate upwards
-    Vertex v3 = v2;
-    while (udsm[v1][v3].down && sm[v1][udsm[v1][v3].down] == v12_old) { // iterate down to look for alters with same rank value
-      v3 = udsm[v1][v3].down;
-    }
-    /* Now at bottom alter with same rank value, can iterate up now */
-    for (; v3 && sm[v1][v3] <= v12_new; v3 = udsm[v1][v3].up) {
-      if(v3 == v2 || v3 == v1) continue;
+    for (Vertex v3 : UpDownRange(v1, v2, sm, udsm, v12_old, v12_new, true)) {
       double v123_covdiff=INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
-      if(v123_covdiff == 0) continue; // If covariate value is 0, don't bother looking up the ranking of v3 by v1.
+      if(v123_covdiff == 0) continue;
       double v13_old = sm[v1][v3];
-      if (v12_old < v13_old) CHANGE_STAT[0] += v123_covdiff; // previously below
-      if (v12_new > v13_old) CHANGE_STAT[0] += v123_covdiff; // now above
+      if (v12_old < v13_old) CHANGE_STAT[0] += v123_covdiff;
+      if (v12_new > v13_old) CHANGE_STAT[0] += v123_covdiff;
     }
   } else { // New is below, so iterate downwards
-    Vertex v3 = v2;
-    while (udsm[v1][v3].up && sm[v1][udsm[v1][v3].up] == v12_old) { // iterate up to look for alters with same rank value
-      v3 = udsm[v1][v3].up;
-    }
-    // Now at top alter with same rank value, can iterate down now
-    for (; v3 && sm[v1][v3] >= v12_new; v3 = udsm[v1][v3].down) {
-      if(v3 == v2 || v3 == v1) continue;
+    for (Vertex v3 : UpDownRange(v1, v2, sm, udsm, v12_old, v12_new, false)) {
       double v123_covdiff=INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
-      if(v123_covdiff == 0) continue; // If covariate value is 0, don't bother looking up the ranking of v3 by v1.
+      if(v123_covdiff == 0) continue;
       double v13_old = sm[v1][v3];
-      if (v12_old > v13_old) CHANGE_STAT[0] -= v123_covdiff; // previously above
-      if (v12_new < v13_old) CHANGE_STAT[0] -= v123_covdiff; // now below
+      if (v12_old > v13_old) CHANGE_STAT[0] -= v123_covdiff;
+      if (v12_new < v13_old) CHANGE_STAT[0] -= v123_covdiff;
     }
   }
   /*GET_AUX_STORAGE(0, double *, sm);
@@ -636,4 +697,6 @@ WtS_CHANGESTAT_FN(s_nonconformity_thresholds){
       }
     }
   }
+}
+
 }
