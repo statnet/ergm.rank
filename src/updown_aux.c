@@ -12,6 +12,8 @@
 #include "ergm_storage.h"
 #include <math.h>
 
+// C++ shim?
+
 typedef struct {
   Vertex up;
   Vertex down;
