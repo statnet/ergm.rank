@@ -63,7 +63,7 @@ static inline Rboolean rank_above(Vertex j, double r_j, Vertex k, double r_k) {
   return(r_j > r_k || (r_j == r_k && j > k));
 } 
 
-WtI_CHANGESTAT_FN(i__updown){
+extern "C" WtI_CHANGESTAT_FN(i__updown){
   ALLOC_AUX_SOCIOMATRIX(Pair, udsm);
   GET_AUX_STORAGE(1, double *, R);
   for (Vertex t = 1; t <= N_NODES; t++) { // Initialisation of look-up look-down structure
