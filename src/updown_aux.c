@@ -95,8 +95,15 @@ WtI_CHANGESTAT_FN(i__updown){
 
 WtU_CHANGESTAT_FN(u__updown){ // Recalculate look-up look-down when something changes
   GET_AUX_STORAGE(0, Pair *, udsm);
-  GET_AUX_STORAGE(1, double *, R);
-  for (Vertex t = 1; t <= N_NODES; t++) { // Initialisation of look-up look-down structure
+  GET_AUX_STORAGE(1, double *, sm);
+  Vertex v1=tail;
+  Vertex v2=head;
+  double v12_old = sm[tail][head];
+  double v12_new = weight;
+  //removed node
+  //figure out where it needs to go first?
+  // Then splice and move
+  /*for (Vertex t = 1; t <= N_NODES; t++) { // Initialisation of look-up look-down structure
     for (Vertex j = 1; j <= N_NODES; j++) {
       if (t == j) continue;
 
@@ -121,7 +128,7 @@ WtU_CHANGESTAT_FN(u__updown){ // Recalculate look-up look-down when something ch
       udsm[t][j].down = below;
       udsm[t][j].up = above;
     }
-  }
+  }*/
 }
 
 WtF_CHANGESTAT_FN(f__updown){

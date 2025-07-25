@@ -24,7 +24,7 @@ WtC_CHANGESTAT_FN(c_edgecov_rank) {
   double v12_new = weight;
   if (v12_new > v12_old) { // New is above, so iterate upwards
     Vertex v3 = v2;
-    while (udsm[v1][v3].down != 0 && sm[v1][udsm[v1][v3].down] == v12_old) { // iterate down to look for alters with same rank value
+    while (udsm[v1][v3].down && sm[v1][udsm[v1][v3].down] == v12_old) { // iterate down to look for alters with same rank value
       v3 = udsm[v1][v3].down;
     }
     /* Now at bottom alter with same rank value, can iterate up now */
@@ -38,7 +38,7 @@ WtC_CHANGESTAT_FN(c_edgecov_rank) {
     }
   } else { // New is below, so iterate downwards
     Vertex v3 = v2;
-    while (udsm[v1][v3].up != 0 && sm[v1][udsm[v1][v3].up] == v12_old) { // iterate up to look for alters with same rank value
+    while (udsm[v1][v3].up && sm[v1][udsm[v1][v3].up] == v12_old) { // iterate up to look for alters with same rank value
       v3 = udsm[v1][v3].up;
     }
     // Now at top alter with same rank value, can iterate down now
@@ -51,7 +51,6 @@ WtC_CHANGESTAT_FN(c_edgecov_rank) {
       if (v12_new < v13_old) CHANGE_STAT[0] -= v123_covdiff; // now below
     }
   }
-	
   /*GET_AUX_STORAGE(0, double *, sm);
     GET_AUX_STORAGE(Pair *, udsm);
     Vertex v1=tail;
