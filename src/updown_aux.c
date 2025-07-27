@@ -63,7 +63,7 @@ static inline Rboolean rank_above(Vertex j, double r_j, Vertex k, double r_k) {
   return(r_j > r_k || (r_j == r_k && j > k));
 } 
 
-extern "C" WtI_CHANGESTAT_FN(i__updown){
+WtI_CHANGESTAT_FN(i__updown){
   ALLOC_AUX_SOCIOMATRIX(Pair, udsm);
   GET_AUX_STORAGE(1, double *, R);
   for (Vertex t = 1; t <= N_NODES; t++) { // Initialisation of look-up look-down structure
@@ -102,35 +102,46 @@ WtU_CHANGESTAT_FN(u__updown){ // Recalculate look-up look-down when something ch
   Vertex v2=head;
   double v12_old = sm[tail][head];
   double v12_new = weight;
-  //removed node
-  //figure out where it needs to go first?
-  // Then splice and move
-  /*for (Vertex t = 1; t <= N_NODES; t++) { // Initialisation of look-up look-down structure
-    for (Vertex j = 1; j <= N_NODES; j++) {
-      if (t == j) continue;
 
-      double r_j = sm(t, j);
-      Vertex below = 0;
-      Vertex above = 0;
-      for (Vertex k = 1; k <= N_NODES; k++) {
-        if (k == t || k == j) continue;
+  // Find where v2 is currently located in udsm[v1]
+  Vertex old_up = udsm[v1][v2].up;
+  Vertex old_down = udsm[v1][v2].down;
 
-        double r_k = sm(t, k);
-
-        if (below == 0 && rank_above(j, r_j, k, r_k)) {below = k; continue;} // Take first below
-        if (above == 0 && rank_above(k, r_k, j, r_j)) {above = k; continue;} // Take first above
-
-        if (rank_above(j, r_j, k, r_k)) {
-          if (rank_above(k, r_k, below, sm(t, below))) below = k; // This k is 'closer' from below
-        }
-        if (rank_above(k, r_k, j, r_j)) {
-          if (rank_above(above, sm(t, above), k, r_k)) above = k; // This k is 'closer' from above
-        }
-      }
-      udsm[t][j].down = below;
-      udsm[t][j].up = above;
+  // Remove v2 from its old position in udsm[v1]
+  // Update the up and down pointers of the neighbors
+  if (old_down != 0) {
+    if (udsm[v1][old_down].up == v2) {
+      udsm[v1][old_down].up = old_up;
     }
-  }*/
+  }
+  if (old_up != 0) {
+    if (udsm[v1][old_up].down == v2) {
+      udsm[v1][old_up].down = old_down;
+    }
+  }
+  udsm[v1][v2].up = 0;
+  udsm[v1][v2].down = 0;
+
+  // Insert v2 with new value v12_new into udsm[v1]
+  Vertex insert_above = 0, insert_below = 0;
+  for(Vertex v3 = 1; v3 <= N_NODES; v3++) {
+    if(v3 == v1 || v3 == v2) continue;
+    double v13_old = sm[v1][v3];
+    if(rank_above(v2, v12_new, v3, v13_old)) {
+      if(insert_below == 0 || rank_above(v3, v13_old, insert_below, sm[v1][insert_below])) {
+        insert_below = v3;
+      }
+    }
+    if(rank_above(v3, v13_old, v2, v12_new)) {
+      if(insert_above == 0 || rank_above(insert_above, sm[v1][insert_above], v3, v13_old)) {
+        insert_above = v3;
+      }
+    }
+  }
+  udsm[v1][v2].down = insert_below;
+  udsm[v1][v2].up = insert_above;
+  if(insert_below != 0) udsm[v1][insert_below].up = v2;
+  if(insert_above != 0) udsm[v1][insert_above].down = v2;
 }
 
 WtF_CHANGESTAT_FN(f__updown){
