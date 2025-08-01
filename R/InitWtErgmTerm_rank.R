@@ -35,7 +35,7 @@ InitWtErgmTerm.rank.deference<-function(nw, arglist, ...) {
   list(name="deference",
        coef.names="deference",
        inputs=NULL,
-       dependence=TRUE, auxiliaries=~.sociomatrix("numeric"))
+       dependence=TRUE, auxiliaries=~.sociomatrix("numeric") + .updown)
 }
 
 #' @templateVar name rank.edgecov
@@ -159,7 +159,7 @@ InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, ...) {
   }
   
   list(name=name, coef.names=coef.names, #name and coef.names: required 
-       inputs = inputs, dependence = FALSE, auxiliaries=~.sociomatrix("numeric"))
+       inputs = inputs, dependence = FALSE, auxiliaries=~.sociomatrix("numeric") + .updown)
 }
 
 #' @importFrom utils packageVersion
