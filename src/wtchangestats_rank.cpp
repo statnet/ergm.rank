@@ -8,16 +8,10 @@
  *  Copyright 2008-2024 Statnet Commons
  */
 
-#include <functional>
-
 extern "C" {
 #include "wtchangestat_rank.h"
+#include "updown_aux.h"
 }
-
-typedef struct {
-  Vertex up;
-  Vertex down;
-} Pair;
 
 // Iterator for up/down traversal
 class UpDownIterator {
@@ -54,15 +48,27 @@ public:
   }
   bool operator!=(const UpDownIterator& other) const { return v3_ != other.v3_; }
 private:
+  // These iterate in their respective direction until one of three
+  // things:
+  //
+  // 1. We run off the end of the list (v3_ == 0).
+  // 2. We pass v12_new.
+  // 3. We reach an alter distinct from v2_.
+  //
+  // In case of 3, iteration continues. Otherwise, it must terminate.
   void advance_to_valid_up() {
-    while (v3_ && (v3_ == v2_ || v3_ == v1_ || sm_[v1_][v3_] > v12_new_)) {
+    bool more = true;
+    while (v3_ && (more = sm_[v1_][v3_] <= v12_new_) && v3_ == v2_) {
       v3_ = udsm_[v1_][v3_].up;
     }
+    if (!more) v3_ = 0;
   }
   void advance_to_valid_down() {
-    while (v3_ && (v3_ == v2_ || v3_ == v1_ || sm_[v1_][v3_] < v12_new_)) {
+    bool more = true;
+    while (v3_ && (more = sm_[v1_][v3_] >= v12_new_) && v3_ == v2_) {
       v3_ = udsm_[v1_][v3_].down;
     }
+    if (!more) v3_ = 0;
   }
   Vertex v1_, v2_, v3_;
   double **sm_;
@@ -88,10 +94,8 @@ private:
 extern "C" {
 
 WtC_CHANGESTAT_FN(c_edgecov_rank) {
-  GET_AUX_STORAGE(0, void, sm_raw);
-  GET_AUX_STORAGE(1, void, udsm_raw);
-  double **sm = (double **)sm_raw;
-  Pair **udsm = (Pair **)udsm_raw;
+  GET_AUX_STORAGE(0, double *, sm);
+  GET_AUX_STORAGE(1, Pair *, udsm);
   Vertex v1=tail;
   Vertex v2=head;
   double v12_old = sm[tail][head];
@@ -155,10 +159,8 @@ WtS_CHANGESTAT_FN(s_edgecov_rank){
 
 
 WtC_CHANGESTAT_FN(c_inconsistency_rank){
-  GET_AUX_STORAGE(0, void, sm_raw);
-  GET_AUX_STORAGE(1, void, udsm_raw);
-  double **sm = (double **)sm_raw;
-  Pair **udsm = (Pair **)udsm_raw;
+  GET_AUX_STORAGE(0, double *, sm);
+  GET_AUX_STORAGE(1, Pair *, udsm);
   Vertex v1=tail;
   Vertex v2=head;
   double v12_old = sm[tail][head];
@@ -212,17 +214,15 @@ WtS_CHANGESTAT_FN(s_inconsistency_rank){
 }
 
 WtC_CHANGESTAT_FN(c_inconsistency_cov_rank){
-  GET_AUX_STORAGE(0, void, sm_raw);
-  GET_AUX_STORAGE(1, void, udsm_raw);
-  double **sm = (double **)sm_raw;
-  Pair **udsm = (Pair **)udsm_raw;
+  GET_AUX_STORAGE(0, double *, sm);
+  GET_AUX_STORAGE(1, Pair *, udsm);
   unsigned int cov_start = N_NODES*N_NODES;
   Vertex v1=tail;
   Vertex v2=head;
   double v12_ref = INPUT_PARAM[(v1-1)*N_NODES+(v2-1)];
   double v12_old = sm[tail][head];
   double v12_new = weight;
-  /*if (v12_new > v12_old) { // New is above, so iterate upwards
+  if (v12_new > v12_old) { // New is above, so iterate upwards
     for (Vertex v3 : UpDownRange(v1, v2, sm, udsm, v12_old, v12_new, true)) {
       double v123_cov = INPUT_PARAM[cov_start + (v1-1)*N_NODES*N_NODES + (v2-1)*N_NODES + (v3-1)];
       double v132_cov = INPUT_PARAM[cov_start + (v1-1)*N_NODES*N_NODES + (v3-1)*N_NODES + (v2-1)];
@@ -256,7 +256,8 @@ WtC_CHANGESTAT_FN(c_inconsistency_cov_rank){
         }
       }
     }
-  }*/
+  }
+  /*
       for(Vertex v3=1; v3 <= N_NODES; v3++){
 	if(v3==v2 || v3==v1) continue;
 	double v123_cov = INPUT_PARAM[cov_start + (v1-1)*N_NODES*N_NODES + (v2-1)*N_NODES + (v3-1)];
@@ -276,6 +277,7 @@ WtC_CHANGESTAT_FN(c_inconsistency_cov_rank){
 	  }
 	}
       }
+  */
 }
 
 WtS_CHANGESTAT_FN(s_inconsistency_cov_rank){ 
@@ -301,10 +303,8 @@ WtS_CHANGESTAT_FN(s_inconsistency_cov_rank){
 }
 
 WtC_CHANGESTAT_FN(c_deference){
-  GET_AUX_STORAGE(0, void, sm_raw);
-  GET_AUX_STORAGE(1, void, udsm_raw);
-  double **sm = (double **)sm_raw;
-  Pair **udsm = (Pair **)udsm_raw;
+  GET_AUX_STORAGE(0, double *, sm);
+  GET_AUX_STORAGE(1, Pair *, udsm);
   /*for(Vertex v1=1; v1 <= N_NODES; v1++){
     for(Vertex v3=1; v3 <= N_NODES; v3++){
       if(v3==v1) continue;
