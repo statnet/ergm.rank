@@ -55,12 +55,12 @@ public:
   bool operator!=(const UpDownIterator& other) const { return v3_ != other.v3_; }
 private:
   void advance_to_valid_up() {
-    while (v3_ && (v3_ == v2_ || v3_ == v1_ || sm_[v1_][v3_] <= v12_new_)) {
+    while (v3_ && (v3_ == v2_ || v3_ == v1_ || sm_[v1_][v3_] > v12_new_)) {
       v3_ = udsm_[v1_][v3_].up;
     }
   }
   void advance_to_valid_down() {
-    while (v3_ && (v3_ == v2_ || v3_ == v1_ || sm_[v1_][v3_] >= v12_new_)) {
+    while (v3_ && (v3_ == v2_ || v3_ == v1_ || sm_[v1_][v3_] < v12_new_)) {
       v3_ = udsm_[v1_][v3_].down;
     }
   }
@@ -165,7 +165,7 @@ WtC_CHANGESTAT_FN(c_inconsistency_rank){
   double v12_ref = INPUT_PARAM[(v1-1)*N_NODES+(v2-1)];
   double v12_new = weight;
 
-  if (v12_new > v12_old) { // New is above, so iterate upwards
+  /*if (v12_new > v12_old) { // New is above, so iterate upwards
     for (Vertex v3 : UpDownRange(v1, v2, sm, udsm, v12_old, v12_new, true)) {
       double v13 = sm[v1][v3];
       double v13_ref=INPUT_PARAM[(v1-1)*N_NODES+(v3-1)];
@@ -179,8 +179,8 @@ WtC_CHANGESTAT_FN(c_inconsistency_rank){
       if((v12_old>v13)!=(v12_ref>v13_ref)) CHANGE_STAT[0]--;
       if((v13>v12_old)!=(v13_ref>v12_ref)) CHANGE_STAT[0]--;
     }
-  }
-  /*
+  }*/
+  
   for(Vertex v3=1; v3 <= N_NODES; v3++){
 	if(v3==v2 || v3==v1) continue;
 	double v13= sm[v1][v3];
@@ -190,7 +190,7 @@ WtC_CHANGESTAT_FN(c_inconsistency_rank){
 	if((v13>v12_old)!=(v13_ref>v12_ref)) CHANGE_STAT[0]--;
 	if((v13>v12_new)!=(v13_ref>v12_ref)) CHANGE_STAT[0]++;
       }
-  */
+  
 }
 
 WtS_CHANGESTAT_FN(s_inconsistency_rank){ 
