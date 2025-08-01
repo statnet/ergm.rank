@@ -1,5 +1,5 @@
-#ifndef _UPDOWN_AUX_H_
-#define _UPDOWN_AUX_H_
+#ifndef _WTCHANGESTATS_RANK_AUX_H_
+#define _WTCHANGESTATS_RANK_AUX_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -100,4 +100,4 @@ private:
 
 #endif // _cplusplus
 
-#endif // _UPDOWN_AUX_H_
+#endif // _WTCHANGESTATS_RANK_AUX_H_

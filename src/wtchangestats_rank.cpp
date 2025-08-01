@@ -12,7 +12,7 @@ extern "C" {
 #include "wtchangestat_rank.h"
 }
 
-#include "updown_aux.h"
+#include "wtchangestats_rank_aux.h"
 
 extern "C" {
 

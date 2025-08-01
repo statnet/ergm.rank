@@ -10,7 +10,7 @@
 #include "ergm_wtedgetree.h"
 #include "ergm_wtchangestat.h"
 #include "ergm_storage.h"
-#include "updown_aux.h"
+#include "wtchangestats_rank_aux.h"
 
 // C++ shim?
 
@@ -94,7 +94,7 @@ WtF_CHANGESTAT_FN(f__updown){
 /*
 WtC_CHANGESTAT_FN(c_dsociomatrix){
   GET_AUX_STORAGE(double *, sm);
-  
+
       Dyad pos = tail-1 + (head-1)*N_NODES;
       CHANGE_STAT[pos] = weight - sm[tail][head];
 }
