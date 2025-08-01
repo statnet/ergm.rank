@@ -10,58 +10,9 @@
 #include "ergm_wtedgetree.h"
 #include "ergm_wtchangestat.h"
 #include "ergm_storage.h"
-#include <math.h>
+#include "updown_aux.h"
 
 // C++ shim?
-
-typedef struct {
-  Vertex up;
-  Vertex down;
-} Pair;
-
-/*WtC_CHANGESTAT_FN(c_test_abs_sum_minus_5){
-  GET_STORAGE(double, stored_sum_ptr);
-  double sum = *stored_sum_ptr;
-    CHANGE_STAT[0] = -fabs(sum-5);
-    CHANGE_STAT[0] += fabs(sum-5 + weight - edgestate);
-}
-
-WtI_CHANGESTAT_FN(i_test_abs_sum_minus_5){
-  ALLOC_STORAGE(1, double, sum);
-  *sum = 0;
-  EXEC_THROUGH_NET_EDGES(tail, e1, head, y, {
-      *sum+=y;
-      head=head; e1=e1; // Prevent a compiler warning.
-    });
-}
-
-WtU_CHANGESTAT_FN(u_test_abs_sum_minus_5){
-  GET_STORAGE(double, sum);
-  *sum += weight-edgestate;
-}
-
-WtS_CHANGESTAT_FN(s_test_abs_sum_minus_5){
-  GET_STORAGE(double, sum);
-  // Storage uninitialized: compute from scratch.
-  if(!sum){
-    double sum = 0;
-    EXEC_THROUGH_NET_EDGES(tail, e1, head, y, {
-	sum+=y;
-	head=head; e1=e1; // Prevent a compiler warning.
-      });
-    CHANGE_STAT[0] = fabs(sum-5);
-  }else{ // Storage initialized: use it.
-    CHANGE_STAT[0] = fabs(*sum-5);
-  }
-}
-
-WtC_CHANGESTAT_FN(c_test_abs_sum_minus_5_no_s){c_test_abs_sum_minus_5(tail, head, weight, mtp, nwp, edgestate);}
-WtI_CHANGESTAT_FN(i_test_abs_sum_minus_5_no_s){i_test_abs_sum_minus_5(mtp, nwp);}
-WtU_CHANGESTAT_FN(u_test_abs_sum_minus_5_no_s){u_test_abs_sum_minus_5(tail, head, weight, mtp, nwp, edgestate);}*/
-
-static inline Rboolean rank_above(Vertex j, double r_j, Vertex k, double r_k) {
-  return(r_j > r_k || (r_j == r_k && j > k));
-} 
 
 WtI_CHANGESTAT_FN(i__updown){
   ALLOC_AUX_SOCIOMATRIX(Pair, udsm);
