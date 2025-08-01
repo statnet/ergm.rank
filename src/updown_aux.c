@@ -110,38 +110,30 @@ WtU_CHANGESTAT_FN(u__updown){ // Recalculate look-up look-down when something ch
   // Remove v2 from its old position in udsm[v1]
   // Update the up and down pointers of the neighbors
   if (old_down != 0) {
-    if (udsm[v1][old_down].up == v2) {
-      udsm[v1][old_down].up = old_up;
-    }
+    if (udsm[v1][old_down].up == v2) udsm[v1][old_down].up = old_up;
   }
   if (old_up != 0) {
-    if (udsm[v1][old_up].down == v2) {
-      udsm[v1][old_up].down = old_down;
-    }
+    if (udsm[v1][old_up].down == v2) udsm[v1][old_up].down = old_down;
   }
   udsm[v1][v2].up = 0;
   udsm[v1][v2].down = 0;
 
   // Insert v2 with new value v12_new into udsm[v1]
   Vertex insert_above = 0, insert_below = 0;
-  for(Vertex v3 = 1; v3 <= N_NODES; v3++) {
-    if(v3 == v1 || v3 == v2) continue;
+  for (Vertex v3 = 1; v3 <= N_NODES; v3++) {
+    if (v3 == v1 || v3 == v2) continue;
     double v13_old = sm[v1][v3];
-    if(rank_above(v2, v12_new, v3, v13_old)) {
-      if(insert_below == 0 || rank_above(v3, v13_old, insert_below, sm[v1][insert_below])) {
-        insert_below = v3;
-      }
+    if (rank_above(v2, v12_new, v3, v13_old)) { // v2 above v3
+      if (insert_below == 0 || rank_above(v3, v13_old, insert_below, sm[v1][insert_below])) insert_below = v3; // new below
     }
-    if(rank_above(v3, v13_old, v2, v12_new)) {
-      if(insert_above == 0 || rank_above(insert_above, sm[v1][insert_above], v3, v13_old)) {
-        insert_above = v3;
-      }
+    if (rank_above(v3, v13_old, v2, v12_new)) { // v2 below v3
+      if (insert_above == 0 || rank_above(insert_above, sm[v1][insert_above], v3, v13_old)) insert_above = v3; // new above
     }
   }
   udsm[v1][v2].down = insert_below;
   udsm[v1][v2].up = insert_above;
-  if(insert_below != 0) udsm[v1][insert_below].up = v2;
-  if(insert_above != 0) udsm[v1][insert_above].down = v2;
+  if (insert_below != 0) udsm[v1][insert_below].up = v2;
+  if (insert_above != 0) udsm[v1][insert_above].down = v2;
 }
 
 WtF_CHANGESTAT_FN(f__updown){
