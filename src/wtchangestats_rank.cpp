@@ -25,7 +25,7 @@ WtC_CHANGESTAT_FN(c_edgecov_rank) {
   double v12_new = weight;
 
   if (v12_new > v12_old) { // New is above, so iterate upwards
-    for (Vertex v3 : UpDownRange(v1, v2, sm, udsm, v12_old, v12_new, true)) {
+    for (Vertex v3 : UpDownRange(v1, v2, sm, udsm, v12_old, v12_new)) {
       double v123_covdiff=INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
       if(v123_covdiff == 0) continue;
       double v13_old = sm[v1][v3];
@@ -33,7 +33,7 @@ WtC_CHANGESTAT_FN(c_edgecov_rank) {
       if (v12_new > v13_old) CHANGE_STAT[0] += v123_covdiff;
     }
   } else { // New is below, so iterate downwards
-    for (Vertex v3 : UpDownRange(v1, v2, sm, udsm, v12_old, v12_new, false)) {
+    for (Vertex v3 : UpDownRange(v1, v2, sm, udsm, v12_old, v12_new)) {
       double v123_covdiff=INPUT_PARAM[(v1-1)*N_NODES + (v2-1)] - INPUT_PARAM[(v1-1)*N_NODES + (v3-1)];
       if(v123_covdiff == 0) continue;
       double v13_old = sm[v1][v3];
@@ -90,32 +90,14 @@ WtC_CHANGESTAT_FN(c_inconsistency_rank){
   double v12_ref = INPUT_PARAM[(v1-1)*N_NODES+(v2-1)];
   double v12_new = weight;
 
-  /*if (v12_new > v12_old) { // New is above, so iterate upwards
-    for (Vertex v3 : UpDownRange(v1, v2, sm, udsm, v12_old, v12_new, true)) {
-      double v13 = sm[v1][v3];
-      double v13_ref=INPUT_PARAM[(v1-1)*N_NODES+(v3-1)];
-      if((v13>v12_new)!=(v13_ref>v12_ref)) CHANGE_STAT[0]++;
-      if((v12_new>v13)!=(v12_ref>v13_ref)) CHANGE_STAT[0]++;
-    }
-  } else { // New is below, so iterate downwards
-    for (Vertex v3 : UpDownRange(v1, v2, sm, udsm, v12_old, v12_new, false)) {
-      double v13 = sm[v1][v3];
-      double v13_ref=INPUT_PARAM[(v1-1)*N_NODES+(v3-1)];
-      if((v12_old>v13)!=(v12_ref>v13_ref)) CHANGE_STAT[0]--;
-      if((v13>v12_old)!=(v13_ref>v12_ref)) CHANGE_STAT[0]--;
-    }
-  }*/
-  
-  for(Vertex v3=1; v3 <= N_NODES; v3++){
-	if(v3==v2 || v3==v1) continue;
-	double v13= sm[v1][v3];
-	double v13_ref=INPUT_PARAM[(v1-1)*N_NODES+(v3-1)];
-	if((v12_old>v13)!=(v12_ref>v13_ref)) CHANGE_STAT[0]--;
-	if((v12_new>v13)!=(v12_ref>v13_ref)) CHANGE_STAT[0]++;
-	if((v13>v12_old)!=(v13_ref>v12_ref)) CHANGE_STAT[0]--;
-	if((v13>v12_new)!=(v13_ref>v12_ref)) CHANGE_STAT[0]++;
-      }
-  
+  for (Vertex v3 : UpDownRange(v1, v2, sm, udsm, v12_old, v12_new)) {
+    double v13 = sm[v1][v3];
+    double v13_ref=INPUT_PARAM[(v1-1)*N_NODES+(v3-1)];
+    if((v12_old>v13)!=(v12_ref>v13_ref)) CHANGE_STAT[0]--;
+    if((v12_new>v13)!=(v12_ref>v13_ref)) CHANGE_STAT[0]++;
+    if((v13>v12_old)!=(v13_ref>v12_ref)) CHANGE_STAT[0]--;
+    if((v13>v12_new)!=(v13_ref>v12_ref)) CHANGE_STAT[0]++;
+  }
 }
 
 WtS_CHANGESTAT_FN(s_inconsistency_rank){ 
@@ -145,38 +127,19 @@ WtC_CHANGESTAT_FN(c_inconsistency_cov_rank){
   double v12_ref = INPUT_PARAM[(v1-1)*N_NODES+(v2-1)];
   double v12_old = sm[tail][head];
   double v12_new = weight;
-  if (v12_new > v12_old) { // New is above, so iterate upwards
-    for (Vertex v3 : UpDownRange(v1, v2, sm, udsm, v12_old, v12_new, true)) {
-      double v123_cov = INPUT_PARAM[cov_start + (v1-1)*N_NODES*N_NODES + (v2-1)*N_NODES + (v3-1)];
-      double v132_cov = INPUT_PARAM[cov_start + (v1-1)*N_NODES*N_NODES + (v3-1)*N_NODES + (v2-1)];
-      if(v123_cov!=0 || v123_cov!=0){
-        double v13=sm[v1][v3];
-        double v13_ref=INPUT_PARAM[(v1-1)*N_NODES+(v3-1)];
-        if(v123_cov!=0){
-          if((v12_old>v13)!=(v12_ref>v13_ref)) CHANGE_STAT[0]-=v123_cov;
-          if((v12_new>v13)!=(v12_ref>v13_ref)) CHANGE_STAT[0]+=v123_cov;
-        }
-        if(v132_cov!=0){
-          if((v13>v12_old)!=(v13_ref>v12_ref)) CHANGE_STAT[0]-=v132_cov;
-          if((v13>v12_new)!=(v13_ref>v12_ref)) CHANGE_STAT[0]+=v132_cov;
-        }
+  for (Vertex v3 : UpDownRange(v1, v2, sm, udsm, v12_old, v12_new)) {
+    double v123_cov = INPUT_PARAM[cov_start + (v1-1)*N_NODES*N_NODES + (v2-1)*N_NODES + (v3-1)];
+    double v132_cov = INPUT_PARAM[cov_start + (v1-1)*N_NODES*N_NODES + (v3-1)*N_NODES + (v2-1)];
+    if(v123_cov!=0 || v123_cov!=0){
+      double v13=sm[v1][v3];
+      double v13_ref=INPUT_PARAM[(v1-1)*N_NODES+(v3-1)];
+      if(v123_cov!=0){
+        if((v12_old>v13)!=(v12_ref>v13_ref)) CHANGE_STAT[0]-=v123_cov;
+        if((v12_new>v13)!=(v12_ref>v13_ref)) CHANGE_STAT[0]+=v123_cov;
       }
-    }
-  } else { // New is above, so iterate upwards
-    for (Vertex v3 : UpDownRange(v1, v2, sm, udsm, v12_old, v12_new, false)) {
-      double v123_cov = INPUT_PARAM[cov_start + (v1-1)*N_NODES*N_NODES + (v2-1)*N_NODES + (v3-1)];
-      double v132_cov = INPUT_PARAM[cov_start + (v1-1)*N_NODES*N_NODES + (v3-1)*N_NODES + (v2-1)];
-      if(v123_cov!=0 || v123_cov!=0){
-        double v13=sm[v1][v3];
-        double v13_ref=INPUT_PARAM[(v1-1)*N_NODES+(v3-1)];
-        if(v123_cov!=0){
-          if((v12_old>v13)!=(v12_ref>v13_ref)) CHANGE_STAT[0]-=v123_cov;
-          if((v12_new>v13)!=(v12_ref>v13_ref)) CHANGE_STAT[0]+=v123_cov;
-        }
-        if(v132_cov!=0){
-          if((v13>v12_old)!=(v13_ref>v12_ref)) CHANGE_STAT[0]-=v132_cov;
-          if((v13>v12_new)!=(v13_ref>v12_ref)) CHANGE_STAT[0]+=v132_cov;
-        }
+      if(v132_cov!=0){
+        if((v13>v12_old)!=(v13_ref>v12_ref)) CHANGE_STAT[0]-=v132_cov;
+        if((v13>v12_new)!=(v13_ref>v12_ref)) CHANGE_STAT[0]+=v132_cov;
       }
     }
   }

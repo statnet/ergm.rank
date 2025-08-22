@@ -21,8 +21,8 @@ typedef struct {
 // Iterator for up/down traversal
 class UpDownIterator {
 public:
-  UpDownIterator(Vertex v1, Vertex v2, double **sm, Pair **udsm, double v12_old, double v12_new, bool up, bool end = false)
-    : v1_(v1), v2_(v2), sm_(sm), udsm_(udsm), v12_old_(v12_old), v12_new_(v12_new), up_(up) {
+  UpDownIterator(Vertex v1, Vertex v2, double **sm, Pair **udsm, double v12_old, double v12_new, bool end = false)
+    : v1_(v1), v2_(v2), sm_(sm), udsm_(udsm), v12_old_(v12_old), v12_new_(v12_new), up_(v12_new > v12_old) {
     if(end) {
       v3_ = 0;
       return;
@@ -84,16 +84,15 @@ private:
 
 class UpDownRange {
 public:
-  UpDownRange(Vertex v1, Vertex v2, double **sm, Pair **udsm, double v12_old, double v12_new, bool up)
-    : v1_(v1), v2_(v2), sm_(sm), udsm_(udsm), v12_old_(v12_old), v12_new_(v12_new), up_(up) {}
-  UpDownIterator begin() const { return UpDownIterator(v1_, v2_, sm_, udsm_, v12_old_, v12_new_, up_, false); }
-  UpDownIterator end() const { return UpDownIterator(v1_, v2_, sm_, udsm_, v12_old_, v12_new_, up_, true); }
+  UpDownRange(Vertex v1, Vertex v2, double **sm, Pair **udsm, double v12_old, double v12_new)
+    : v1_(v1), v2_(v2), sm_(sm), udsm_(udsm), v12_old_(v12_old), v12_new_(v12_new) {}
+  UpDownIterator begin() const { return UpDownIterator(v1_, v2_, sm_, udsm_, v12_old_, v12_new_, false); }
+  UpDownIterator end() const { return UpDownIterator(v1_, v2_, sm_, udsm_, v12_old_, v12_new_, true); }
 private:
   Vertex v1_, v2_;
   double **sm_;
   Pair **udsm_;
   double v12_old_, v12_new_;
-  bool up_;
 };
 
 #endif // _cplusplus
