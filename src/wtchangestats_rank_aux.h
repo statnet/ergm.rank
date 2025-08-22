@@ -10,9 +10,7 @@ typedef struct {
   Vertex down;
 } Pair;
 
-static inline bool rank_above(Vertex j, double r_j, Vertex k, double r_k) {
-  return(r_j > r_k || (r_j == r_k && j > k));
-}
+#define rank_above(j, r_j, k, r_k) ((r_j) > (r_k) || ((r_j) == (r_k) && (j) > (k)))
 
 #ifdef __cplusplus
 }
