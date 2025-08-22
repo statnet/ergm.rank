@@ -58,8 +58,10 @@ nws <- simulate(nw0~rank.nonconformity("all")+
                   rank.nodeicov("v")+
                   rank.nodeicov(~poly(v,2))+
                   rank.edgecov("m")+
+                  rank.inconsistency(nw0,"r")+
                   rank.inconsistency(nw0,"r",xa),
-                coef=rep(0,10),response="r", reference=~DiscUnif(1, n-1), nsim=S)
+                coef = rep(0, 11), response = "r",
+                reference = ~DiscUnif(1, n - 1), nsim = S)
 
 d.stats <- attr(nws,"stats")
 
@@ -73,6 +75,7 @@ c.stats <- t(sapply(lapply(nws,as.matrix,attrname="r"),
                                   nodeicov(m, poly(xv,2)[,1]),
                                   nodeicov(m, poly(xv,2)[,2]),
                                   edgecov(m, xm),
+                                  inconsistency(m, m0),
                                   inconsistency(m, m0, xa))))
 
 s.stats <- summary(nws~rank.nonconformity("all")+
@@ -83,7 +86,9 @@ s.stats <- summary(nws~rank.nonconformity("all")+
                   rank.nodeicov("v")+
                   rank.nodeicov(~poly(v,2))+
                   rank.edgecov("m")+
-                  rank.inconsistency(nw0,"r",xa), response="r")
+                  rank.inconsistency(nw0,"r")+
+                  rank.inconsistency(nw0,"r",xa),
+                  response = "r")
 
 stopifnot(all.equal(d.stats,c.stats,check.attributes=FALSE),
           all.equal(d.stats,s.stats,check.attributes=FALSE),
@@ -99,7 +104,10 @@ nws <- simulate(nw1~rank.nonconformity("all")+
                   rank.nodeicov("v")+
                   rank.nodeicov(~poly(v,2))+
                   rank.edgecov("m")+
-                  rank.inconsistency(nw0,"r",xa), coef=rep(0,10),response="r", reference=~CompleteOrder, nsim=S)
+                  rank.inconsistency(nw0,"r")+
+                  rank.inconsistency(nw0,"r",xa),
+                coef = rep(0, 11), response = "r",
+                reference = ~CompleteOrder, nsim = S)
 
 d.stats <- attr(nws,"stats")
 
@@ -113,6 +121,7 @@ c.stats <- t(sapply(lapply(nws,as.matrix,attrname="r"),
                                   nodeicov(m, poly(xv,2)[,1]),
                                   nodeicov(m, poly(xv,2)[,2]),
                                   edgecov(m, xm),
+                                  inconsistency(m, m0),
                                   inconsistency(m, m0, xa))))
 
 s.stats <- summary(nws~rank.nonconformity("all")+
@@ -123,7 +132,9 @@ s.stats <- summary(nws~rank.nonconformity("all")+
                   rank.nodeicov("v")+
                   rank.nodeicov(~poly(v,2))+
                   rank.edgecov("m")+
-                  rank.inconsistency(nw0,"r",xa), response="r")
+                  rank.inconsistency(nw0,"r")+
+                  rank.inconsistency(nw0,"r",xa),
+                  response = "r")
 
 stopifnot(all.equal(d.stats,c.stats,check.attributes=FALSE),
           all.equal(d.stats,s.stats,check.attributes=FALSE),
