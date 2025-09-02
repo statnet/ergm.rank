@@ -188,9 +188,36 @@ WtS_CHANGESTAT_FN(s_inconsistency_cov_rank){
   }
 }
 
-#define defer_perm(i, j, l)                                             \
-  if (sm[l][j] > sm[l][i] && sm[i][l] > sm[i][j]) CHANGE_STAT[0]--;     \
-  if (GETNEWWTSM(l, j) > GETNEWWTSM(l, i) && GETNEWWTSM(i, l) > GETNEWWTSM(i, j)) CHANGE_STAT[0]++;
+// Keep track of which have already been triggered, so that we only print once.
+bool up_tail_head_k_old = false,
+  up_tail_k_head_old = false,
+  up_head_k_tail_old = false,
+  up_k_head_tail_old = false,
+  down_tail_head_k_old = false,
+  down_tail_k_head_old = false,
+  down_head_k_tail_old = false,
+  down_k_head_tail_old = false,
+  up_tail_head_k_new = false,
+  up_tail_k_head_new = false,
+  up_head_k_tail_new = false,
+  up_k_head_tail_new = false,
+  down_tail_head_k_new = false,
+  down_tail_k_head_new = false,
+  down_head_k_tail_new = false,
+  down_k_head_tail_new = false;
+
+// See, e.g., https://gcc.gnu.org/onlinedocs/cpp/Stringizing.html and
+// https://gcc.gnu.org/onlinedocs/cpp/Concatenation.html for
+// documentation: these basically construct the above variable names
+// (using ##) and their corresponding strings (using #) and call
+// Rprintf() the first time each of these if() statements triggers.
+//
+// After a sufficiently long MCMC run under a proposal that permits
+// ties, we can safely assume that if an if() statement hasn't
+// triggered, it never will.
+#define defer_perm(i, j, l, dir)                                        \
+  if (sm[l][j] > sm[l][i] && sm[i][l] > sm[i][j]) { CHANGE_STAT[0]--; if(! dir ## _ ## i ## _ ## j ## _ ## l ## _ ## old) {dir ## _ ## i ## _ ## j ## _ ## l ## _ ## old = true; Rprintf("Triggered: " # dir "_" # i "_" # j "_" # l "_old\n");} } \
+  if (GETNEWWTSM(l, j) > GETNEWWTSM(l, i) && GETNEWWTSM(i, l) > GETNEWWTSM(i, j)) { CHANGE_STAT[0]++;  if(! dir ## _ ## i ## _ ## j ## _ ## l ## _ ## new) {dir ## _ ## i ## _ ## j ## _ ## l ## _ ## new = true; Rprintf("Triggered: " # dir "_" # i "_" # j "_" # l "_new\n");} }
 
 WtC_CHANGESTAT_FN(c_deference){
   GET_AUX_STORAGE(0, double *, sm);
@@ -200,17 +227,18 @@ WtC_CHANGESTAT_FN(c_deference){
   if (vth_new > vth_old) { // New is above, so iterate upwards
     for (Vertex k : UpDownRange(tail, head, sm, udsm, vth_old, vth_new)) {
       // i or l can be tail
-      defer_perm(tail, head, k);
-      defer_perm(tail, k, head);
-      defer_perm(head, k, tail);
-      defer_perm(k, head, tail);
+      defer_perm(tail, head, k, up);
+      defer_perm(tail, k, head, up);
+      defer_perm(head, k, tail, up);
+      defer_perm(k, head, tail, up);
     }
   } else { // New is below, so iterate downwards
+    const char dir[] = "down";
     for (Vertex k : UpDownRange(tail, head, sm, udsm, vth_old, vth_new)) {
-      defer_perm(tail, head, k);
-      defer_perm(tail, k, head);
-      defer_perm(head, k, tail);
-      defer_perm(k, head, tail);
+      defer_perm(tail, head, k, down);
+      defer_perm(tail, k, head, down);
+      defer_perm(head, k, tail, down);
+      defer_perm(k, head, tail, down);
     }
   }
   /*
