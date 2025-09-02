@@ -218,7 +218,7 @@ WtC_CHANGESTAT_FN(c_deference){
 	  }
 	}
   } else { // New is below, so iterate downwards
-  	for (Vertex v3 : UpDownRange(tail, head, sm, udsm, vth_new, vth_old)) {
+  	for (Vertex v3 : UpDownRange(tail, head, sm, udsm, vth_old, vth_new)) {
 		// We can assume any nodes in between were >= previously to l:i
 		double v13_old = sm[tail][v3]; // l rating of j
 		double v23_old = sm[head][v3]; // i rating of j
