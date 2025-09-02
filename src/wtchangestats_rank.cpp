@@ -191,15 +191,58 @@ WtS_CHANGESTAT_FN(s_inconsistency_cov_rank){
 WtC_CHANGESTAT_FN(c_deference){
   GET_AUX_STORAGE(0, double *, sm);
   GET_AUX_STORAGE(1, Pair *, udsm);
-  /*for(Vertex v1=1; v1 <= N_NODES; v1++){
-    for(Vertex v3=1; v3 <= N_NODES; v3++){
-      if(v3==v1) continue;
-      double v31_old = sm[v3][v1];
-      double v13_old = sm[v1][v3];
-      double v31_new = GETNEWWTOLD_M(v3,v1,v31_old);
-      double v13_new = GETNEWWTOLD_M(v1,v3,v13_old);
-    }
-  }*/
+  Vertex vth_old = sm[tail][head];
+  Vertex vth_new = weight;
+  // v3 = j, tail = v1 = l, head = i = v2
+  if (vth_new > vth_old) { // New is above, so iterate upwards
+	for (Vertex v3 : UpDownRange(tail, head, sm, udsm, vth_old, vth_new)) {
+	  // We can assume any nodes in between were <= previously to l:i
+	  double v13_old = sm[tail][v3]; // l rating of j
+	  double v23_old = sm[head][v3]; // i rating of j
+	  double v21_old = sm[head][tail]; // i rating of l
+	  if (v13_old == vth_new) { // Promoted to be equal, previously l: j > i = 1, now 0
+		if (v21_old > v23_old) { // i:l>j = 1
+			CHANGE_STAT[0]--;
+		}
+	  } else if (v13_old == vth_old) { // Promoted to be above, equal before
+		if (v23_old > v21_old) { // i:j>l = 1, so now y(i:j>l) * y(l:i>j) = 1 * 1, before was 1 * 0
+			CHANGE_STAT[0]++;
+		}
+	  } else { // Promoted to be above, below before
+		if (v21_old > v23_old) { // i:l>j = 1
+			CHANGE_STAT[0]--;
+		}
+		if (v23_old > v21_old) { // i:j>l = 1, so now y(i:j>l) * y(l:i>j) = 1 * 1, before was 1 * 0
+			CHANGE_STAT[0]++;
+		}
+	  }
+	}
+  } else { // New is below, so iterate downwards
+  	for (Vertex v3 : UpDownRange(tail, head, sm, udsm, vth_new, vth_old)) {
+		// We can assume any nodes in between were >= previously to l:i
+		double v13_old = sm[tail][v3]; // l rating of j
+		double v23_old = sm[head][v3]; // i rating of j
+		double v21_old = sm[head][tail]; // i rating of l
+	  	if (v13_old == vth_new) { // Demoted to be equal, previously l: j > i = 0, still 0
+			if (v23_old > v21_old) { // i:j>l = 1, so now y(i:j>l) * y(l:i>j) = 1 * 0, before was 1 * 1
+				CHANGE_STAT[0]--;
+			}
+	  	}
+		else if (v13_old == vth_old) { // Demoted to be below, equal before
+			if (v21_old > v23_old) { // i:l>j = 1, so now y(l:j > i) * y(i:l> j) went from 0 * 1 to 1 * 1
+				CHANGE_STAT[0]++;
+			}
+		} else { // Demoted to be below, above before
+			if (v21_old > v23_old) { // i:l>j = 1, so now y(l:j > i) * y(i:l> j) went from 0 * 1 to 1 * 1
+				CHANGE_STAT[0]++;
+			}
+			if (v23_old > v21_old) { // i:j>l = 1, so now y(i:j>l) * y(l:i>j) = 1 * 0, before was 1 * 1
+				CHANGE_STAT[0]--;
+			}
+		}
+  	}
+	}
+  /*
       for(Vertex v1=1; v1 <= N_NODES; v1++){
 	for(Vertex v3=1; v3 <= N_NODES; v3++){
 	  if(v3==v1) continue;
@@ -222,7 +265,7 @@ WtC_CHANGESTAT_FN(c_deference){
 	      CHANGE_STAT[0]++;
 	  }
 	}
-      }
+      }*/
 }
 
 WtS_CHANGESTAT_FN(s_deference){ 
