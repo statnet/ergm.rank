@@ -23,6 +23,7 @@
 #define GETNEWWT2OLD(a,b,old) (SAMEDYAD(TAIL,HEAD1,a,b) ? NEWWT1 : (SAMEDYAD(TAIL,HEAD2,a,b) ? NEWWT2 : (old)))
 
 #define GETNEWWTOLD_M(a,b,old) (SAMEDYAD(tail,head,a,b)?weight:old)
+#define GETNEWWTSM(a,b) (SAMEDYAD(tail,head,a,b)?weight:sm[a][b])
 
 #define EXEC_THROUGH_FOUTDYADS(a,e,v,w,subroutine){		\
   Vertex v = BIPARTITE?BIPARTITE:1;				\
