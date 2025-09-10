@@ -9,31 +9,34 @@
 ################################################################################
 #' Fit, Simulate and Diagnose Exponential-Family Models for Rank-Order
 #' Relational Data
-#' 
-#' \code{\link[=ergm.rank-package]{ergm.rank}} is a set of extensions
-#' to package \code{\link[=ergm-package]{ergm}} to fit and simulate
-#' from exponential-family random graph models for networks whose edge
-#' weights are ranks. Mainly, it implements the
+#'
+#' \pkg{ergm.rank} is a set of extensions to package \CRANpkg{ergm} to
+#' fit and simulate from exponential-family random graph models for
+#' networks whose edge weights are ranks.
+#'
+#' Mainly, it implements the
 #' \code{\link[=CompleteOrder-ergmReference]{CompleteOrder}} reference
-#' measure for valued ERGMs \insertCite{Kr12e,KrHu23e}{ergm.rank} and provides some rank-order change
-#' statistics (`search.ergmTerms("ordinal")` for a list) \insertCite{KrBu17e}{ergm.rank}.
-#' 
+#' measure for valued ERGMs \insertCite{Kr12e,KrHu23e}{ergm.rank} and
+#' provides some rank-order change statistics
+#' (`search.ergmTerms("ordinal")` for a list)
+#' \insertCite{KrBu17e}{ergm.rank}.
+#'
 #' When publishing results obtained using this package, please cite the
 #' original authors as described in \code{citation(package="ergm.rank")}.
-#' 
+#'
 #' All programs derived from this package must cite it.
-#' 
-#' This package contains functions specific to using
-#' \code{\link{ergm}} to model networks whose dyad values are
-#' ranks. Examples include preferences, valued ties reduced to ranks,
-#' etc.. These terms have a specialized interpretation, and are
-#' therefore generally prefixed by "`rank.`", though they should take
-#' any valued data.
+#'
+#' This package contains functions specific to using [ergm()] to model
+#' networks whose dyad values are ranks. Examples include preferences,
+#' valued ties reduced to ranks, etc.. These terms have a specialized
+#' interpretation, and are therefore generally prefixed by "`rank.`",
+#' though they should take any valued data.
 #'
 #' For detailed information on how to download and install the software, go to
 #' the Statnet project website: \url{https://statnet.org}. A tutorial, support
 #' newsgroup, references and links to further resources are provided there.
-#' 
+#'
 #' @name ergm.rank-package
-#' @references  \insertAllCited{}
+#' @seealso [`ergmTerm`], [`ergmReference`]
+#' @references \insertAllCited{}
 "_PACKAGE"
