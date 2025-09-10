@@ -38,7 +38,7 @@
 #' should be cited.  In addition this should be cited as:
 #' 
 #' Vladimir Batagelj and Andrej Mrvar (2006): \emph{Pajek datasets} \cr
-#' \url{http://vlado.fmf.uni-lj.si/pub/networks/data/}
+#' \url{https://github.com/bavla/Nets/tree/master/data/Pajek}
 #' @references See the link above.  Newcomb T. (1961). The acquaintance
 #' process. New York: Holt, Reinhard and Winston.
 #' 
