@@ -8,7 +8,7 @@
 A list of 15 networks.
 }
 \source{
-\url{http://vlado.fmf.uni-lj.si/pub/networks/data/ucinet/ucidata.htm#newfrat}
+\url{https://github.com/bavla/Nets/blob/master/data/Pajek/ucinet/README.md}
 }
 \description{
 These 14 networks record weekly sociometric preference rankings from 17 men
