@@ -15,3 +15,6 @@ appveyor.yml
 ^codecov\.yml$
 ^README.md$
 ^man-roxygen$
+^src/.*\.s?o$
+^\.vscode/
+.*\.code-workspace
