@@ -81,6 +81,8 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item Formatting corrections to documentation.
+
+      \item Fixed a broken link to a dataset source.
     }
   }
 }

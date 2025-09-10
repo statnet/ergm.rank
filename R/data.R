@@ -50,7 +50,7 @@
 #' networks, I. Blockmodels of roles and positions. American Journal of
 #' Sociology, 81, 730-780.
 #' @source
-#' \url{http://vlado.fmf.uni-lj.si/pub/networks/data/ucinet/ucidata.htm#newfrat}
+#' \url{https://github.com/bavla/Nets/blob/master/data/Pajek/ucinet/README.md}
 #' @keywords datasets
 #' @examples
 #' 
