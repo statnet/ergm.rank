@@ -1,11 +1,11 @@
-#  File R/InitWtErgmTerm_rank.R in package ergm.rank, part of the
-#  Statnet suite of packages for network analysis, https://statnet.org .
+#  File R/InitWtErgmTerm_rank.R in package ergm.rank, part of the Statnet suite
+#  of packages for network analysis, https://statnet.org .
 #
-#  This software is distributed under the GPL-3 license.  It is free,
-#  open source, and has the attribution requirements (GPL Section 7) at
+#  This software is distributed under the GPL-3 license.  It is free, open
+#  source, and has the attribution requirements (GPL Section 7) at
 #  https://statnet.org/attribution .
 #
-#  Copyright 2008-2024 Statnet Commons
+#  Copyright 2008-2025 Statnet Commons
 ################################################################################
 
 #' @templateVar name rank.deference
@@ -75,11 +75,23 @@ InitWtErgmTerm.rank.edgecov <- function(nw, arglist, ...) {
 #'
 #' @usage
 #' # valued: rank.inconsistency(x, attrname, weights, wtname, wtcenter)
-#' @param x,attrname `x` can be a [`network`] with an edge attribute `attrname` containing the ranks or a matrix of
-#'   appropriate dimension containing the ranks. If `x` is not
-#'   given, it defaults to the LHS network, and if `attrname` is
-#'   not given, it defaults to the `response` edge attribute.
-#' @param weights optional parameter to weigh the counts. Can be either a 3D \eqn{n\times n\times n} -array
+#' @param x,attrname a specification for the reference ranking: either
+#'   one of the following, or the name of a network attribute
+#'   containing one of the following: \describe{
+#'
+#'   \item{a matrix}{with dimensions \eqn{n \times n}{n*n}
+#'     for unipartite networks and \eqn{b \times (n-b)}{b*(n-b)} for
+#'     bipartite networks; `attrname`, if given, is used to construct
+#'     the term name.}
+#'
+#'   \item{a network object}{with the same size and bipartitedness as
+#'     LHS; `attrname`, if given, provides the name of the
+#'     quantitative edge attribute to use for reference rankings values (in
+#'     this case, missing edges in `x` are assigned a rank value
+#'     of zero).}
+#'
+#' }
+#' @param weights optional parameter to weigh the counts. Can be either a 3D \eqn{n\times n\times n}-array
 #'    whose \eqn{(i,j,k)} th element gives the weight for the
 #'   comparison by \eqn{i} of \eqn{j} and \eqn{k} or a function taking
 #'   three arguments, \eqn{i}, \eqn{j}, and \eqn{k}, and returning
@@ -103,27 +115,9 @@ InitWtErgmTerm.rank.inconsistency<-function (nw, arglist, ...) {
   name<-"inconsistency_rank"
   
     ## Process hamming network ##
-  if(is.network(a$x)){ # Arg to hamming is a network
-    xm<-as.matrix.network(a$x,matrix.type="adjacency",a$attrname)
-  }else if(is.character(a$x)){ # Arg to hamming is the name of an attribute in nw
-    xm<-get.network.attribute(nw,a$x)
-    xm<-as.matrix.network(xm,matrix.type="adjacency")
-  }else{
-    xm<-as.matrix(a$x) # Arg to hamming is anything else; attempts to coerce
-  }
-  ## Process case without dyadcov (i.e. unweighted) ##
-  sc03 <- sys.call(0)[[3]]
-  coef.names <- "inconsistency"  # This might be modified later
-  if (length(sc03)>1) 
-    coef.names <- paste("inconsistency", deparse1(sc03[[2]]), sep=".")
-  
-  if(!is.null(a$attrname) && length(sc03)>1){
-    coef.names<-paste("inconsistency", deparse1(sc03[[2]]),
-                      deparse1(a$attrname), sep = ".")
-  }else if (length(sc03)>1) {
-    coef.names<-paste("inconsistency", deparse1(sc03[[2]]),
-                      deparse1(sys.call(0)[[3]]), sep = ".")
-  }
+  l <- ergm_edgecov_args("inconsistency", nw, a)
+  xm <- l$xm
+  coef.names <- l$cn
 
   # A column-major matrix of choices.
   inputs <- c(t(xm))

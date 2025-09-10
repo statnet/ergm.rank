@@ -9,11 +9,11 @@ Authors@R: c(
            person(c("David", "R."), "Hunter", role=c("ctb"), email="dhunter@stat.psu.edu"))
 Depends:
     R (>= 4.0),
-    ergm (>= 4.2.2),
-    network (>= 1.15)
+    ergm (>= 4.10.1),
+    network (>= 1.19.0)
 Imports:
-    statnet.common (>= 4.2.0),
-    Rdpack (>= 2.4),
+    statnet.common (>= 4.12.0),
+    Rdpack (>= 2.6.4),
     utils
 LinkingTo:
     ergm

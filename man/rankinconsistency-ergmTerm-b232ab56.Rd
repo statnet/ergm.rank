@@ -8,12 +8,24 @@
 # valued: rank.inconsistency(x, attrname, weights, wtname, wtcenter)
 }
 \arguments{
-\item{x, attrname}{\code{x} can be a \code{\link[network:network]{network}} with an edge attribute \code{attrname} containing the ranks or a matrix of
-appropriate dimension containing the ranks. If \code{x} is not
-given, it defaults to the LHS network, and if \code{attrname} is
-not given, it defaults to the \code{response} edge attribute.}
+\item{x, attrname}{a specification for the reference ranking: either
+one of the following, or the name of a network attribute
+containing one of the following: \describe{
 
-\item{weights}{optional parameter to weigh the counts. Can be either a 3D \eqn{n\times n\times n} -array
+\item{a matrix}{with dimensions \eqn{n \times n}{n*n}
+for unipartite networks and \eqn{b \times (n-b)}{b*(n-b)} for
+bipartite networks; \code{attrname}, if given, is used to construct
+the term name.}
+
+\item{a network object}{with the same size and bipartitedness as
+LHS; \code{attrname}, if given, provides the name of the
+quantitative edge attribute to use for reference rankings values (in
+this case, missing edges in \code{x} are assigned a rank value
+of zero).}
+
+}}
+
+\item{weights}{optional parameter to weigh the counts. Can be either a 3D \eqn{n\times n\times n}-array
 whose \eqn{(i,j,k)} th element gives the weight for the
 comparison by \eqn{i} of \eqn{j} and \eqn{k} or a function taking
 three arguments, \eqn{i}, \eqn{j}, and \eqn{k}, and returning
