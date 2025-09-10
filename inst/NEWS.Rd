@@ -1,15 +1,25 @@
-%  File inst/NEWS.Rd in package ergm.rank, part of the
-%  Statnet suite of packages for network analysis, https://statnet.org .
+%  File inst/NEWS.Rd in package ergm.rank, part of the Statnet suite of
+%  packages for network analysis, https://statnet.org .
 %
-%  This software is distributed under the GPL-3 license.  It is free,
-%  open source, and has the attribution requirements (GPL Section 7) at
+%  This software is distributed under the GPL-3 license.  It is free, open
+%  source, and has the attribution requirements (GPL Section 7) at
 %  https://statnet.org/attribution .
 %
-%  Copyright 2008-2024 Statnet Commons
+%  Copyright 2008-2025 Statnet Commons
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \name{NEWS}
 \title{NEWS file for the \code{\link[=ergm.rank-package]{ergm.rank}} package}
 \encoding{UTF-8}
+
+
+%% Note: This needs to be kept in sync with man/macros/ergmTerm.Rd
+\newcommand{\ergmTerm}{\code{\link[#1:#2-ergmTerm]{#2#3}}}
+\newcommand{\ergmConstraint}{\code{\link[#1:#2-ergmConstraint]{#2#3}}}
+\newcommand{\ergmReference}{\code{\link[#1:#2-ergmReference]{#2#3}}}
+\newcommand{\ergmHint}{\code{\link[#1:#2-ergmHint]{#2#3}}}
+\newcommand{\ergmProposal}{\code{\link[#1:#2-ergmProposal]{#2#3}}}
+\newcommand{\ergmAuxiliary}{\code{\link[#1:#2-ergmAuxiliary]{#2#3}}}
+
 
 % When a release is forked, copy the sections to a new release and
 % delete unused sections.
@@ -59,6 +69,23 @@
   %   }
   % }
 %% }
+
+
+\section{Changes in version 4.1.2}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \ergmTerm{ergm.rank}{rank.inconsistency}{()} no processes the reference rank matrix in a consistent manner.
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Formatting corrections to documentation.
+    }
+  }
+}
+
+
 
 \section{Changes in version 4.1.1}{
   \subsection{BUG FIXES}{

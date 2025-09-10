@@ -15,7 +15,7 @@ Models the effect of one or more nodal covariates on the propensity of an
 actor to be ranked highly by the others.
 }
 \seealso{
-\code{\link{ergmTerm}} for index of model terms currently visible to the package.
+\code{\link[ergm:ergmTerm]{ergmTerm}} for index of model terms currently visible to the package.
 
 \Sexpr[results=rd,stage=render]{ergm:::.formatTermKeywords("ergmTerm", "rank.nodeicov", "subsection")}
 }
