@@ -16,7 +16,7 @@ value of this statistic and/or a negative coefficient implies a form
 of mutuality in the network.
 }
 \seealso{
-\code{\link{ergmTerm}} for index of model terms currently visible to the package.
+\code{\link[ergm:ergmTerm]{ergmTerm}} for index of model terms currently visible to the package.
 
 \Sexpr[results=rd,stage=render]{ergm:::.formatTermKeywords("ergmTerm", "rank.deference", "subsection")}
 }

@@ -21,7 +21,7 @@ Models the effect of a dyadic covariate on the propensity of an ego
 \eqn{i} to rank alter \eqn{j} highly.
 }
 \seealso{
-\code{\link{ergmTerm}} for index of model terms currently visible to the package.
+\code{\link[ergm:ergmTerm]{ergmTerm}} for index of model terms currently visible to the package.
 
 \Sexpr[results=rd,stage=render]{ergm:::.formatTermKeywords("ergmTerm", "rank.edgecov", "subsection")}
 }

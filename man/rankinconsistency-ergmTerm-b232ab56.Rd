@@ -8,7 +8,7 @@
 # valued: rank.inconsistency(x, attrname, weights, wtname, wtcenter)
 }
 \arguments{
-\item{x, attrname}{\code{x} can be a \code{\link{network}} with an edge attribute \code{attrname} containing the ranks or a matrix of
+\item{x, attrname}{\code{x} can be a \code{\link[network:network]{network}} with an edge attribute \code{attrname} containing the ranks or a matrix of
 appropriate dimension containing the ranks. If \code{x} is not
 given, it defaults to the LHS network, and if \code{attrname} is
 not given, it defaults to the \code{response} edge attribute.}
@@ -29,7 +29,7 @@ network and a fixed covariate network \code{x} , by couting the number of pairwi
 comparisons for which the two networks disagree.
 }
 \seealso{
-\code{\link{ergmTerm}} for index of model terms currently visible to the package.
+\code{\link[ergm:ergmTerm]{ergmTerm}} for index of model terms currently visible to the package.
 
 \Sexpr[results=rd,stage=render]{ergm:::.formatTermKeywords("ergmTerm", "rank.inconsistency", "subsection")}
 }
