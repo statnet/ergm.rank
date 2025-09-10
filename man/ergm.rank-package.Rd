@@ -7,26 +7,28 @@
 \title{Fit, Simulate and Diagnose Exponential-Family Models for Rank-Order
 Relational Data}
 \description{
-\code{\link[=ergm.rank-package]{ergm.rank}} is a set of extensions
-to package \code{\link[=ergm-package]{ergm}} to fit and simulate
-from exponential-family random graph models for networks whose edge
-weights are ranks. Mainly, it implements the
-\code{\link[=CompleteOrder-ergmReference]{CompleteOrder}} reference
-measure for valued ERGMs \insertCite{Kr12e,KrHu23e}{ergm.rank} and provides some rank-order change
-statistics (\code{search.ergmTerms("ordinal")} for a list) \insertCite{KrBu17e}{ergm.rank}.
+\pkg{ergm.rank} is a set of extensions to package \CRANpkg{ergm} to
+fit and simulate from exponential-family random graph models for
+networks whose edge weights are ranks.
 }
 \details{
+Mainly, it implements the
+\code{\link[=CompleteOrder-ergmReference]{CompleteOrder}} reference
+measure for valued ERGMs \insertCite{Kr12e,KrHu23e}{ergm.rank} and
+provides some rank-order change statistics
+(\code{search.ergmTerms("ordinal")} for a list)
+\insertCite{KrBu17e}{ergm.rank}.
+
 When publishing results obtained using this package, please cite the
 original authors as described in \code{citation(package="ergm.rank")}.
 
 All programs derived from this package must cite it.
 
-This package contains functions specific to using
-\code{\link{ergm}} to model networks whose dyad values are
-ranks. Examples include preferences, valued ties reduced to ranks,
-etc.. These terms have a specialized interpretation, and are
-therefore generally prefixed by "\code{rank.}", though they should take
-any valued data.
+This package contains functions specific to using \code{\link[ergm:ergm]{ergm()}} to model
+networks whose dyad values are ranks. Examples include preferences,
+valued ties reduced to ranks, etc.. These terms have a specialized
+interpretation, and are therefore generally prefixed by "\code{rank.}",
+though they should take any valued data.
 
 For detailed information on how to download and install the software, go to
 the Statnet project website: \url{https://statnet.org}. A tutorial, support
@@ -36,12 +38,7 @@ newsgroup, references and links to further resources are provided there.
 \insertAllCited{}
 }
 \seealso{
-Useful links:
-\itemize{
-  \item \url{https://statnet.org}
-  \item Report bugs at \url{https://github.com/statnet/ergm.rank/issues}
-}
-
+\code{\link[ergm:ergmTerm]{ergmTerm}}, \code{\link[ergm:ergmReference]{ergmReference}}
 }
 \author{
 \strong{Maintainer}: Pavel N. Krivitsky \email{pavel@statnet.org} (\href{https://orcid.org/0000-0002-9101-3362}{ORCID})
