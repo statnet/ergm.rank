@@ -39,7 +39,7 @@ When publishing results obtained using this data set the original authors
 should be cited.  In addition this should be cited as:
 
 Vladimir Batagelj and Andrej Mrvar (2006): \emph{Pajek datasets} \cr
-\url{http://vlado.fmf.uni-lj.si/pub/networks/data/}
+\url{https://github.com/bavla/Nets/tree/master/data/Pajek}
 }
 
 \examples{
