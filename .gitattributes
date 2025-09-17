@@ -1,0 +1,30 @@
+* text=auto
+
+# Ensure consistent line endings for R source files and other text files
+*.R text
+*.r text
+*.Rmd text
+*.qmd text
+*.Rproj text
+*.md text
+*.txt text
+*.Rd text
+*.c text
+*.h text
+*.cpp text
+*.yaml text
+*.yml text
+*.py text
+*.bib text
+
+# Declare common R binary files to prevent Git from trying to diff them
+*.rda binary
+*.RData binary
+*.rds binary
+*.qs binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pdf binary
+*.xlsx binary
+*.zip binary
