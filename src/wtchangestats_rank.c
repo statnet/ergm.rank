@@ -352,7 +352,7 @@ WtS_CHANGESTAT_FN(s_local1_nonconformity){
 	if(v13<=v12) continue;	
 	double v32=sm[v3][v2];
 	for(Vertex v4=1; v4 <= N_NODES; v4++){
-	  if(v4==v3 || v4==v2 || v2==v1) continue;
+	  if(v4==v3 || v4==v2 || v4==v1) continue;
 	  double v14=sm[v1][v4];
 	  double v34=sm[v3][v4];
 	  if(v32>v34 && v12<=v14) CHANGE_STAT[0]++;
@@ -535,7 +535,7 @@ WtS_CHANGESTAT_FN(s_localAND_nonconformity){
 	if(v13<=v12) continue;	
 	double v32=sm[v3][v2];
 	for(Vertex v4=1; v4 <= N_NODES; v4++){
-	  if(v4==v3 || v4==v2 || v2==v1) continue;
+	  if(v4==v3 || v4==v2 || v4==v1) continue;
 	  double v14=sm[v1][v4];
 	  if(v13<=v14) continue;	
 	  double v34=sm[v3][v4];
