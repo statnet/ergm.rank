@@ -10,7 +10,7 @@
 
 #' @templateVar name CompleteOrder
 #' @title A uniform distribution over the possible complete orderings of the alters by each ego
-#' @description A uniform distribution over the possible complete orderings of the alters by each ego
+#' @description The network must be directed or bipartite, and the ordering of the alters by each ego must be complete, i.e., there must not be any ties.
 #'
 #' @usage
 #' # CompleteOrder
@@ -20,5 +20,16 @@
 #' @concept ordinal
 InitErgmReference.CompleteOrder <- function(nw, arglist, ...){
   a <- check.ErgmTerm(nw, arglist)
+
+  if(!is.directed(nw) && !is.bipartite(nw))
+    ergm_Init_stop("The network must be directed or bipartite.")
+
+  nalters <- if (is.bipartite(nw)) network.size(nw) - nw %v% "bipartite"
+             else network.size(nw) - 1L
+  m <- as.matrix(nw, attrname = nw %ergmlhs% "response", matrix.type = "adjacency")
+  diag(m) <- NA
+  if (!all(apply(m, 1, function(x) length(unique(na.omit(x)))) == nalters))
+    ergm_Init_stop("The rankings contain ties.")
+
   list(name="CompleteOrder", init_methods = c("CD","zeros"))
 }

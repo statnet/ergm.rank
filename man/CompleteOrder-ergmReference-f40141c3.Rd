@@ -8,7 +8,7 @@
 # CompleteOrder
 }
 \description{
-A uniform distribution over the possible complete orderings of the alters by each ego
+The network must be directed or bipartite, and the ordering of the alters by each ego must be complete, i.e., there must not be any ties.
 }
 \seealso{
 \code{\link[ergm:ergmReference]{ergmReference}} for index of reference distributions currently visible to the package.

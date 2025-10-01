@@ -44,6 +44,7 @@ inconsistency <- function(m, x, w=array(1,c(nrow(m),ncol(m),ncol(m)))){
 n <- 7
 S <- 10
 
+### Partial Orderings
 nw0 <- network.initialize(n,dir=TRUE)
 nw0[,, names.eval="r", add.edges=TRUE] <- m0 <- matrix(sample.int(n, n*n, replace=TRUE), n, n)
 nw0 %v% "v" <- xv <- rnorm(n)
@@ -94,9 +95,15 @@ stopifnot(all.equal(d.stats,c.stats,check.attributes=FALSE),
           all.equal(d.stats,s.stats,check.attributes=FALSE),
           all.equal(s.stats,c.stats,check.attributes=FALSE))
 
-nw1 <- nws[[length(nws)]]
 
-nws <- simulate(nw1~rank.nonconformity("all")+
+### Complete orderings
+nw0[,, names.eval="r", add.edges=TRUE] <- m0 <- t(replicate(n, sample.int(n)))
+nw0 %v% "v" <- xv <- rnorm(n)
+nw0 %n% "m" <- xm <- matrix(rnorm(n*n),n,n)
+nw0 %n% "a" <- xa <- array(rnorm(n*n*n),c(n,n,n))
+
+
+nws <- simulate(nw0~rank.nonconformity("all")+
                   rank.nonconformity("local1")+
                   rank.nonconformity("local2")+
                   rank.nonconformity("localAND")+
