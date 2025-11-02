@@ -22,9 +22,9 @@
 #' The data set, derived from one in the unreleased \code{netdata} package,
 #' contains a network list \code{newcomb} with 14 networks. Each network is
 #' complete and contains two edge attributes: \describe{
-#' \item{list("rank")}{the preference of the \eqn{i}th man for the \eqn{j}th
+#' \item{`"rank"`}{the preference of the \eqn{i}th man for the \eqn{j}th
 #' man from \code{1} through \code{16}, with \code{1} being the highest
-#' preference.} \item{list("descrank")}{the same, but \code{1} indicates lowest
+#' preference.} \item{`"descrank"`}{the same, but \code{1} indicates lowest
 #' preference.} }
 #'
 #' @name newcomb
